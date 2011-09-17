@@ -59,7 +59,8 @@ typedef enum mxslt_debug_e {
   MXSLT_DBG_VARIABLES=BIT(9),
   MXSLT_DBG_VERBOSE0=BIT(10),
   MXSLT_DBG_VERBOSE1=BIT(11),
-  MXSLT_DBG_VERBOSE2=BIT(12)
+  MXSLT_DBG_VERBOSE2=BIT(12),
+  MXSLT_DBG_ALL=0xffff - MXSLT_DBG_ERROR
 } mxslt_debug_e;
 
   /** Enables libmodxslt0 debugging.

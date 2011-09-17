@@ -43,13 +43,14 @@ int mxslt_debug_firstlevel(void) {
 }
 
 # define MXSLT_DBG_STR_LONGEST mxslt_sizeof_str("variables")
-# define MXSLT_DBG_STR_SHORTEST mxslt_sizeof_str("sapi")
+# define MXSLT_DBG_STR_SHORTEST mxslt_sizeof_str("all")
 
 struct mxslt_debug_string_t {
   char * name;
   int nsize;
   int bit;
 } mxslt_debug_strings[] = { 
+  { "all", mxslt_sizeof_str("all"), MXSLT_DBG_ALL },
   { "config", mxslt_sizeof_str("config"), MXSLT_DBG_CONFIG  },
   { "debug", mxslt_sizeof_str("debug"), MXSLT_DBG_DEBUG },
   { "flags", mxslt_sizeof_str("flags"), MXSLT_DBG_FLAGS },
@@ -98,8 +99,12 @@ int mxslt_debug_flag(const char * str, int len) {
   int diff;
 
     /* Make sure null strings do not cause troubles */
-  if(!str || !*str || len > MXSLT_DBG_STR_LONGEST || len < MXSLT_DBG_STR_SHORTEST)
+  if(!str || !*str) 
     return 0;
+
+    /* Invalid strings should be discarded immediately */
+  if (len > MXSLT_DBG_STR_LONGEST || len < MXSLT_DBG_STR_SHORTEST)
+    return MXSLT_DBG_ERROR;
 
     /* Simple binary search in flag list */
   while(max >= min) {
