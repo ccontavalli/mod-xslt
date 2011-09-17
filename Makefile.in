@@ -1,0 +1,149 @@
+#
+#   mod-xslt -- Copyright (C) 2002-2008 
+# 		 Carlo Contavalli 
+# 		 <ccontavalli at inscatolati.net>
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+#  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+@SET_MAKE@
+sapi=@SAPI@
+
+all: library sapi utils
+
+.PHONY: all library sapi utils doc \
+	install install-library install-sapi install-utils install-man install-strip \
+	uninstall uninstall-library uninstall-sapi uninstall-utils uninstall-man \
+	clean clean-library clean-sapi clean-utils clean-doc \
+	distclean distclean-library distclean-sapi distclean-utils distclean-doc \
+	release relase-library release-sapi release-utils release-doc \
+	tidy tidy-library tidy-sapi tidy-utils tidy-doc
+
+install: install-library install-sapi install-utils install-man
+
+install-man:
+
+uninstall: uninstall-library uninstall-sapi uninstall-utils uninstall-man
+
+clean: clean-library clean-sapi clean-utils
+
+release: release-library release-sapi release-utils release-doc
+	find . -name Makefile -o -name tags | xargs rm -f
+
+tidy: tidy-library tidy-sapi tidy-utils 
+
+distclean: distclean-library distclean-sapi distclean-utils
+	find . -name Makefile | xargs rm -f
+	rm -f ./config.log ./config.status libtool
+
+library:
+	$(MAKE) -C lib @DEFAULT_TARGET@
+
+sapi: library
+	$(MAKE) -C sapi/$(sapi) @DEFAULT_TARGET@
+
+utils: library
+	$(MAKE) -C utils @DEFAULT_TARGET@
+
+doc:
+	$(MAKE) -C doc @DEFAULT_TARGET@
+
+
+install-library:  
+	$(MAKE) -C lib install 
+
+install-sapi:
+	$(MAKE) -C sapi/$(sapi) install
+
+install-utils:  
+	$(MAKE) -C utils install 
+
+install-man:  
+	$(MAKE) -C doc/man install
+
+install-strip:  
+	$(MAKE) -C lib install-strip
+	$(MAKE) -C sapi/$(sapi) install-strip
+	$(MAKE) -C lib install-strip
+	$(MAKE) -C doc install-strip
+
+
+uninstall-library:  
+	$(MAKE) -C lib uninstall 
+
+uninstall-sapi:
+	$(MAKE) -C sapi/$(sapi) uninstall
+
+uninstall-utils:  
+	$(MAKE) -C utils uninstall 
+
+uninstall-man:  
+	$(MAKE) -C doc/man uninstall
+
+
+clean-library:  
+	$(MAKE) -C lib clean 
+
+clean-sapi:
+	$(MAKE) -C sapi/$(sapi) clean
+
+clean-utils:  
+	$(MAKE) -C utils clean 
+
+clean-doc:  
+	$(MAKE) -C doc clean
+
+
+distclean-library:  
+	$(MAKE) -C lib distclean 
+
+distclean-sapi:
+	$(MAKE) -C sapi/$(sapi) distclean
+
+distclean-utils:  
+	$(MAKE) -C utils distclean 
+
+distclean-doc:  
+	$(MAKE) -C doc distclean
+
+
+release-library:  
+	$(MAKE) -C lib release 
+
+release-sapi:
+	$(MAKE) -C sapi/$(sapi) release
+
+release-utils:  
+	$(MAKE) -C utils release 
+
+release-doc:  
+	$(MAKE) -C doc 
+
+
+tidy-library:  
+	$(MAKE) -C lib tidy 
+
+tidy-sapi:
+	$(MAKE) -C sapi/$(sapi) tidy
+
+tidy-utils:  
+	$(MAKE) -C utils tidy 
+
+tidy-doc:  
+	$(MAKE) -C doc tidy
+
+
+#	find . -name *.so -o -name *.o -o -name tags \
+#	       -name *.a -o -name *.lo -o -name *.la \
+#	       -o -name .*.swp -o -name *.a |xargs rm -f

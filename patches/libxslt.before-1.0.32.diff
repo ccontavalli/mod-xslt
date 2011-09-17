@@ -1,0 +1,12 @@
+diff -Naur libxslt-1.0.30/libxslt/transform.c libxslt-1.0.30.patched/libxslt/transform.c
+--- libxslt-1.0.30/libxslt/transform.c	2003-08-23 15:04:01.000000000 +0200
++++ libxslt-1.0.30.patched/libxslt/transform.c	2003-10-11 10:45:30.000000000 +0200
+@@ -488,7 +488,7 @@
+  *
+  * Returns: a new xmlNodePtr, or NULL in case of error.
+  */
+-static xmlNodePtr
++xmlNodePtr
+ xsltCopyTextString(xsltTransformContextPtr ctxt, xmlNodePtr target,
+ 	     const xmlChar *string, int noescape) {
+     xmlNodePtr copy;

@@ -1,0 +1,99 @@
+#
+#   mod-xslt -- Copyright (C) 2002-2008 
+# 		 Carlo Contavalli 
+# 		 <ccontavalli at inscatolati.net>
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+#  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+@SET_MAKE@
+VPATH = @srcdir@
+
+  # Basic directories
+srcdir=@srcdir@
+abs_srcdir=@abs_srcdir@
+top_srcdir=@top_srcdir@
+abs_top_srcdir=@abs_top_srcdir@
+
+builddir=@builddir@
+abs_builddir=@abs_builddir@
+top_builddir=@top_builddir@
+abs_top_builddir=@abs_top_builddir@
+
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+bindir=@bindir@
+sbindir=@sbindir@
+datarootdir=@datarootdir@
+libexecdir=@libexecdir@
+
+datadir=@datadir@
+sysconfdir=@sysconfdir@
+sharedstatedir=@sharedstatedir@
+localstatedir=@localstatedir@
+libdir=@libdir@
+infodir=@infodir@
+includedir=@includedir@
+mandir=@mandir@
+
+  # Basic commands
+CC := @CC@
+LD := @LD@
+
+  # Additional parameters
+LIBTOOL := @LIBTOOL@
+INSTALL := @INSTALL@
+
+  # Overrideable parameters
+LIBS += @LIBS@
+CFLAGS += @CFLAGS@ 
+LDFLAGS += @LDFLAGS@
+CPPFLAGS += @CPPFLAGS@ -I$(srcdir)/include -I$(top_builddir)/lib/include
+  
+  # Specific Variables
+LIB_CURRENT = @LIB_CURRENT@
+LIB_REVISION = @LIB_REVISION@
+LIB_AGE = @LIB_AGE@
+LIB_VERSION = @LIB_VERSION@
+
+default: @DEFAULT_TARGET@
+
+.SUFFIXES: .c .o .h .lo .la
+
+.PHONY: default \
+	all debug std \
+	clean distclean tidy release \
+	install-strip install uninstall
+
+  # Targets
+all: std
+
+debug: std
+
+std: 
+
+clean: 
+
+distclean: 
+
+tidy:
+
+release: 
+
+install-strip: 
+
+install: 
+
+uninstall: 
+

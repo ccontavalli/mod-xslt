@@ -1,0 +1,168 @@
+/* lib/modxslt0/modxslt-system.h.in.  Generated from configure.ac by autoheader.  */
+
+/* libpcre is installed on the system and is usable */
+#undef HAS_LIBPCRE
+
+/* Define to 1 if you have the <fcntl.h> header file. */
+#undef HAVE_FCNTL_H
+
+/* Define to 1 if you have the `getpagesize' function. */
+#undef HAVE_GETPAGESIZE
+
+/* Define to 1 if you have the <inttypes.h> header file. */
+#undef HAVE_INTTYPES_H
+
+/* Define to 1 if you have the <libexslt/exslt.h> header file. */
+#undef HAVE_LIBEXSLT_EXSLT_H
+
+/* A version of libxml2 that does support setGlobalState is being used */
+#undef HAVE_LIBXML_HACK
+
+/* Define to 1 if you have the <libxml/nanohttp.h> header file. */
+#undef HAVE_LIBXML_NANOHTTP_H
+
+/* Define to 1 if you have the <libxml/parserInternals.h> header file. */
+#undef HAVE_LIBXML_PARSERINTERNALS_H
+
+/* A version of libxml2 with multithreading support is being used */
+#undef HAVE_LIBXML_THREADS
+
+/* Define to 1 if you have the <libxml/tree.h> header file. */
+#undef HAVE_LIBXML_TREE_H
+
+/* Define to 1 if you have the <libxml/uri.h> header file. */
+#undef HAVE_LIBXML_URI_H
+
+/* Define to 1 if you have the <libxslt/transform.h> header file. */
+#undef HAVE_LIBXSLT_TRANSFORM_H
+
+/* Define to 1 if you have the <libxslt/xsltInternals.h> header file. */
+#undef HAVE_LIBXSLT_XSLTINTERNALS_H
+
+/* Define to 1 if you have the <libxslt/xsltutils.h> header file. */
+#undef HAVE_LIBXSLT_XSLTUTILS_H
+
+/* Define to 1 if you have the <libxslt/xslt.h> header file. */
+#undef HAVE_LIBXSLT_XSLT_H
+
+/* Define to 1 if you have the `malloc' function. */
+#undef HAVE_MALLOC
+
+/* Define to 1 if you have the `memcmp' function. */
+#undef HAVE_MEMCMP
+
+/* Define to 1 if you have the <memory.h> header file. */
+#undef HAVE_MEMORY_H
+
+/* Define to 1 if you have the `memset' function. */
+#undef HAVE_MEMSET
+
+/* Define to 1 if you have a working `mmap' system call. */
+#undef HAVE_MMAP
+
+/* enable this if SIOCGIFADDR is available */
+#undef HAVE_NETWORK_IOCTLS
+
+/* posix threading interface (pthread) is available */
+#undef HAVE_PTHREADS
+
+/* Define to 1 if you have the `realloc' function. */
+#undef HAVE_REALLOC
+
+/* Define to 1 if you have the `stat' function. */
+#undef HAVE_STAT
+
+/* Define to 1 if you have the <stdint.h> header file. */
+#undef HAVE_STDINT_H
+
+/* Define to 1 if you have the <stdlib.h> header file. */
+#undef HAVE_STDLIB_H
+
+/* Define to 1 if you have the `strdup' function. */
+#undef HAVE_STRDUP
+
+/* Define to 1 if you have the <strings.h> header file. */
+#undef HAVE_STRINGS_H
+
+/* Define to 1 if you have the <string.h> header file. */
+#undef HAVE_STRING_H
+
+/* Define to 1 if you have the <syslog.h> header file. */
+#undef HAVE_SYSLOG_H
+
+/* Define to 1 if you have the <sys/stat.h> header file. */
+#undef HAVE_SYS_STAT_H
+
+/* Define to 1 if you have the <sys/types.h> header file. */
+#undef HAVE_SYS_TYPES_H
+
+/* Define to 1 if you have the <unistd.h> header file. */
+#undef HAVE_UNISTD_H
+
+/* Define to 1 if you have the `vprintf' function. */
+#undef HAVE_VPRINTF
+
+/* Enable strict memory checks */
+#undef MXSLT_DEBUG_MEMORY
+
+/* Disable compilation of xslt extensions */
+#undef MXSLT_DISABLE_EXTENSIONS
+
+/* Disable modxslt usage of xinclude */
+#undef MXSLT_DISABLE_XINCLUDE
+
+/* Avoid the error ``fallback was not compiled'' to be shown in the web
+   servers log */
+#undef MXSLT_FALLBACK_WRAPAROUND
+
+/* Define this if xmlNanoHTTPCtxt is available from libxml2 headers */
+#undef MXSLT_LIBXML_HTTP_STATUS
+
+/* Enable libxslt debugging */
+#undef MXSLT_LIBXSLT_DEBUG
+
+/* Enable compilation of a wrapper for xsltDebugError to work around a libxslt
+   bug */
+#undef MXSLT_LIBXSLT_HACK
+
+/* Enable multithreading support */
+#undef MXSLT_THREAD
+
+/* Define to the address where bug reports for this package should be sent. */
+#undef PACKAGE_BUGREPORT
+
+/* Define to the full name of this package. */
+#undef PACKAGE_NAME
+
+/* Define to the full name and version of this package. */
+#undef PACKAGE_STRING
+
+/* Define to the one symbol short name of this package. */
+#undef PACKAGE_TARNAME
+
+/* Define to the version of this package. */
+#undef PACKAGE_VERSION
+
+/* Define to 1 if the C compiler supports function prototypes. */
+#undef PROTOTYPES
+
+/* Define to 1 if you have the ANSI C header files. */
+#undef STDC_HEADERS
+
+/* libexslt is installed on the system and you want mod-xslt to use it */
+#undef USE_EXSLT
+
+/* Define like PROTOTYPES; this can be used by system headers. */
+#undef __PROTOTYPES
+
+/* Define to empty if `const' does not conform to ANSI C. */
+#undef const
+
+/* Define to `__inline__' or `__inline' if that's what the C compiler
+   calls it, or to nothing if 'inline' is not supported under any name.  */
+#ifndef __cplusplus
+#undef inline
+#endif
+
+/* Define to `unsigned int' if <sys/types.h> does not define. */
+#undef size_t

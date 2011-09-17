@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<?modxslt-stylesheet type="text/xsl" method="http" href="${xsltRoot}/translator.xsl" 
+	media="screen and ! $GET[format]" alternate="no" title="For any web browser" charset="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" method="http" href="xslt/sdope/docbook.xsl"
+	media="screen" alternate="no" title="For any web browser" charset="ISO-8859-1"?>
+
+<!--
+   mod-xslt - Copyright (C) 2002, 2003 Carlo Contavalli 
+ 			 <ccontavalli at masobit.net> -->
+
+
+<article xmlns="http://www.masobit.net/ns/sdope/1.0">
+  <articleinfo>
+    <title>Credits</title>
+
+    <author>
+      <firstname>Carlo</firstname>
+      <surname>Contavalli</surname>
+      <affiliation>
+        <address>
+	  <email>ccontavalli at masobit.net</email>
+	</address>
+      </affiliation>
+    </author>
+
+    <abstract><para>
+    Many people contributed to the development of mod-xslt2
+    as it is today. Purpose of this page is to thank those 
+    people for the time they spent on mod-xslt2.
+    </para></abstract>
+  </articleinfo>
+
+    <para>
+    The following people contributed to the rewrite
+    of mod-xslt2:
+  
+    <variablelist>
+      <varlistentry>
+        <term>Carlo Contavalli <bf>&lt;ccontavalli at mod-xslt2.com&gt;</bf></term>
+	<listitem>
+	  Wrote most of the code of the new mod-xslt2 version. The whole project
+	  to rewrite mod-xslt and most of the features that have been added are
+	  his ideas.
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Philipp Dunkel <bf>&lt;philipp at dunkel.org&gt;</bf></term>
+	<listitem>
+	  <para>
+	    He made available the original codebase. Huge thanks go to him.
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Josh Nutzman &lt;nutzman at users.sourceforge.net&gt;</term>
+	<term>Tom Murray &lt;yozhik at users.sourceforge.net&gt;</term>
+	<listitem>
+	  <para>
+	    For allowing me to continue their effort for mod-xslt on
+	    sourceforge.net, and for working on a great release of
+	    mod-xslt early in 2001.
+	  </para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>Marco Merlin <bf>&lt;mmerlin at masobit.net&gt;</bf></term>
+	<listitem>
+	  <para>
+	    For providing many xslt and xml files to test
+	    mod-xslt2 with and for pointing out many on-the-field
+	    problems. He is also the one who designed the interface
+	    of this web site. Thanks!
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Gianni Carabelli <bf>&lt;gcarabelli at masobit.net&gt;</bf></term>
+	<listitem>
+	  <para>
+ 	    For massively testing mod-xslt2 and for pointing out
+	    pieces of broken code in the mime-type handling, PHP 
+	    error handling, cookies &amp; headers management, inclusion 
+	    of external entities and xslt, variables and expressions 
+	    handling. Well, he probably had fun playing with mod-xslt2 :-).
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Andrea Ciancone <bf>&lt;aciancone at masobit.net&gt;</bf></term>
+	<listitem>
+	  <para>
+	    Took care of the testing of the first releases,
+	    pointing out some flaws and helping out the design
+	    of new features.
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Riccardo Setti <bf>&lt;giskard at autistici.org&gt;</bf></term>
+	<listitem>
+	  <para>
+	    For setting this site up, creating the mailing lists,
+	    for installing mod-xslt2 on many servers, and for pointing
+	    out some problems in the configure script and Makefiles.
+	  </para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>Peter Svanberg &lt;psv at nada.kth.se&gt;</term>
+
+	<listitem>
+	<para>
+       	    Provided updated nanohttp patch for libxml 2.6.16
+	    and some useful feedbacks about running mod-xslt on
+	    SunOS.
+        </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>The whole <ulink url="http://www.masobit.net/">Masobit</ulink> staff</term>
+	<listitem>
+	  <para>
+	    For helping me out, for letting me work
+	    on this project (while I should have been working for their customers)
+	    and for providing resources to the project.
+	  </para>
+	</listitem>
+      </varlistentry>
+
+    </variablelist>
+    </para>
+
+    <para>
+    The following people were listed in the original mod-xslt
+    ``THANKS'' file since they contributed to the project 
+    by suggesting improvements or by submitting code:
+    <variablelist>
+      <varlistentry>
+        <term>NISHIMURA Hideki <bf>&lt;hideki at westvil.net&gt;</bf></term>
+	<listitem>
+	  <para>
+	    Thanks a lot for pointing out some serious flaws. 
+	    (And sending patches. You are a developers dream)
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>OLIVEIRA Ricardo &lt;ricardo.oliveira at whatevernet.com&gt;</term>
+	<listitem><para>
+	For being one of the more sturdy Alpha Testers
+	</para></listitem> 
+      </varlistentry>
+      <varlistentry>
+        <term>KEW Nick &lt;nick at webthing.com&gt;</term>
+	<listitem><para>
+	For making me conciously justify my design decisions. 
+	And for stealing some of my code boosting my ego in the process ;-&gt;
+	</para></listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Ville Skytta &lt;ville.skytta at iki.fi&gt;</term>
+	<listitem><para>
+	For making the build process a lot better (Huge THANKS)
+	</para></listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>Gennady Feldman &lt;gena01 at gena01.com&gt;</term>
+	<listitem><para>
+	The one who has provided me with the most patches to date, who has 
+	extended  functionality, and who has become a sourceforge.net project member!!!
+	</para></listitem>
+      </varlistentry>
+    </variablelist>
+    </para>
+</article>

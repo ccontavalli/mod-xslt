@@ -1,0 +1,24 @@
+/* This file was used to generate the 
+ *	modxslt-opr-cmp.c 
+ * file. Once generated, it was hacked 
+ * manually (this is why this file is 
+ * not used in the building process)
+ * If you want to add a new operator,
+ * you should change this file, regenerate
+ * modxslt-opr-cmp.c and add the new operator
+ * to the lexer */
+
+struct mxslt_opr_t {
+  char * opr;
+  int (*call)(void * arg1, void * arg2);
+} mxslt_opr_t;
+%%
+==, mxslt_opr_cmp_equal
+=, mxslt_opr_cmp_equal
+!=, mxslt_opr_cmp_notequal
+=~, mxslt_opr_cmp_regequal
+!~, mxslt_opr_cmp_notregequal
+>, mxslt_opr_cmp_greater
+<, mxslt_opr_cmp_less
+>=, mxslt_opr_cmp_greaterequal
+<=, mxslt_opr_cmp_lessequal

@@ -1,0 +1,121 @@
+#
+#   mod-xslt -- Copyright (C) 2002-2008 
+# 		 Carlo Contavalli 
+# 		 <ccontavalli at inscatolati.net>
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+#  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+@SET_MAKE@
+VPATH = @srcdir@
+
+  # Basic directories
+srcdir=@srcdir@
+abs_srcdir=@abs_srcdir@
+top_srcdir=@top_srcdir@
+abs_top_srcdir=@abs_top_srcdir@
+
+builddir=@builddir@
+abs_builddir=@abs_builddir@
+top_builddir=@top_builddir@
+abs_top_builddir=@abs_top_builddir@
+
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+bindir=@bindir@
+sbindir=@sbindir@
+datarootdir=@datarootdir@
+libexecdir=@libexecdir@
+
+datadir=@datadir@
+sysconfdir=@sysconfdir@
+sharedstatedir=@sharedstatedir@
+localstatedir=@localstatedir@
+libdir=@libdir@
+infodir=@infodir@
+includedir=@includedir@
+mandir=@mandir@
+
+  # Basic commands
+CC := @CC@
+LD := @LD@
+
+  # Parser generators
+FLEX := flex
+BISON := bison
+
+  # Additional parameters
+LIBTOOL := @LIBTOOL@
+INSTALL := @INSTALL@
+
+  # Overrideable parameters
+LIBS += @LIBS@
+CFLAGS += @CFLAGS@ -I@srcdir@ -I@top_builddir@/lib
+LDFLAGS += @LDFLAGS@
+CPPFLAGS += @CPPFLAGS@
+  
+# Flex and bison are used only to generate the C file
+# when none is available. Since I'm using quite a bounce
+# of GNU extensions, C generated files won't be erased
+# on cleanup
+
+  # Flex options
+FLOPT := --bison-bridge --bison-locations -P mxslt_expr_yy_ #--verbose --backup -T 
+  
+  # Bison options
+BIOPT := -v -d -p mxslt_expr_yy_ 
+
+  # Options for bison and flex needed while compiling
+PFLAGS := -DYYPARSE_PARAM=scanner -DYYLEX_PARAM=scanner
+
+
+#####################################################
+# Real targets 
+default: @DEFAULT_TARGET@
+
+.SUFFIXES: .c .o .h .lo .la
+
+.PHONY: defaul all debug std clean distclean tidy release
+
+all: std
+
+debug: CFLAGS += -ggdb -Wall -O0 
+debug: PFLAGS += -DYYDEBUG=3
+debug: FLOPT += -d
+debug: std
+
+std: modxslt-screen-expr.parser.lo modxslt-screen-expr.lexer.lo
+
+modxslt-screen-expr.lexer.lo: modxslt-screen-expr.lexer.c Makefile
+	$(LIBTOOL) --mode=compile --tag=CC $(CC) $(CPPFLAGS) $(CFLAGS) $(PFLAGS) -c $(srcdir)/modxslt-screen-expr.lexer.c
+
+modxslt-screen-expr.parser.lo: modxslt-screen-expr.parser.c Makefile
+	$(LIBTOOL) --mode=compile --tag=CC $(CC) $(CPPFLAGS) $(CFLAGS) $(PFLAGS) -c $(srcdir)/modxslt-screen-expr.parser.c
+
+
+release: modxslt-screen-expr.lexer.c modxslt-screen-expr.parser.c
+
+modxslt-screen-expr.lexer.c: modxslt-screen-expr.lex 
+	$(FLEX) $(FLOPT) -o $(srcdir)/modxslt-screen-expr.lexer.c $(srcdir)/modxslt-screen-expr.lex
+
+modxslt-screen-expr.parser.c: modxslt-screen-expr.y 
+	$(BISON) $(BIOPT) -o $(srcdir)/modxslt-screen-expr.parser.c $(srcdir)/modxslt-screen-expr.y
+
+tidy: distclean
+	rm -f $(srcdir)/modxslt-screen-expr.parser.{c,h,output} $(srcdir)/modxslt-screen-expr.lexer.c
+
+distclean: clean
+
+clean:
+	$(LIBTOOL) --mode=clean rm -f ./*.lo ./*.la ./*.o

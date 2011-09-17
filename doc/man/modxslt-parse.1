@@ -1,0 +1,55 @@
+.\"     Title: modxslt-parse
+.\"    Author: Carlo Contavalli <ccontavalli at inscatolati.net>
+.\" Generator: DocBook XSL Stylesheets v1.73.2 <http://docbook.sf.net/>
+.\"      Date: September 6, 2004
+.\"    Manual: 
+.\"    Source: 
+.\"
+.TH "MODXSLT\-PARSE" "1" "September 6, 2004" "" ""
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.SH "NAME"
+modxslt-parse \- program to convert .xml files using .xsl stylesheet and libmodxslt
+.SH "SYNOPSIS"
+.HP 14
+\fBmodxslt\-parse\fR [\fIFILE\fR]
+.SH "DESCRIPTION"
+.PP
+\fBmodxslt\-parse\fR
+can be used to parse a \&.xml file using a \&.xsl stylesheet\&. modxslt\-parse uses libmodxslt, based upon libxml2 and libxslt1, of xmlsoft\&.org (GNOME Project)\&.
+.PP
+modxslt\-parse was not meant to be a general purpose replacement for xsltproc\&. Its main purpose is for debugging libmodxslt and to test \&.xml files that use libmodxslt extensions\&.
+.PP
+libmodxslt was written to ease the task of integrating an xml/xslt parser into web servers or web applications\&.
+.SH "OPTIONS"
+.PP
+\fIFILE\fR
+.RS 4
+The name of the \&.xml file to parse\&. The stylesheet is loaded depending on the PIs contained in the \&.xml file, supporting modxslt extensions\&. Output is sent to standard output
+.RE
+.SH "EXAMPLES"
+.sp
+.RS 4
+.nf
+$ \fBmodxslt\-parse file\&.xml\fR
+<?xml version="1\&.0"\&.\&.\&.
+.fi
+.RE
+.SH "SEE ALSO"
+.PP
+xsltproc(1), modxslt\-perror(1), modxslt\-config(1), modxslt manual, http://www\&.mod\-xslt2\&.com
+.SH "LICENSE"
+.PP
+This manual page was written by Carlo Contavalli
+<ccontavalli at inscatolati\&.net>\&. Permission is granted to copy, distribute and/or modify this document under the terms of the GNU General Public License, Version 2 any later version published by the Free Software Foundation\&.
+.SH "AUTHOR"
+.PP
+\fBCarlo Contavalli\fR <\&ccontavalli at inscatolati\&.net\&>
+.sp -1n
+.IP "" 4
+Author.
+.SH "COPYRIGHT"
+Copyright \(co 2002-2008 Carlo Contavalli
+.br

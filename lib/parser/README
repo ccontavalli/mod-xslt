@@ -1,0 +1,7 @@
+Adding an operator:
+	- add the operator to the lexer (file.lex)
+	- modify the file .c in src/ to lookup the new operator
+	  Originally, those files where generated with ``gperf'' and
+	  hacked manually to improve performance. However, automatically
+	  generated gperf files should be just fine, as long as the API
+	  is respected

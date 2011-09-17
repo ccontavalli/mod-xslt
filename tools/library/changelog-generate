@@ -1,0 +1,76 @@
+#!/bin/bash
+
+# Creates a complete changelog record,
+# including all informations, but the checksums of the files
+
+. tools/include/config || {
+  echo "must be run from mod-xslt source top level directory" 1>&2
+  exit 1
+}
+
+test -n "$library_ymd" || {
+  echo 1>&2 "no ymd provided"
+  exit 1
+}
+
+if test -f "$file_update"; then
+  echo 1>&2 "Using update info from $file_update file"
+  $EDITOR "$file_update" < /dev/tty > /dev/tty || {
+    echo "Aborted generation, editor exited with non-0 status" 1>&2
+    exit 3
+  }
+  update=`cat "$file_update"`;
+else
+  echo 1>&2 "Please enter update information"
+  update=`cat`
+fi
+
+cat <<EOF
+  <release>
+    <description>
+      <maintainer>ccontavalli</maintainer>
+      <data href="./GPG.key">GPG Public Key</data>
+      <base>./archive/${library_ymd}</base>
+      <date>`date +"%Y/%m/%d %H:%m:%S CET"`</date>
+EOF
+
+test -z "$library_mmp" || {
+  major=${library_mmp%%.*}
+  minor=`echo "$library_mmp" |sed -e 's/.*\.\([0-9]*\)\..*/\1/'`
+  patchlevel=${library_mmp##*.}
+
+  cat <<EOF
+      <version type="mmp">
+        <label>release</label>
+	<major>$major</major><minor>$minor</minor><patchlevel>$patchlevel</patchlevel>
+      </version>
+EOF
+}
+
+cat <<EOF
+      <version type="ymd">
+        <label>cvs-snapshot</label>
+	<ymd>${library_ymd}</ymd>
+      </version>
+    </description>
+
+    <download>
+      <format type="tar.gz" name="modxslt-${library_ymd}.tar.gz">
+        <!-- %CHECKSUMS-${library_ymd}% -->
+      </format>
+
+      <format type="online" name="modxslt-${library_ymd}" />
+    </download>
+
+    <update>
+$update
+    </update>
+    <changes>
+EOF
+
+. "$dir_library"/changelog-parse
+
+cat <<EOF
+    </changes>
+  </release>
+EOF

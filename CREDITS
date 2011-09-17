@@ -1,0 +1,65 @@
+  Many people contributed to the development of mod-xslt2
+as it is today. Purpose of this file is to thank those 
+people for the time they spent on mod-xslt2.
+
+  The following people contributed to the rewrite
+of mod-xslt2:
+
+    o  Carlo Contavalli <ccontavalli at mod-xslt2.com>
+    	    Wrote most of the code of the new mod-xslt2 version. The whole 
+	    project to rewrite mod-xslt and most of the features that have 
+	    been added are his ideas.
+    o  Philipp Dunkel <philipp at dunkel.org>
+	    He made available the original codebase. Huge thanks go to him.
+    o  Josh Nutzman - <nutzman at users.sourceforge.net>
+    o  Tom Murray - <yozhik at users.sourceforge.net>
+	    For allowing me to continue their effort for mod-xslt on
+	    sourceforge.net, and for working on a great release of
+	    mod-xslt early in 2001.
+    o  Marco Merlin <mmerlin at masobit.net>
+	    For providing many xslt and xml files to test
+	    mod-xslt2 with and for pointing out many on-the-field
+	    problems. He is also the one who designed the interface
+	    of this web site. Thanks!
+    o  Gianni Carabelli <gcarabelli at masobit.net>
+ 	    For massively testing mod-xslt2 and for pointing out
+	    pieces of broken code in the mime-type handling, PHP 
+	    error handling, cookies & headers management, inclusion 
+	    of external entities and xslt, variables and expressions 
+	    handling. Well, he probably had fun playing with mod-xslt2 :-).
+    o  Andrea Ciancone <aciancone at masobit.net>
+	    Took care of the testing of the first releases,
+	    pointing out some flaws and helping out the design
+	    of new features.
+    o  Riccardo Setti <giskard at autistici.org>
+	    For setting this site up, creating the mailing lists,
+	    for installing mod-xslt2 on many servers, and for pointing
+	    out some problems in the configure script and Makefiles.
+    o  Peter Svanberg <psv at nada.kth.se>
+     	    Provided updated nanohttp patch for libxml 2.6.16
+	    and some useful feedbacks about running mod-xslt on
+	    SunOS.
+    o  The whole Masobit staff - http://www.masobit.net/
+	    For helping me out, for letting me work on this project 
+	    (while I should have been working for their customers) and 
+	    for providing resources to the project.
+
+  The following people were listed in the original mod-xslt
+``THANKS'' file since they contributed to the project 
+by suggesting improvements or by submitting code:
+
+    o  NISHIMURA Hideki <hideki at westvil.net>
+	    Thanks a lot for pointing out some serious flaws. 
+	    (And sending patches. You are a developers dream)
+    o  OLIVEIRA Ricardo <ricardo.oliveira at whatevernet.com>
+    	    For being one of the more sturdy Alpha Testers
+    o  KEW Nick <nick at webthing.com>
+	    For making me conciously justify my design decisions. 
+	    And for stealing some of my code boosting my ego in the 
+	    process ;->
+    o  Ville Skytta <ville.skytta at iki.fi>
+	    For making the build process a lot better (Huge THANKS)
+    o  Gennady Feldman <gena01 at gena01.com>
+	    The one who has provided me with the most patches to date, 
+	    who has extended  functionality, and who has become a 
+	    sourceforge.net project member!!!

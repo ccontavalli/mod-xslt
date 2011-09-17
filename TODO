@@ -1,0 +1,152 @@
+ALL SORTS OF TODO ITEMS
+- c99 strip, has been renamed, and refers to MXSLT_DEBUG.
+  Should update docs and regular expressions.
+- add support to retrieve ENVIRONMENT variables from xslt
+  stylesheet, like HTTP_HOST
+- try to compile on Mac OS X (now I can :)
+- check that mod-xslt works properly with mod-proxy
+- allow mod-xslt to be enabled/disabled based on browsers Accept headers
+- accept parameter parsing. Mail from Tiago.Tuxkiller:
+  <?xsl-stylesheet type="text/xsl" noprocess="no" accept="admin" href="http://teste.com/estilo/fotolog/admin.xsl"?>
+  <?xsl-stylesheet type="text/xsl" noprocess="no" accept="mini" href="http://teste.com/estilo/fotolog/mini.xsl"?>
+  <?xml-stylesheet type="text/xsl" href="http://teste.com/estilo/fotolog/lista.xsl"?>
+  [...]
+  And I can't change between:
+  http://200.222.222.222/html/2007/08/15/13530858.xml
+  and
+  http://200.222.222.222/html/2007/08/15/13530858.xml?admin
+  or
+  http://200.222.222.222/html/2007/08/15/13530858.xml?mini
+- building on gentoo (reported by Bill Farrar <bill.w.farrar at gmail.com>)
+  libtool: compile: unable to infer tagged configuration
+  libtool: compile: specify a tag with `--tag'
+  make[1]: *** [modxslt.lo] Error 1
+  make[1]: Leaving directory
+  `/home/rbrown/Downloads/Tar/modxslt-2005072700/sapi/apache2'
+  make: *** [sapi] Error 2
+  
+  After messing around with this for a while, I turned to the libtool
+  mailing list, who recommended that I edit sapi/apache2/Makefile.in to
+  append --tag=CC to this line:
+
+  [...]
+  modxslt.c  -fPIC -DPIC -o .libs/modxslt.o
+  modxslt.c:23:21: error: sockios.h: No such file or directory
+  modxslt.c: In function 'mxslt_ap2_setanyiplist':
+  modxslt.c:495: error: 'SIOCGIFCONF' undeclared (first use in this function)
+  modxslt.c:495: error: (Each undeclared identifier is reported only once
+  modxslt.c:495: error: for each function it appears in.)
+  modxslt.c:513: error: 'SIOCGIFADDR' undeclared (first use in this function)
+  modxslt.c: At top level:
+  modxslt.c:721: warning: initialization from incompatible pointer type
+  make[1]: *** [modxslt.lo] Error 1
+  make[1]: Leaving directory
+  `/home/rbrown/Downloads/Tar/modxslt-2005072700/sapi/apache2'
+  make: *** [sapi] Error 2
+  
+  I got round this by adding the following to sapi/apache2/modxslt.c:
+
+  #include "/usr/include/linux/sockios.h"
+
+- eval screen and pippo pluto = pluto -> TRUE -> must be FALSE
+- add in the README.Debian file notes on how to setup 
+  modxslt both for apache and apache2
+  
++ mail with latypoff@yandex.ru -- investigate why mod-xslt
+  ignores xsl:output in imported stylesheet while original
+  mod-xslt seemed to work correctly.
++ change variable behavior to simplify escaping ...
++ correct the problems due to the new document extensions
+  (mail of Toby White...) -- set the outputFile libxslt
+  variable -- provide some mechanism for users to 
+  override it -- consider adding a virtual path mechanism,
+  or something like that ...
+- start writing mod-xslt recipes ...
+
+- make mod-xslt variables and parameters ``more'' 
+  accessible (right now, they can only be accessed
+  using mod-xslt own extensions)
+
+SAPI PARAMETERS
+- add XSLTPolicy <display|page|error>, to let user decide
+  what to do with documents without a valid <xml-stylesheet
+- correct If-Modified handling as in mails with Patrick
+  Ben Koetter
+
+LIBRARY
+- !!cleanup the library!!
+- initialize and destroy scanner status
+  only at init time, not every time a string
+  has to be evluated
+- use xmlSAXParseFile instead of other standard
+  functions
+- add XPath _function_ to access mod-xslt variables
+- add XPath _function_ to open up another url
+  (like open, but with the ability to fake being a client
+  and pass over POST parameters and headers)
+- add xml instruction for external elements
+
+  MODXSLT_EXPRESSIONS
+  - = and ==, problem with long numbers and strings 
+  - variables accepted by lex are not the same handled
+    by replace string - and are not the same handled by
+    value-of!!!
+
+SAPI
+- apache 2.0 cacheing 
+- apache 1.3 cacheing
+- wildcards in mime types
+- save xml document from dynamic documents
+  only when an error verifies
+- error output in html documents
+- add some way to load external modules and plugins
+
+CONFIGURE SCRIPT stuff
+- add flag to detect flex and bison
+- check for pcre version
+
+DONE
+* allow disabling signatures at run-time
+D add XSLTLogStylesheet to let user log how a stylesheet
+  was chosen -> this mechanism is beign replaced by a much
+  more powerful mechanism
+* correct local:// url handling under apache2 
+* verify xsl:param usage as mail from Eric Anderson
+* remember to add notes about AddOutputFilterByType,
+  remember to tell giskard ..  (manual done, still
+  need README.Debian)
+* remove \n from debug_print ...
+* modxslt-config, returns garbage when --list is used.
+  Something is wrong somewhere.
+
+* add XSLTForceStylesheet
+* apache 1.3 locking issue
+* verify apache parameters
+* ap_overlay_tables is wrong
+* apache conditional stylesheet
+* apache 2.0 worker 
+* memory leak when calling mxslt_ap2_child_init()
+
+* uhm - very strange ... seems like that accessing
+  a file in a forbidden directory causes strange
+  errors (chmod 2770 /home/projects)
+* build process, update to build library 
+  _and_ binaries
+* in local urls, use subrequests to avoid 
+  denyal of service
+* handle server port in local and http
+  urls!!!!
+* watch out! when making sub requests, switch
+  url parameters to those of the new request!!!
+* note temporary file name
+* delay handling of local urls
+* apache1: lookup ip addresses using ioctl
+* use two hashing tables to keep parameters
+* crash with access denyed
+
+* avoid sapi flags being used for other stuff
+* add pthread detection code in configure.ac
+* add detection code for xsltCopyTextString, available
+  from libxslt 1.0.32 and greater
+* add detection code for interface ioctl
+* add detection code for nano patch in configure.ac

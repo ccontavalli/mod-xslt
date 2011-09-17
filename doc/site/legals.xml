@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<?modxslt-stylesheet type="text/xsl" method="http" href="${xsltRoot}/translator.xsl" 
+	media="screen and ! $GET[format]" alternate="no" title="For any web browser" charset="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" method="http" href="../xslt/docbook.xsl"
+	media="screen" alternate="no" title="For any web browser" charset="ISO-8859-1"?>
+	
+<!--
+   mod-xslt - Copyright (C) 2002, 2003 Carlo Contavalli 
+ 			 <ccontavalli at masobit.net> -->
+
+
+<article xmlns="http://www.masobit.net/ns/sdope/1.0">
+
+<articleinfo>
+  <title>About this site</title>  
+  <author>
+    <firstname>Carlo</firstname>
+    <surname>Contavalli</surname>
+    <affiliation>
+      <address>
+        <email>ccontavalli at masobit.net</email>
+      </address>
+    </affiliation>
+  </author> 
+
+<!--  <abstract><para>
+....................
+  </para></abstract> -->
+</articleinfo>
+
+  <para>  
+  Unless otherwise specified, permission is granted to copy, distribute 
+  and or modify a copy of every document or page provided on this internet 
+  site under the terms of the GNU Free Documentation License, Version 1.1 or
+  any later version published by the Free Software Foundation; with no
+  Invariant Sections, no Front-Cover Texts and no Back-Cover Texts.
+  </para>
+
+  <para>
+  Any program code, source code or software provided on this site or in any
+  document available on this site, unless otherwise specified, should be
+  considered free software. You can redistribute it and/or modify it under
+  the terms of the GNU General Public License as published by the Free Software
+  Foundation; either version 2 of the License, or (at your option) any
+  later version.
+  </para>
+
+  <para>
+  Everything provided on this site is distributed in the hope that it will
+  be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+  Public License for more details.
+  </para>
+
+  <para>
+  A copy of the GNU General Public License can be found following this
+  link; if not, write to the Free Software Foundation, Inc., 675 Mass Ave,
+  Cambridge, MA 02139, USA or contact &lt;ccontavalli at masobit.net&gt;.
+  </para>
+</article>	

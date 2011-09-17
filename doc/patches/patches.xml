@@ -1,0 +1,215 @@
+<!DOCTYPE Article PUBLIC "-//Davenport//DTD DocBook V3.0//EN">
+
+<Article>
+
+<ArtHeader>
+
+<Title>Patches for libxslt/libxml</Title>
+<AUTHOR>
+  <FirstName>Carlo Contavalli</FirstName>
+</AUTHOR>
+
+<Abstract>
+<Para>
+This document describes a couple patches to apply to libxml and libxslt that could be useful to improve mod-xslt2 overall
+performance and reliability, even if their absence does not compromise mod-xslt2 usability.
+</Para>
+
+</Abstract>
+
+</ArtHeader>
+
+<Sect1>
+<Title>License and Copyright</Title>
+<Para>
+This document is Copyright (C), Carlo Contavalli 2002-2008.
+</Para>
+
+<Para>
+Permission is granted to copy, distribute and/or modify this document under the
+terms of the GNU Free Documentation License, Version 1.1 or any later version
+published by the Free Software Foundation; with no Invariant Sections, no
+Front-Cover Texts, and no Back-Cover Texts. A copy of this license
+can be found at http://www.commedia.it/ccontavalli/license/FDL/en/index.html.
+</Para>
+</Sect1>
+
+<Sect1>
+<Title>libxml - libxml.setglobalstate.diff</Title>
+
+<Para>
+The setglobalstate patch allows an application
+to make use of the internal ``xmlGetGlobalState''
+function provided by libxml2 and adds 
+and adds a ``xmlSetGlobalState''.
+</Para>
+
+<Para>
+libxml makes use of many global variables kept
+in a task specific area (when multithreading
+is enabled) to avoid race conditions with other
+threads. However, this is not enough for mod-xslt:
+many apache modules share the same thread of execution
+and thus share the same ``task specific'' libxml
+data. To avoid interactions with other modules
+using libxml, mod-xslt saves the global execution
+state and restore it for each processed request.
+The process of ``storing'' and ``restoring'' is
+in facts a ``copy'' of a memory area (using memcpy).
+However, libxml internally uses a much more efficient
+mechanism that would allow mod-xslt to ``store'' and
+``restore'' a single pointer on most POSIX systems (using
+POSIX threads).
+</Para>
+
+<Para>
+The highlited patch allows an application (like mod-xslt) 
+to make use of those functions improving overall performance.
+</Para>
+
+<Para>
+The patch is automatically detected by mod-xslt ``configure''
+and should not cause any harm to other applications.
+</Para>
+
+</Sect1>
+
+<Sect1>
+<Title>libxslt - libxslt.genericerror.diff</Title>
+
+<Para>
+Internally, libxslt calls ``xsltGenericError'' to 
+signal an error to the application making use of the
+library.
+</Para>
+
+<Para>
+However, sometimes, ``xsltGenericError'' gets called
+by libxslt with the arguments of the function 
+``xsltGenericDebug'' instead of its own, causing
+a SEGFAULT in mod-xslt (which doesn't expect
+the wrong arguments to be passed - it would cause
+a SEGFAULT on most applications).
+</Para>
+
+<Para>
+Those ``xsltGenericError'' calls should never be
+reached in the normal path of execution of the library
+and of an application. However, it came out that they
+are sometimes reached, usually due to bugs in libxml2
+or in the xslt handlers set by mod-xslt (quite unlikely :).
+</Para>
+
+<Para>
+A sort of harmless ``parachute'' has been employed in
+mod-xslt to detect this situation <Emphasis remap="bf">most</Emphasis> of the
+times. However, this mechanism doesn't guarantee
+the error will be avoided <Emphasis remap="bf">all</Emphasis> the times.
+</Para>
+
+<Para>
+To completely avoid this problem, you should patch the
+library with the provided .diff (or use the configure
+parameter described below).
+</Para>
+
+<Para>
+The patch was created by running something like:
+
+<Screen>
+find . -type f -name '*.c' |xargs perl -pi -e \
+'s/xsltGenericError\(xsltGenericDebugContext/xsltGenericError\(xsltGenericErrorContext/'
+</Screen>
+
+from the libxslt source tree.
+</Para>
+
+<Sect2>
+<Title>configure - --enable-libxslt-hack</Title>
+
+<Para>
+Another solution to patching the library
+is to use ``--enable-libxslt-hack''. Enabling
+this option to configure, mod-xslt will be
+configured to setup a fake ``debug'' error
+function, which uses the same parameters
+as the standard error functions.
+</Para>
+
+<Para>
+That way, the problem is completely avoided
+without needing any further action.
+</Para>
+
+<Para>
+Note, however, that by enabling this option
+you enable libxslt debugging facilities,
+which may potentially slow down the parsing.
+</Para>
+
+</Sect2>
+
+</Sect1>
+
+<Sect1>
+<Title>libxslt - libxslt.fallback.diff</Title>
+
+<Para>
+During debugging, it came out that most
+of those errors that used the wrong ``arguments''
+were triggered by placing a ``&lt;fallback&gt;''
+tag in the wrong position.
+</Para>
+
+<Para>
+When such a tag is found, ``libxslt'' will 
+print an error message due to the fact it
+reaches an unexpected position in the code.
+</Para>
+
+<Para>
+However, if you use extension tags provided
+by mod-xslt and the fallback handler, you will
+see quite a bounce of these errors. If the
+library was not patched with libxslt.genericerror.diff
+or mod-xslt not compiled with ``--enable-libxslt-hack'',
+then each of these error would cause a SEGFAULT
+(however, this is not my fault), otherwise, an annoying
+warning is outputted in the logs.
+</Para>
+
+<Para>
+To avoid this warning filling the logs, you can
+apply libxslt.fallback.diff, which, conforming
+with ``REC-xslt-19991116.html&num;fallback'' will make
+libxslt ignore the presence of such a tag.
+</Para>
+
+<Sect2>
+<Title>configure - --enable-fallback-wraparound</Title>
+
+<Para>
+Another solution to patching the library is to
+compile mod-xslt passing ``--enable-fallback-wraparound''
+as an argument to configure.
+</Para>
+
+<Para>
+Enabling this option will cause some more code
+to be compiled in mod-xslt. This code will take care
+of ``stripping down'' the &lt;fallback tags from ``legal''
+positions made illegal by mod-xslt usage of the library.
+</Para>
+
+<Para>
+Eg, the patch solves the problem once and forever.
+This option solves the problem when it is triggered
+by mod-xslt, which means every time a &lt;fallback
+tag is found inside a mod-xslt extension tag.
+</Para>
+
+</Sect2>
+
+</Sect1>
+
+</Article>

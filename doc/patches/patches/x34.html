@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>libxslt - libxslt.fallback.diff</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="Patches for libxslt/libxml"
+HREF="index.html"><LINK
+REL="PREVIOUS"
+TITLE="libxslt - libxslt.genericerror.diff"
+HREF="x18.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>Patches for libxslt/libxml</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="x18.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+>&nbsp;</TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN34"
+>4. libxslt - libxslt.fallback.diff</A
+></H1
+><P
+>During debugging, it came out that most
+of those errors that used the wrong ``arguments''
+were triggered by placing a ``&lt;fallback&gt;''
+tag in the wrong position.</P
+><P
+>When such a tag is found, ``libxslt'' will 
+print an error message due to the fact it
+reaches an unexpected position in the code.</P
+><P
+>However, if you use extension tags provided
+by mod-xslt and the fallback handler, you will
+see quite a bounce of these errors. If the
+library was not patched with libxslt.genericerror.diff
+or mod-xslt not compiled with ``--enable-libxslt-hack'',
+then each of these error would cause a SEGFAULT
+(however, this is not my fault), otherwise, an annoying
+warning is outputted in the logs.</P
+><P
+>To avoid this warning filling the logs, you can
+apply libxslt.fallback.diff, which, conforming
+with ``REC-xslt-19991116.html&num;fallback'' will make
+libxslt ignore the presence of such a tag.</P
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN40"
+>4.1. configure - --enable-fallback-wraparound</A
+></H2
+><P
+>Another solution to patching the library is to
+compile mod-xslt passing ``--enable-fallback-wraparound''
+as an argument to configure.</P
+><P
+>Enabling this option will cause some more code
+to be compiled in mod-xslt. This code will take care
+of ``stripping down'' the &lt;fallback tags from ``legal''
+positions made illegal by mod-xslt usage of the library.</P
+><P
+>Eg, the patch solves the problem once and forever.
+This option solves the problem when it is triggered
+by mod-xslt, which means every time a &lt;fallback
+tag is found inside a mod-xslt extension tag.</P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="x18.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>&nbsp;</TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>libxslt - libxslt.genericerror.diff</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>&nbsp;</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

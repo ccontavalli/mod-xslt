@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<?modxslt-stylesheet type="text/xsl" method="http" href="${xsltRoot}/translator.xsl" 
+	media="screen and ! $GET[format]" alternate="no" title="For any web browser" charset="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" method="http" href="xslt/sdope/docbook.xsl"
+	media="screen" alternate="no" title="For any web browser" charset="ISO-8859-1"?>
+	
+<!--
+   mod-xslt - Copyright (C) 2002, 2003 Carlo Contavalli 
+ 			 <ccontavalli at masobit.net> -->
+
+
+<article xmlns="http://www.masobit.net/ns/sdope/1.0">
+
+  <articleinfo>
+    <title>Accessing <bf>mod-xslt</bf> CVS</title>  
+
+  <author>
+    <firstname>Carlo</firstname>
+    <surname>Contavalli</surname>
+    <affiliation>
+      <address>
+        <email>ccontavalli at masobit.net</email>
+      </address>
+    </affiliation>
+  </author> 
+
+  <abstract><para>
+  Work on mod-xslt is coordinated among developers using TLA,
+  based on <ulink url="http://www.gnuarch.org">GNUArch</ulink>, 
+  a nice alternative to CVS. TLA allows many developers
+  to work together on the same code solving most of the conflicts
+  and avoiding most of the dangerous conditions. Anyone is
+  allowed read only access to mod-xslt TLA archives using the 
+  parameters provided below.
+  </para></abstract> 
+  </articleinfo>
+
+  <para>                                                 
+    mod-xslt TLA read-only archives are made available using http.
+    To access the TLA archives, you need to:
+    <itemizedlist>
+      <listitem><bf>have tla installed</bf> on your
+        system. You can download tla (gnuarch) from
+	<ulink url="http://www.gnu.org/software/gnu-arch/">
+	the GNU home page</ulink>.
+	</listitem>
+      <listitem><bf>register</bf> the archive:
+<screen width="30"><userinput>
+tla register-archive tla(at)ml.masobit.net--2004-public \
+	http://www.mod-xslt2.com/tla/</userinput></screen>
+        Please, remember to replace the '(at)' with the '@'! I
+	already receive enough spam...
+      </listitem>
+      <listitem><bf>fetch the sources</bf> using the command:
+<screen width="30"><userinput>
+tla get -A tla(at)ml.masobit.net--2004-public \
+	modxslt2--main</userinput></screen>
+	You can also fetch stable releases using ``modxslt2--stable''
+	instead.
+      </listitem>
+      <listitem>
+        To compile the sources you just downloaded, keep in mind you need to:
+	<itemizedlist>
+	  <listitem>have the latest version of autoconf, autotools, automake and libtool
+	  	installed on your system</listitem>
+	  <listitem>generate a ``configure'' script, using the script ``<it>tools/release</it>''</listitem>
+	  <listitem>have the latest version of bison and flex installed
+	  	(the parsers are usually made available ``precompiled'' in the tarball)</listitem>
+	</itemizedlist>
+      </listitem>
+    </itemizedlist>
+  </para> 
+
+  <para>
+    Note that you can also access the sources using the 
+ <ulink url="http://www.mod-xslt2.com/cgi-bin/archzoom.cgi/tla@ml.masobit.net--2004-public/modxslt2">web interface</ulink> 
+ or by accessing directly <ulink url="http://www.mod-xslt2.com/tla/">the online repository</ulink>.
+  </para>
+  <para>
+  You should use TLA sources every time you want to add features to mod-xslt or 
+  to work on its code. Patches or contributes are more than welcome, just post them 
+  to the dev mailing list. However, if you are planning to add major features or to 
+  make significant changes to the sources, please post a message to the mailing list 
+  <bf>before</bf> starting your work. This will help us in:
+  <itemizedlist>
+    <listitem>avoiding to duplicate the efforts (maybe someone is already
+    	working on the changes you are planning)</listitem>
+    <listitem>avoiding to create incompatible changes (maybe someoune is working
+    	on something that will break the code you are writing)</listitem>
+    <listitem>plan for future releases</listitem>
+  </itemizedlist>
+  We are usually <bf>happy</bf> to hear from our users or future developers,
+  to get souggestions, pieces of code or help offers. So, don't be scared!
+  Just mail us. 
+  </para>
+</article>	

@@ -1,0 +1,36 @@
+*** include/libxml/nanohttp.h.ORIG      Mon Sep 20 22:01:05 2004
+--- include/libxml/nanohttp.h   Mon Mar  7 14:16:04 2005
+***************
+*** 15,20 ****
+--- 15,44 ----
+
+  #ifdef LIBXML_HTTP_ENABLED
+
++ typedef struct xmlNanoHTTPCtxt {
++     char *protocol;   /* the protocol name */
++     char *hostname;   /* the host name */
++     int port;         /* the port */
++     char *path;               /* the path within the URL */
++     SOCKET fd;                /* the file descriptor for the socket */
++     int state;                /* WRITE / READ / CLOSED */
++     char *out;                /* buffer sent (zero terminated) */
++     char *outptr;     /* index within the buffer sent */
++     char *in;         /* the receiving buffer */
++     char *content;    /* the start of the content */
++     char *inptr;      /* the next byte to read from network */
++     char *inrptr;     /* the next byte to give back to the client */
++     int inlen;                /* len of the input buffer */
++     int last;         /* return code for last operation */
++     int returnValue;  /* the protocol return value */
++     int ContentLength;  /* specified content length from HTTP header */
++     char *contentType;        /* the MIME type for the input */
++     char *location;   /* the new URL in case of redirect */
++     char *authHeader; /* contents of {WWW,Proxy}-Authenticate header */
++     char *encoding;   /* encoding extracted from the contentType */
++     char *mimeType;   /* Mime-Type extracted from the contentType */
++ } xmlNanoHTTPCtxt, *xmlNanoHTTPCtxtPtr;
++
+  #ifdef __cplusplus
+  extern "C" {
+  #endif
+

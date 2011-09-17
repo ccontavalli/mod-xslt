@@ -1,0 +1,236 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+
+<refentry>
+  <refentryinfo>
+    <address>
+      <email>ccontavalli at inscatolati.net</email>
+    </address>
+    <author>
+      <firstname>Carlo</firstname>
+      <surname>Contavalli</surname>
+      <email>ccontavalli at inscatolati.net</email>
+    </author>
+    <copyright>
+      <year>2002-2008</year>
+      <holder>Carlo Contavalli</holder>
+    </copyright>
+    <date>September 6, 2004</date>
+  </refentryinfo>
+
+  <refmeta>
+    <refentrytitle>modxslt-config</refentrytitle>
+    <manvolnum>1</manvolnum>
+  </refmeta>
+
+  <refnamediv>
+    <refname>modxslt-config</refname>
+    <refpurpose>program to return libmodxslt configuration</refpurpose>
+  </refnamediv>
+
+  <refsynopsisdiv>
+    <cmdsynopsis>
+      <command>modxslt-config</command>
+
+      <arg><option>--prefix</option></arg>
+      <arg><option>--exec-prefix</option></arg>
+      <arg><option>--libs</option></arg>
+      <arg><option>--libtool-libs</option></arg>
+      <arg><option>--includes</option></arg>
+      <arg><option>--cppflags</option></arg>
+      <arg><option>--cflags</option></arg>
+      <arg><option>--list</option></arg>
+      <arg><option>--query=<replaceable>VAR</replaceable></option></arg>
+      <arg><option>--show=<replaceable>VAR</replaceable></option></arg>
+      <arg><option>--version</option></arg>
+    </cmdsynopsis>
+  </refsynopsisdiv>
+
+  <refsect1>
+    <title>DESCRIPTION</title>
+
+    <para><command>modxslt-config</command> can be used to query the status
+      of an installed libmodxslt and to access its compile time parameters/options.</para>
+
+    <para>The main idea behind <command>modxslt-config</command> (or any other
+      foo-config) is to provide an easy way for configre scripts and makefiles
+      to use a given library. The configure script of a package using libmodxslt
+      should try to search for <command>modxslt-config</command>, while the makefiles
+      will try to compile the package using the variables found using the 
+      <command>modxslt-config</command> command.</para>
+  </refsect1>
+
+  <refsect1>
+    <title>OPTIONS</title>
+
+    <variablelist>
+      <varlistentry>
+        <term>
+          <option>--prefix</option>
+        </term>
+
+        <listitem>
+          <para>Returns libmodxslt install prefix, as specified to the configure script</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>
+          <option>--exec-prefix</option>
+        </term>
+
+        <listitem>
+          <para>Returns libmodxslt install exec-prefix, as specified to the configure script</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>
+          <option>--libs</option>
+        </term>
+
+        <listitem>
+          <para>Returns the parameters to be used with <command>ld</command> to link your binaries with libmodxslt</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>
+          <option>--libtool-libs</option>
+        </term>
+
+        <listitem>
+          <para>Returns the parameters to be used with <command>libtool</command> to link your binaries with libmodxslt</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>
+          <option>--includes</option>
+        </term>
+
+        <listitem>
+          <para>Returns the parameters to be used with <command>cc</command> to allow your .c files 
+	  	to include libmodxslt headers</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>
+          <option>--cppflags</option>
+        </term>
+
+        <listitem>
+          <para>Returns the parameters to be used with <command>cpp</command> (the c preprocessor) 
+	        to succesfully compile your .c files using libmodxslt headers</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>
+          <option>--cflags</option>
+        </term>
+
+        <listitem>
+          <para>Returns the parameters specified to <command>cc</command> during libmodxslt
+	        compilation</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>
+          <option>--list</option>
+        </term>
+
+        <listitem>
+          <para><command>modxslt-config</command> allows you to access any other variable
+	  	specified or detected by the libmodxslt configure script. This options lists
+		all known varaibles and their raw values (with shell variables not substituted)</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>
+          <option>--query=<replaceable>VAR</replaceable></option>
+        </term>
+
+        <listitem>
+          <para>shows the value of variable <replaceable>VAR</replaceable>,
+	  	expanding any shell variables therein</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>
+          <option>--show=<replaceable>VAR</replaceable></option>
+        </term>
+
+        <listitem>
+          <para>same as <option>--query</option>, but shell
+	        variables are not expanded</para>
+        </listitem>
+      </varlistentry>
+
+
+      <varlistentry>
+        <term>
+          <option>--version</option>
+        </term>
+        <listitem>
+          <para>Show version of libmodxslt installed on this system</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+
+    <para>
+      If called without parameters, the help screen is displayed. More than
+      one parameter can be specified at the same time. 
+    </para>
+  </refsect1>
+  
+  <refsect1>
+    <title>EXAMPLES</title>
+<literallayout>
+<prompt>$</prompt> <userinput>modxslt-config --query=sysconfdir</userinput>
+/usr/local/etc
+<prompt>$</prompt> <userinput>modxslt-config --show=sysconfdir</userinput>
+${prefix}/etc
+<prompt>$</prompt> <userinput>modxslt-config --prefix</userinput>
+/usr/local
+<prompt>$</prompt> <userinput>modxslt-config --cflags</userinput>
+-g -O2 -D_REENTRANT
+<prompt>$</prompt> <userinput>cc `modxslt-config --includes` `modxslt-config --libs` \
+  `modxslt-config --cppflags` myownprogram.c -o myownprogram</userinput>
+</literallayout>
+  </refsect1>
+
+  <refsect1>
+    <title>RETURN VALUES</title>
+
+    <para><command>modxslt-config</command> exits with status 1 in case
+      no argument was supplied and the help screen was displayed. Status
+      2 is returned whenever an argument wich does not need any additional
+      parameter is encountered with an unnecessary parameter (like --prefix=fuffa).
+      Status 3 is returned when an argument which needs an additional parameter
+      is encountered without the needed parameter (like --query), while
+      4 is returned when an unknown argument is specified. Any other
+      exit status should be interpreted accordingly to the shell being used.</para>
+  </refsect1>
+
+  <refsect1>
+    <title>SEE ALSO</title>
+
+    <para>modxslt-perror(1), modxslt-parse(1), modxslt manual, http://www.modxslt2.com</para>
+  </refsect1>
+
+  <refsect1>
+    <title>LICENSE</title>
+
+    <para>This manual page was written by Carlo Contavalli <email>ccontavalli at inscatolati.net</email>.
+      Permission is granted to copy, distribute and/or modify this document under
+      the terms of the GNU General Public License, Version 2 any 
+	  later version published by the Free Software Foundation.
+    </para>
+  </refsect1>
+</refentry>

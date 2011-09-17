@@ -1,0 +1,93 @@
+Condizioni in cui si verifica un loop
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Una richiesta soddisfatta e` composta da
+  - un file .xml
+  - un file .xsl
+
+
+Fetching xml file
+^^^^^^^^^^^^^^^^^^
+The xml file is fetched using (almost) the
+standard apache procedure (a subrequest
+is made). Can a loop verify?
+
+  fixup decides we must handle the request when:
+      - the engine is on  _AND_
+      - mime type is one of those indicated 
+    handler is set to `mod-xslt-*'
+
+  (std|dyn)_handler is called (we consider dyn handler)
+    dyn_handler makes a sub request 
+    fixup is called again, but refuses to
+      process the request since it is not
+      a main request (r->main is set), so,
+      the processing goes on normally
+   Now, the xml file has been fetched!
+
+
+Fetching xslt file
+^^^^^^^^^^^^^^^^^^
+   - file_parse is called, and we try to
+     understand which is the xsl we must load
+
+   - the url of the xsl we need to load can 
+     either be:
+	- a file:// url
+	- a http:// url
+
+   - if the url is a file, the url is read
+     directly by the library (mmap or open(2))
+     (so, no risk for loops)
+
+   - otherwise, the url must be fetched  
+
+
+Fetching urls without subrequests
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   - the request for a url can be
+   	- ``local''
+	- ``remote''
+
+   - a storm of requests to xml files
+     that require to fetch a local url
+     may cause a deadlock!
+     (only definitive solution: avoid
+      using another child to process the 
+      request - or reserve some children
+      to process requests)
+
+   - a local url which is again an xml
+     file, will cause the process to
+     start again (to parse the new xml 
+     file), this is not bad, as long as
+     loops do not create. 
+     (solutions: do not process url
+      sub-requests - add some code 
+      to detect loop urls - use either:
+      header tagging or hashing table -
+      hashing table must be kept in a tsd)
+     (header: a header like 
+       X-Mod-Xslt: uid is placed in
+       each sub request. When we get
+       a request with such a header,
+       it is returned raw - to avoid
+       security problems, we may add
+       a md5 of the url plus a secret
+       random key)
+      (header does not work: it doesn't
+       tell us which document has already
+       been requested, and survives only
+       one request (it is not carried over))
+
+     - autolearning of ip addresses
+     - shared hashing tables with carried on ``cookies''
+     - local sub requests 
+
+   - a redirect may cause a loop 
+
+ * * * * * * * * * * * * * * * * * *
+(file.xml -> local://fuffa.php)
+(fuffa.php -> http://pappa.php) - HEADERS OUT
+
+(http://pappa.php -> http(back)://file.xml) - HEADERS OUT
+

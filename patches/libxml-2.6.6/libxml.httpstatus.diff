@@ -1,0 +1,80 @@
+*** nanohttp.c.ORIG     Wed Oct 27 11:42:38 2004
+--- nanohttp.c  Mon Mar  7 14:11:50 2005
+***************
+*** 82,87 ****
+--- 82,90 ----
+  #define SOCKLEN_T unsigned int
+  #endif
+
++ #ifndef SOCKET
++ #define SOCKET int
++ #endif
+
+  #include <libxml/globals.h>
+  #include <libxml/xmlerror.h>
+***************
+*** 110,118 ****
+  #ifndef SOCKLEN_T
+  #define SOCKLEN_T unsigned int
+  #endif
+- #ifndef SOCKET
+- #define SOCKET int
+- #endif
+
+  #ifdef STANDALONE
+  #define DEBUG_HTTP
+--- 113,118 ----
+***************
+*** 129,158 ****
+  #define XML_NANO_HTTP_READ    2
+  #define XML_NANO_HTTP_NONE    4
+
+- typedef struct xmlNanoHTTPCtxt {
+-     char *protocol;   /* the protocol name */
+-     char *hostname;   /* the host name */
+-     int port;         /* the port */
+-     char *path;               /* the path within the URL */
+-     SOCKET fd;                /* the file descriptor for the socket */
+-     int state;                /* WRITE / READ / CLOSED */
+-     char *out;                /* buffer sent (zero terminated) */
+-     char *outptr;     /* index within the buffer sent */
+-     char *in;         /* the receiving buffer */
+-     char *content;    /* the start of the content */
+-     char *inptr;      /* the next byte to read from network */
+-     char *inrptr;     /* the next byte to give back to the client */
+-     int inlen;                /* len of the input buffer */
+-     int last;         /* return code for last operation */
+-     int returnValue;  /* the protocol return value */
+-     int ContentLength;  /* specified content length from HTTP header */
+-     char *contentType;        /* the MIME type for the input */
+-     char *location;   /* the new URL in case of redirect */
+-     char *authHeader; /* contents of {WWW,Proxy}-Authenticate header */
+-     char *encoding;   /* encoding extracted from the contentType */
+-     char *mimeType;   /* Mime-Type extracted from the contentType */
+- } xmlNanoHTTPCtxt, *xmlNanoHTTPCtxtPtr;
+-
+ static int initialized = 0;
+ static char *proxy = NULL;     /* the proxy name if any */
+ static int proxyPort; /* the proxy port if any */
+--- 129,134 ----
+*** nanohttp.c.~3~      Mon Mar  7 14:11:50 2005
+--- nanohttp.c  Thu Mar 17 13:33:35 2005
+***************
+*** 1453,1458 ****
+--- 1453,1467 ----
+       return(NULL);
+     }
+
++     if(ctxt->returnValue != 200) {
++ #ifdef DEBUG_HTTP
++       xmlGenericError(xmlGenericErrorContext,
++               "xmlNanoHTTPMethodRedir: Skipping document, since status != 200 (%d)...\n", c txt->returnValue);
++ #endif
++       xmlNanoHTTPFreeCtxt(ctxt);
++       return NULL;
++     }
++
+     if (contentType != NULL) {
+       if (ctxt->contentType != NULL)
+           *contentType = xmlMemStrdup(ctxt->contentType);
+

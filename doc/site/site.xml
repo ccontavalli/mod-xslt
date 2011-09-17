@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<?modxslt-stylesheet type="text/xsl" method="http" 
+	href="${xsltRoot}/translator.xsl" 
+	media="screen and ! $GET[format]" 
+	alternate="no" title="For any web browser" 
+	charset="ISO-8859-1"?>
+
+<?xml-stylesheet 
+	type="text/xsl" 
+	method="http" 
+	href="xslt/sdope/docbook.xsl"
+	media="screen" alternate="no" 
+	title="Per l'utibrowser" charset="ISO-8859-1"?>
+	
+<!--
+   mod-xslt - Copyright (C) 2002, 2003 Carlo Contavalli 
+ 			 <ccontavalli at masobit.net> -->
+
+
+<article xmlns="http://www.masobit.net/ns/sdope/1.0">
+  <articleinfo>
+    <title>About this site</title>  
+
+  <author>
+    <firstname>Carlo</firstname>
+    <surname>Contavalli</surname>
+    <affiliation>
+      <address>
+        <email>ccontavalli at masobit.net</email>
+      </address>
+    </affiliation>
+  </author> 
+
+<!--  <abstract><para>
+....................
+  </para></abstract> -->
+  </articleinfo>
+
+  <para>                                                 
+    This whole site is a proof of concept of mod-xslt usage.
+    It was written entirely in .xml + .xsl by using mod-xslt 
+    features. 
+  </para> 
+
+  <para>
+    In the future, we would like to release the .xml and .xsl
+    files we used as a generalized way to build up internet
+    sites, as a raw and simple version of a Content Management
+    System. 
+  </para>
+
+  <para>
+    However, lot of works still needs to be done, both to cleanup 
+    the code, to make it easyer to customize
+    and to add support for more features (like php scripts to modify
+    the layout of menus and boxes). If you like it and would like to 
+    help us out, just let us know (write to the mailing lists or contact
+    one of the authors, either Marco Merlin or Carlo Contavalli).
+  </para>
+
+  <para>
+    All the .xsl files and .xml files are released under GPL, so,
+    if you want to test them out or take a look at them before
+    they are released, drop us a mail. They will be made available
+    on this site as soon as they are completed.
+  </para>
+
+  <para>
+    At time of writing, the stylesheets we wrote have been used
+    for a couple other sites:
+  </para>
+  <para>
+    <itemizedlist>
+    <listitem><bf><ulink url="http://www.masobit.net" /></bf><para>Masobit Corp SRL</para></listitem>
+    <listitem><bf><ulink url="http://www.mod-xslt2.com" /></bf><para>mod-xslt2 web site</para></listitem>
+    <listitem><bf><ulink url="http://www.pigeonair.net" /></bf><para>Pigeonair Mail System</para></listitem>
+    </itemizedlist>
+    If you want to use them for your own site, or you want your site
+    to be listed here, just let us know.
+  </para>
+</article>	

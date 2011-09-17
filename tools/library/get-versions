@@ -1,0 +1,14 @@
+#!/bin/sh
+
+test -n "$prj_configac" || {
+  echo 1>&2 "missing prj_configac variable"
+  exit 1
+}
+
+test -n "$prj_configure" || {
+  echo 1>&2 "missing prj_configure variable"
+  exit 1
+}
+
+test ! -f "$prj_configac" || lib_version_configac=`grep AC_INIT < "$prj_configac" |sed -e 's@[^,]*,[^0-9]*@@' -e 's@,.*@@'`
+test ! -f "$prj_configure" || lib_version_configure=`grep '^PACKAGE_VERSION' < "$prj_configure" |sed -e "s/[^']*'//" -e "s/'.*//;q"`

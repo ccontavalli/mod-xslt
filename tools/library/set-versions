@@ -1,0 +1,13 @@
+#!/bin/sh
+
+test -n "$library_version_configac" || {
+  echo "internal: library_version_configac not set" 1>&2
+  exit 1
+}
+
+test -n "$prj_configac" || {
+  echo "internal: missing prj_configac" 1>&2 
+  exit 1
+}
+
+sed -i "s/AC_INIT(\([^,]*\), [^,]*, \([^,]*\), \([^,]*\))/AC_INIT(\1, ${library_version_configac}, \2, \3)/g" $prj_configac	

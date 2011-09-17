@@ -1,0 +1,23 @@
+  o  Coeherent behavior among different web servers,
+     with great care to multithreading issues
+  o  Allows you, from your xml documents, to choose
+     which xslt to use based on get parameters or
+     any header passed from the browser
+  o  Good conformance with xslt specifications
+     relatively to: escaping attributes, interpretation
+     of xml-stylesheet PI, DTD interpretation
+  o  DTD and external entity are loaded and used
+     as specifyed by the ``standalone'' attribute
+  o  DTD, xslt or any external entity can:
+  	o  be fetched from a remote url
+	o  be fetched from a file
+	o  be fetched from a file like if
+	   it was an URL
+     This latest feature allows you to write
+     php or cgi scripts able to provide both
+     DTDs or xslt stylesheets
+  o  Any header or get data is passed over
+     to the xslt as parameters
+  o  Ability to parse dinamically generated
+     documents with the lowest overhead 
+     possible

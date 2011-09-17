@@ -1,0 +1,32 @@
+#!/bin/sh
+
+dir_library="tools/library"
+dir_mirror="../http"
+dir_data="tools/data"
+dir_repository="${dir_mirror}/http/software/archive"
+dir_changelog="${dir_mirror}/http/software"
+
+file_snapshots="snapshots.xml"
+file_releases="releases.xml"
+file_changes="Changes"
+file_update="Update"
+
+prj_name="modxslt"
+prj_configac="./configure.ac"
+prj_configure="./configure"
+
+cmd_tla="tla"
+cmd_sign="cc-gpg-sign"
+
+tla_archive="tla@ml.masobit.net--2004-public"
+tla_brench_stable="modxslt2--stable--1.3"
+tla_brench_current="modxslt2--main--1.3"
+tla_brench_stable_version=`echo $tla_brench_stable |sed -e 's/^.*--.*--\(.*\)$/\1/'`
+
+tla_brench_release="cat {arch}/++default-version"
+
+tla_last_release_file="./tools/data/LAST_RELEASE"
+tla_last_snapshot_file="./tools/data/LAST_SNAPSHOT"
+
+prj_last_release="`cat $tla_last_release_file`"
+prj_last_snapshot="`cat $tla_last_snapshot_file`"

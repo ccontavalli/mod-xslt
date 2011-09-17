@@ -1,0 +1,184 @@
+#! /bin/bash
+# @configure_input@
+
+#   mod-xslt -- Copyright (C) 2002-2008 
+# 		 Carlo Contavalli 
+# 		 <ccontavalli at inscatolati.net>
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+#  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+
+set -e 
+
+prefix="@prefix@"
+exec_prefix="@exec_prefix@"
+
+_acrt_srcdir=@srcdir@
+_acrt_abs_srcdir=@abs_srcdir@
+_acrt_top_srcdir=@top_srcdir@
+_acrt_abs_top_srcdir=@abs_top_srcdir@
+
+_acrt_builddir=@builddir@
+_acrt_abs_builddir=@abs_builddir@
+_acrt_top_builddir=@top_builddir@
+_acrt_abs_top_builddir=@abs_top_builddir@
+
+# Do NOT remove the following comment!
+#%{AUTOCONF_VARS}%#
+
+package_name="modxslt"
+_rt_libs="-L@libdir@ -l${package_name}@LIB_VERSION@"
+_rt_libtool_libs="@libdir@/lib${package_name}@LIB_VERSION@.la"
+_rt_includes="-I@includedir@"
+_rt_cppflags="@CPPFLAGS@"
+_rt_cflags="@CFLAGS@"
+
+usage="\
+Usage: ${package_name}-config [OPTIONS]
+Available OPTIONS:
+  --prefix	 lib${package_name} install prefix (as specified to configure) 
+  --exec-prefix  lib${package_name} install exec_prefix (as specified to configure)
+
+  --libs	 parameters for ld to link against lib${package_name}
+  --libtool-libs parameters for libtool to link against lib${package_name}
+  --includes	 parameters for cc to use lib${package_name} headers
+
+  --cppflags	 flags to pass over to the c preprocessor to use lib${package_name}
+  --cflags 	 flags to pass over cc to correctly compile using lib${package_name}
+
+  --list	 lists all variables known to ${package_name}-config
+  --query=[VAR]	 shows the value of the variable VAR. Shell variables 
+                 are expanded 
+  --show=[VAR]	 shows the value of the variable VAR. Shell variables 
+  		 are _not_ expanded
+
+  --version	 shows lib${package_name} version
+
+  If more than one option is specified on the command line, the name
+of the parameter being printed is prepended to its output. 
+  Exit status:
+        1 - No arguments - help screen was displayed
+	2 - An argument which does not need any additional argument was
+	    encountered with an argument (like --prefix=fuffa)
+	3 - An argument which needs an additional argument was encountered
+	    without it (like --query --prefix)
+	4 - An unknown argument was specified
+  Any other exit value should be interpreted accordingly to the shell
+being used and to the command that failed."
+
+  # Check if at least one parameter
+  # was specified
+if test $# -eq 0; then
+  echo "${usage}"
+  exit 1
+fi
+
+if test "$#" -gt 1; then
+  _rt_output_name="yes"
+fi
+
+while test $# -gt 0; do
+   # Get any optional argument passed over
+   # to the parameter
+  case "$1" in
+    -*=*)
+      optarg=`echo "$1"|sed 's/[a-zA-Z0-9_-]*=//'`
+     ;;
+
+    *)
+      optarg=""
+     ;;
+  esac
+
+    # Output parameter name if necessary
+  if test "x$_rt_output_name" = "xyes"; then
+    echo "$1:"
+  fi
+
+    # Output parameter value 
+  case "$1" in
+    --prefix)
+      echo "$prefix"
+     ;;
+    
+    --exec-prefix)
+      echo "$exec_prefix"
+     ;;
+
+    --libs)
+      echo "$_rt_libs"
+     ;;
+
+    --libtool-libs)
+      echo "$_rt_libtool_libs"
+     ;;
+    
+    --includes)
+      echo "$_rt_includes"
+     ;;
+
+    --cppflags)
+      echo "$_rt_cppflags"
+     ;;
+    
+    --cflags)
+      echo "$_rt_cflags"
+     ;;
+    
+    --version)
+      echo "$_acrt_PACKAGE_VERSION"
+     ;;
+
+    --list)
+      set|grep '^_acrt_'|sed -e 's/_acrt_//'
+     ;;
+
+    --query*)
+      if test "x$optarg" = "x"; then
+        echo "--query=[VAR] - missing VAR" 1>&2
+	echo "${usage}"
+	exit 3
+      fi
+      eval echo `eval echo \\$_acrt_$optarg`
+      optarg=""
+     ;;
+
+    --show*)
+      if test "x$optarg" = "x"; then
+        echo "--show=[VAR] - missing VAR" 1>&2
+	echo "${usage}"
+	exit 3
+      fi
+      eval echo \$_acrt_$optarg
+      optarg=""
+     ;;
+
+    *)
+     echo "$1 - unknown parameter" 1>&2
+     echo "${usage}"
+     exit 4
+  esac
+
+    # Check if an useless optional
+    # parameter was specified
+  if test "x$optarg" != "x"; then
+    echo "$1 - does not require any parameter" 1>&2
+    echo "${usage}"
+    exit 2
+  fi
+
+    # Go on to next parameter
+  shift
+done

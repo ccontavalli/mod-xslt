@@ -1,0 +1,47 @@
+#!/usr/bin/perl -w
+
+# Parses tla output to generate a valid
+# xml changelog 
+
+use strict;
+
+my %months = ( Jan => '01', Feb => '02', Mar => '03', Apr => '04', May => '05', 
+	       Jun => '06', Jul => '07', Aug => '08', Sep => '09', Oct => '10',
+	       Nov => '11', Dec => '12' );
+my $date;
+my $author;
+
+while(<>) {
+  if(/Date: [A-z]+ ([A-z]+)[ ]+([0-9]+) ([0-9:]+).*([0-9]{4})/) {
+    $date="$4/$months{$1}/$2 $3";
+  } elsif(/Creator: .* <(.*)@/) {
+    $author="$1";
+  } elsif(/^$/) {
+    last;
+  }
+}
+
+die "couldn't find author or date" if(!$date || !$author);
+
+while(<>) {
+  s/&/&amp;/g;
+  s/</&lt;/g;
+  s/>/&gt;/g;
+
+  if(/^\* (.*)/ || /\s+(.*)/) {
+    my $var=$1;
+    next if(!$1 || $1 !~ /\S+/);
+      
+    print "\n    <entry>\n      <date>$date</date>\n      <author>$author</author>\n";
+    print "      <log>\n        $var\n";
+    while(<>) {
+      s/&/&amp;/g;
+      s/</&lt;/g;
+      s/>/&gt;/g;
+
+      last if(/^$/);
+      print "      $_";
+    }
+    print "      </log>\n    </entry>\n";
+  } 
+}

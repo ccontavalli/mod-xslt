@@ -1,0 +1,131 @@
+#
+#   mod-xslt -- Copyright (C) 2002-2008 
+# 		 Carlo Contavalli 
+# 		 <ccontavalli at inscatolati.net>
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+#  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+@SET_MAKE@
+VPATH = @srcdir@
+
+  # Basic directories
+srcdir=@srcdir@
+abs_srcdir=@abs_srcdir@
+top_srcdir=@top_srcdir@
+abs_top_srcdir=@abs_top_srcdir@
+
+builddir=@builddir@
+abs_builddir=@abs_builddir@
+top_builddir=@top_builddir@
+abs_top_builddir=@abs_top_builddir@
+
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+bindir=@bindir@
+sbindir=@sbindir@
+datarootdir=@datarootdir@
+libexecdir=@libexecdir@
+
+datadir=@datadir@
+sysconfdir=@sysconfdir@
+sharedstatedir=@sharedstatedir@
+localstatedir=@localstatedir@
+libdir=@libdir@
+infodir=@infodir@
+includedir=@includedir@
+mandir=@mandir@
+
+  # Basic commands
+CC := @SAPI_CC@
+LD := @SAPI_LD@
+
+  # Additional parameters
+LIBTOOL := @LIBTOOL@
+INSTALL := @INSTALL@
+
+  # Overrideable parameters
+LIBS += @SAPI_LIBS@ @LIBS@
+CFLAGS += @SAPI_CFLAGS@ @CFLAGS@
+LDFLAGS += @SAPI_LDFLAGS@ @LDFLAGS@
+CPPFLAGS += @SAPI_CPPFLAGS@ -I$(top_srcdir)/lib -I$(top_builddir)/lib
+
+  # Specific Variables
+LIB_CURRENT = @LIB_CURRENT@
+LIB_REVISION = @LIB_REVISION@
+LIB_AGE = @LIB_AGE@
+LIB_VERSION = @LIB_VERSION@
+
+  # Installation parameters
+APXS_INSTALLDIR := @APXS_INSTALLDIR@
+APXS := @APXS@
+SAPI := @SAPI@
+
+
+default: @DEFAULT_TARGET@
+
+.SUFFIXES: .c .o .h .lo .la
+
+.PHONY: default all debug clean distclean std tidy release
+
+  # Targets
+all: std
+
+debug: CFLAGS += -ggdb -Wall -O0 
+debug: std
+
+std: mod_xslt.la
+
+install-strip: STRIP += -s
+install-strip: install
+
+install: mod_xslt.la install-stamp Makefile
+
+install-stamp: mod_xslt.la Makefile
+	test -w '$(DESTDIR)$(APXS_INSTALLDIR)' || \
+	  { echo 'You are not allowed to write in $(DESTDIR)$(APXS_INSTALLDIR). Are you root??'; exit 1; }
+	$(INSTALL) $(STRIP) -m 0644 -d '$(DESTDIR)$(APXS_INSTALLDIR)'
+	$(LIBTOOL) --mode=install $(INSTALL) $(STRIP) -m 0644 mod_xslt.la '$(DESTDIR)$(APXS_INSTALLDIR)'
+	@echo Removing extra files...
+	FILE=`grep dlname mod_xslt.la | sed -e "s/[^']*'\([^']*\).*/\1/"` && \
+	  find '$(DESTDIR)$(APXS_INSTALLDIR)' -name 'mod_xslt.*'|grep -v "$$FILE"|xargs rm -f && \
+	  echo '$(DESTDIR)$(APXS_INSTALLDIR)'/$$FILE > install-stamp
+
+uninstall: 
+	test -f install-stamp && rm -f `cat install-stamp`
+
+mod_xslt.la: modxslt.lo modxslt-helpers.lo ../../lib/libmodxslt$(LIB_VERSION).la 
+	$(LIBTOOL) --mode=link --tag=CC $(CC) $(CFLAGS) $(CPPFLAGS) -export-dynamic \
+		-rpath "$(APXS_INSTALLDIR)" -module -avoid-version \
+		-o mod_xslt.la $^ $(LIBS)
+
+../../lib/libmodxslt$(LIB_VERSION).la:
+	$(MAKE) -C ../../lib/ @DEFAULT_TARGET@
+
+modxslt-helpers.lo: modxslt-helpers.c modxslt.h
+modxslt.lo: modxslt.c modxslt.h
+
+.c.lo:
+	$(LIBTOOL) --mode=compile --tag=CC $(CC) $(CFLAGS) $(CPPFLAGS) -c $< 
+
+distclean: clean
+	rm -rf ./.libs install-stamp
+
+clean:
+	$(LIBTOOL) --mode=clean rm -f *.lo *.slo *.loT *.la
+
+tidy: distclean
+
+release:
+

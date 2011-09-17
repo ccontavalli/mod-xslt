@@ -1,0 +1,24 @@
+- quite a bounce build&compilation&installation issues 
+- problem with imported documents (really bad)
+- problem in non 7 bit characters in decod url (estetically ugly)
+- http client issues (corrected configure)
+- double free in sax_processing_instruction (due to cut & paste) (bad)
+- forgot shift << 4 in url parse
+- different handling of variables from lex to apache (would require
+  more work - added to TODO list)
+- realloc problem in variable handling (replace, file .lex) (bad)
+- port handling problem in calculating local url
+- freeing up state on exit (caused segfault - bad)
+- lexer problems (lookahead was necessary - variable and expressions
+  handling)
+- 6 changed in 8 in mxslt_sax_processing_instruction
+- decode[*url+x] precedence
+- <text> tag in html output when using variables
+- apache1 - incorrect handling of methods != GET for static documents
+- mxslt_done - when no page was parsed, segmentation fault on exit
+- if libxml2 input callback returns a null descriptor, research for
+  an handler goes on - there is no way to return an error
+- changed -- in comments in -*
+- address segfault (address && *address)
+- parsing systemid for modxslt variables when loading DTDs
+- NULL pointer in str dereference

@@ -1,0 +1,14 @@
+main idea:
+  - apache style handling of connections, using
+    threads
+
+  - in memory cacheing of preloaded .xml files,
+    .xslt stylesheets, and parsed result
+
+  - chroot in a given read only directory, to avoid
+    file/directory creation
+
+  - eventually cache up results on disk using 
+    some sort of directory hashing/encoding
+
+  - connection cacheing using pools

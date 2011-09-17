@@ -1,0 +1,115 @@
+diff -Naur libxml2-2.5.7/include/libxml/threads.h libxml2-2.5.7.carlo/include/libxml/threads.h
+--- libxml2-2.5.7/include/libxml/threads.h	2002-03-12 18:34:44.000000000 +0100
++++ libxml2-2.5.7.carlo/include/libxml/threads.h	2003-07-01 21:17:31.000000000 +0200
+@@ -33,6 +33,9 @@
+ extern "C" {
+ #endif
+ 
++xmlGlobalStatePtr	xmlNewGlobalState(void);
++void 			xmlFreeGlobalState(void * state);
++
+ xmlMutexPtr		xmlNewMutex	(void);
+ void			xmlMutexLock	(xmlMutexPtr tok);
+ void			xmlMutexUnlock	(xmlMutexPtr tok);
+@@ -53,6 +56,7 @@
+ int			xmlIsMainThread	(void);
+ void			xmlCleanupThreads(void);
+ xmlGlobalStatePtr	xmlGetGlobalState(void);
++int			xmlSetGlobalState(xmlGlobalStatePtr, xmlGlobalStatePtr **);
+ 
+ #ifdef __cplusplus
+ }
+diff -Naur libxml2-2.5.7/threads.c libxml2-2.5.7.carlo/threads.c
+--- libxml2-2.5.7/threads.c	2002-12-10 16:09:42.000000000 +0100
++++ libxml2-2.5.7.carlo/threads.c	2003-07-01 21:17:29.000000000 +0200
+@@ -291,7 +291,7 @@
+  * xmlFreeGlobalState() is called when a thread terminates with a non-NULL
+  * global state. It is is used here to reclaim memory resources.
+  */
+-static void
++void
+ xmlFreeGlobalState(void *state)
+ {
+     free(state);
+@@ -306,7 +306,7 @@
+  *
+  * Returns the newly allocated xmlGlobalStatePtr or NULL in case of error
+  */
+-static xmlGlobalStatePtr
++xmlGlobalStatePtr
+ xmlNewGlobalState(void)
+ {
+     xmlGlobalState *gs;
+@@ -398,6 +398,52 @@
+ #endif
+ }
+ 
++/**
++ * xmlSetGlobalState:
++ *
++ * xmlSetGlobalState() is called to set the global state for a thread.
++ *   0 - is returned on failure
++ *   1 - is returned on success
++ */
++int
++xmlSetGlobalState(xmlGlobalStatePtr new_state, xmlGlobalStatePtr ** old_state)
++{
++#ifdef HAVE_PTHREAD_H
++    if(old_state)
++      (*old_state)=(xmlGlobalState *)pthread_getspecific(globalkey);
++
++    if(new_state)
++      pthread_setspecific(globalkey, new_state);
++
++    return 1;
++#elif defined HAVE_WIN32_THREADS
++#if defined(HAVE_COMPILER_TLS)
++    int retval=1;
++
++      /* If state was not initiated, no
++       * need to copy it in old pointer */
++    if (!tlstate_inited) {
++	tlstate_inited = 1;
++       if(old_state)
++         (*old)=NULL
++    } else
++      if(old_state) {
++        (*old_state)=(xmlGlobalStatePtr)xmlMalloc(sizeof(xmlGlobalState));
++        if(*old_state)
++          memcpy(*old_state, &tlstate, sizeof(xmlGlobalState));
++        else
++          retval=0;
++      }
++    
++    if(new_state && (!old_state || *old_state)) {
++      memcpy(&tlstate, new_state, sizeof(xmlGlobalState));
++      xmlFree(new_state);
++    }
++
++    return;
++#else /* HAVE_COMPILER_TLS */
++    if (run_once_init) { 
++	run_once_init = 0; 
++	xmlOnceInit(); 
++    }
++
++      /* I don't think we need to arrange for
++       * cleanup: the new_state state supposedly will 
++       * be freed by whoever
++       * set it - in contrast, the _default_ state
++       * should be freed (the one created by default
++       * by libxml) */
++    if(old_state)
++      (*old_state)=(xmlGlobalState *)TlsGetValue(globalkey);
++    TlsSetValue(globalkey, new_state);
++
++    return;
++#endif /* HAVE_COMPILER_TLS */
++#else
++    return;
++#endif
++}
++
+ /************************************************************************
+  *									*
+  *			Library wide thread interfaces			*

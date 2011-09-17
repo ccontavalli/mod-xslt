@@ -1,0 +1,47 @@
+<!ENTITY % HTMLlat1 PUBLIC
+"-//W3C//ENTITIES Latin 1 for XHTML//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml-lat1.ent">
+%HTMLlat1;
+
+<!ENTITY % ISOlat1.module "INCLUDE"> 
+<![%ISOlat1.module;[
+<!ENTITY % ISOlat1 PUBLIC
+"ISO 8879:1986//ENTITIES Added Latin 1//EN//XML"
+"/usr/share/sgml/entities/xml-iso-entities-8879.1986/ISOlat1.ent">
+%ISOlat1;
+<!--end of ISOlat1.module-->]]>
+
+<!ENTITY % ISOpub.module "INCLUDE"> 
+<![%ISOpub.module;[
+<!ENTITY % ISOpub PUBLIC
+"ISO 8879:1986//ENTITIES Added Latin 1//EN//XML"
+"/usr/share/sgml/entities/xml-iso-entities-8879.1986/ISOpub.ent">
+%ISOpub;
+<!--end of ISOpub.module-->]]>
+
+
+<!ENTITY % text "#PCDATA | bf | p">
+
+<!ELEMENT faq (section*,entry*)> 
+<!ATTLIST faq
+	  lang CDATA "en"
+	  module CDATA #REQUIRED
+	  author CDATA #REQUIRED
+	  version CDATA #REQUIRED
+	  released CDATA #REQUIRED
+	  copyright CDATA #REQUIRED>
+
+<!ELEMENT section (entry*)>
+<!ATTLIST section
+	  title CDATA #REQUIRED>
+
+<!ELEMENT entry (question*,answer*)>
+<!ATTLIST entry
+	  contributed CDATA #IMPLIED>
+
+<!ELEMENT question (%text;)*>
+
+<!ELEMENT answer (%text;)*>
+
+<!ELEMENT p (#PCDATA)>
+<!ELEMENT bf (#PCDATA)>

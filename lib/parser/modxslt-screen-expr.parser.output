@@ -1,0 +1,298 @@
+Terminals which are not used
+
+   TOKEN_STRING
+
+
+Grammar
+
+    0 $accept: media_list_expr $end
+
+    1 media_list_expr: media_expr
+    2                | media_expr EOS media_list_expr
+
+    3 media_expr: TOKEN_ALL
+    4           | screen_expr
+    5           | TOKEN_ANY
+
+    6 screen_expr: TOKEN_SCREEN TOKEN_AND bool_expr
+    7            | bool_expr
+    8            | TOKEN_SCREEN
+
+    9 bool_expr: cmp_expr
+
+   10 cmp_expr: '(' cmp_expr ')'
+   11         | '!' cmp_expr
+   12         | cmp_expr TOKEN_OPR_BOOL cmp_expr
+   13         | TOKEN_LIT TOKEN_OPR_CMP TOKEN_LIT
+   14         | TOKEN_LIT
+   15         | error
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'!' (33) 11
+'(' (40) 10
+')' (41) 10
+error (256) 15
+TOKEN_STRING (258)
+TOKEN_SCREEN (259) 6 8
+TOKEN_ALL (260) 3
+TOKEN_ANY (261) 5
+TOKEN_AND (262) 6
+TOKEN_LIT (263) 13 14
+TOKEN_OPR_BOOL (264) 12
+TOKEN_OPR_CMP (265) 13
+EOS (266) 2
+
+
+Nonterminals, with rules where they appear
+
+$accept (15)
+    on left: 0
+media_list_expr (16)
+    on left: 1 2, on right: 0 2
+media_expr (17)
+    on left: 3 4 5, on right: 1 2
+screen_expr (18)
+    on left: 6 7 8, on right: 4
+bool_expr (19)
+    on left: 9, on right: 6 7
+cmp_expr (20)
+    on left: 10 11 12 13 14 15, on right: 9 10 11 12
+
+
+state 0
+
+    0 $accept: . media_list_expr $end
+
+    error         shift, and go to state 1
+    TOKEN_SCREEN  shift, and go to state 2
+    TOKEN_ALL     shift, and go to state 3
+    TOKEN_ANY     shift, and go to state 4
+    TOKEN_LIT     shift, and go to state 5
+    '!'           shift, and go to state 6
+    '('           shift, and go to state 7
+
+    media_list_expr  go to state 8
+    media_expr       go to state 9
+    screen_expr      go to state 10
+    bool_expr        go to state 11
+    cmp_expr         go to state 12
+
+
+state 1
+
+   15 cmp_expr: error .
+
+    $default  reduce using rule 15 (cmp_expr)
+
+
+state 2
+
+    6 screen_expr: TOKEN_SCREEN . TOKEN_AND bool_expr
+    8            | TOKEN_SCREEN .
+
+    TOKEN_AND  shift, and go to state 13
+
+    $default  reduce using rule 8 (screen_expr)
+
+
+state 3
+
+    3 media_expr: TOKEN_ALL .
+
+    $default  reduce using rule 3 (media_expr)
+
+
+state 4
+
+    5 media_expr: TOKEN_ANY .
+
+    $default  reduce using rule 5 (media_expr)
+
+
+state 5
+
+   13 cmp_expr: TOKEN_LIT . TOKEN_OPR_CMP TOKEN_LIT
+   14         | TOKEN_LIT .
+
+    TOKEN_OPR_CMP  shift, and go to state 14
+
+    $default  reduce using rule 14 (cmp_expr)
+
+
+state 6
+
+   11 cmp_expr: '!' . cmp_expr
+
+    error      shift, and go to state 1
+    TOKEN_LIT  shift, and go to state 5
+    '!'        shift, and go to state 6
+    '('        shift, and go to state 7
+
+    cmp_expr  go to state 15
+
+
+state 7
+
+   10 cmp_expr: '(' . cmp_expr ')'
+
+    error      shift, and go to state 1
+    TOKEN_LIT  shift, and go to state 5
+    '!'        shift, and go to state 6
+    '('        shift, and go to state 7
+
+    cmp_expr  go to state 16
+
+
+state 8
+
+    0 $accept: media_list_expr . $end
+
+    $end  shift, and go to state 17
+
+
+state 9
+
+    1 media_list_expr: media_expr .
+    2                | media_expr . EOS media_list_expr
+
+    EOS  shift, and go to state 18
+
+    $default  reduce using rule 1 (media_list_expr)
+
+
+state 10
+
+    4 media_expr: screen_expr .
+
+    $default  reduce using rule 4 (media_expr)
+
+
+state 11
+
+    7 screen_expr: bool_expr .
+
+    $default  reduce using rule 7 (screen_expr)
+
+
+state 12
+
+    9 bool_expr: cmp_expr .
+   12 cmp_expr: cmp_expr . TOKEN_OPR_BOOL cmp_expr
+
+    TOKEN_OPR_BOOL  shift, and go to state 19
+
+    $default  reduce using rule 9 (bool_expr)
+
+
+state 13
+
+    6 screen_expr: TOKEN_SCREEN TOKEN_AND . bool_expr
+
+    error      shift, and go to state 1
+    TOKEN_LIT  shift, and go to state 5
+    '!'        shift, and go to state 6
+    '('        shift, and go to state 7
+
+    bool_expr  go to state 20
+    cmp_expr   go to state 12
+
+
+state 14
+
+   13 cmp_expr: TOKEN_LIT TOKEN_OPR_CMP . TOKEN_LIT
+
+    TOKEN_LIT  shift, and go to state 21
+
+
+state 15
+
+   11 cmp_expr: '!' cmp_expr .
+   12         | cmp_expr . TOKEN_OPR_BOOL cmp_expr
+
+    $default  reduce using rule 11 (cmp_expr)
+
+
+state 16
+
+   10 cmp_expr: '(' cmp_expr . ')'
+   12         | cmp_expr . TOKEN_OPR_BOOL cmp_expr
+
+    TOKEN_OPR_BOOL  shift, and go to state 19
+    ')'             shift, and go to state 22
+
+
+state 17
+
+    0 $accept: media_list_expr $end .
+
+    $default  accept
+
+
+state 18
+
+    2 media_list_expr: media_expr EOS . media_list_expr
+
+    error         shift, and go to state 1
+    TOKEN_SCREEN  shift, and go to state 2
+    TOKEN_ALL     shift, and go to state 3
+    TOKEN_ANY     shift, and go to state 4
+    TOKEN_LIT     shift, and go to state 5
+    '!'           shift, and go to state 6
+    '('           shift, and go to state 7
+
+    media_list_expr  go to state 23
+    media_expr       go to state 9
+    screen_expr      go to state 10
+    bool_expr        go to state 11
+    cmp_expr         go to state 12
+
+
+state 19
+
+   12 cmp_expr: cmp_expr TOKEN_OPR_BOOL . cmp_expr
+
+    error      shift, and go to state 1
+    TOKEN_LIT  shift, and go to state 5
+    '!'        shift, and go to state 6
+    '('        shift, and go to state 7
+
+    cmp_expr  go to state 24
+
+
+state 20
+
+    6 screen_expr: TOKEN_SCREEN TOKEN_AND bool_expr .
+
+    $default  reduce using rule 6 (screen_expr)
+
+
+state 21
+
+   13 cmp_expr: TOKEN_LIT TOKEN_OPR_CMP TOKEN_LIT .
+
+    $default  reduce using rule 13 (cmp_expr)
+
+
+state 22
+
+   10 cmp_expr: '(' cmp_expr ')' .
+
+    $default  reduce using rule 10 (cmp_expr)
+
+
+state 23
+
+    2 media_list_expr: media_expr EOS media_list_expr .
+
+    $default  reduce using rule 2 (media_list_expr)
+
+
+state 24
+
+   12 cmp_expr: cmp_expr . TOKEN_OPR_BOOL cmp_expr
+   12         | cmp_expr TOKEN_OPR_BOOL cmp_expr .
+
+    $default  reduce using rule 12 (cmp_expr)

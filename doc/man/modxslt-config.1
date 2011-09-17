@@ -1,0 +1,135 @@
+.\"     Title: modxslt-config
+.\"    Author: Carlo Contavalli <ccontavalli at inscatolati.net>
+.\" Generator: DocBook XSL Stylesheets v1.73.2 <http://docbook.sf.net/>
+.\"      Date: September 6, 2004
+.\"    Manual: 
+.\"    Source: 
+.\"
+.TH "MODXSLT\-CONFIG" "1" "September 6, 2004" "" ""
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.SH "NAME"
+modxslt-config \- program to return libmodxslt configuration
+.SH "SYNOPSIS"
+.HP 15
+\fBmodxslt\-config\fR [\fB\-\-prefix\fR] [\fB\-\-exec\-prefix\fR] [\fB\-\-libs\fR] [\fB\-\-libtool\-libs\fR] [\fB\-\-includes\fR] [\fB\-\-cppflags\fR] [\fB\-\-cflags\fR] [\fB\-\-list\fR] [\fB\-\-query=\fR\fB\fIVAR\fR\fR] [\fB\-\-show=\fR\fB\fIVAR\fR\fR] [\fB\-\-version\fR]
+.SH "DESCRIPTION"
+.PP
+\fBmodxslt\-config\fR
+can be used to query the status of an installed libmodxslt and to access its compile time parameters/options\&.
+.PP
+The main idea behind
+\fBmodxslt\-config\fR
+(or any other foo\-config) is to provide an easy way for configre scripts and makefiles to use a given library\&. The configure script of a package using libmodxslt should try to search for
+\fBmodxslt\-config\fR, while the makefiles will try to compile the package using the variables found using the
+\fBmodxslt\-config\fR
+command\&.
+.SH "OPTIONS"
+.PP
+\fB\-\-prefix\fR
+.RS 4
+Returns libmodxslt install prefix, as specified to the configure script
+.RE
+.PP
+\fB\-\-exec\-prefix\fR
+.RS 4
+Returns libmodxslt install exec\-prefix, as specified to the configure script
+.RE
+.PP
+\fB\-\-libs\fR
+.RS 4
+Returns the parameters to be used with
+\fBld\fR
+to link your binaries with libmodxslt
+.RE
+.PP
+\fB\-\-libtool\-libs\fR
+.RS 4
+Returns the parameters to be used with
+\fBlibtool\fR
+to link your binaries with libmodxslt
+.RE
+.PP
+\fB\-\-includes\fR
+.RS 4
+Returns the parameters to be used with
+\fBcc\fR
+to allow your \&.c files to include libmodxslt headers
+.RE
+.PP
+\fB\-\-cppflags\fR
+.RS 4
+Returns the parameters to be used with
+\fBcpp\fR
+(the c preprocessor) to succesfully compile your \&.c files using libmodxslt headers
+.RE
+.PP
+\fB\-\-cflags\fR
+.RS 4
+Returns the parameters specified to
+\fBcc\fR
+during libmodxslt compilation
+.RE
+.PP
+\fB\-\-list\fR
+.RS 4
+\fBmodxslt\-config\fR
+allows you to access any other variable specified or detected by the libmodxslt configure script\&. This options lists all known varaibles and their raw values (with shell variables not substituted)
+.RE
+.PP
+\fB\-\-query=\fR\fB\fIVAR\fR\fR
+.RS 4
+shows the value of variable
+\fIVAR\fR, expanding any shell variables therein
+.RE
+.PP
+\fB\-\-show=\fR\fB\fIVAR\fR\fR
+.RS 4
+same as
+\fB\-\-query\fR, but shell variables are not expanded
+.RE
+.PP
+\fB\-\-version\fR
+.RS 4
+Show version of libmodxslt installed on this system
+.RE
+.PP
+If called without parameters, the help screen is displayed\&. More than one parameter can be specified at the same time\&.
+.SH "EXAMPLES"
+.sp
+.RS 4
+.nf
+$ \fBmodxslt\-config \-\-query=sysconfdir\fR
+/usr/local/etc
+$ \fBmodxslt\-config \-\-show=sysconfdir\fR
+${prefix}/etc
+$ \fBmodxslt\-config \-\-prefix\fR
+/usr/local
+$ \fBmodxslt\-config \-\-cflags\fR
+\-g \-O2 \-D_REENTRANT
+$ \fBcc `modxslt\-config \-\-includes` `modxslt\-config \-\-libs` \e
+  `modxslt\-config \-\-cppflags` myownprogram\&.c \-o myownprogram\fR
+.fi
+.RE
+.SH "RETURN VALUES"
+.PP
+\fBmodxslt\-config\fR
+exits with status 1 in case no argument was supplied and the help screen was displayed\&. Status 2 is returned whenever an argument wich does not need any additional parameter is encountered with an unnecessary parameter (like \-\-prefix=fuffa)\&. Status 3 is returned when an argument which needs an additional parameter is encountered without the needed parameter (like \-\-query), while 4 is returned when an unknown argument is specified\&. Any other exit status should be interpreted accordingly to the shell being used\&.
+.SH "SEE ALSO"
+.PP
+modxslt\-perror(1), modxslt\-parse(1), modxslt manual, http://www\&.modxslt2\&.com
+.SH "LICENSE"
+.PP
+This manual page was written by Carlo Contavalli
+<ccontavalli at inscatolati\&.net>\&. Permission is granted to copy, distribute and/or modify this document under the terms of the GNU General Public License, Version 2 any later version published by the Free Software Foundation\&.
+.SH "AUTHOR"
+.PP
+\fBCarlo Contavalli\fR <\&ccontavalli at inscatolati\&.net\&>
+.sp -1n
+.IP "" 4
+Author.
+.SH "COPYRIGHT"
+Copyright \(co 2002-2008 Carlo Contavalli
+.br

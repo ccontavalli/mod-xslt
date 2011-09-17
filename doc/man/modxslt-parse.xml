@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+
+<refentry>
+  <refentryinfo>
+    <address>
+      <email>ccontavalli at inscatolati.net</email>
+    </address>
+    <author>
+      <firstname>Carlo</firstname>
+      <surname>Contavalli</surname>
+      <email>ccontavalli at inscatolati.net</email>
+    </author>
+    <copyright>
+      <year>2002-2008</year>
+      <holder>Carlo Contavalli</holder>
+    </copyright>
+    <date>September 6, 2004</date>
+  </refentryinfo>
+
+  <refmeta>
+    <refentrytitle>modxslt-parse</refentrytitle>
+    <manvolnum>1</manvolnum>
+  </refmeta>
+
+  <refnamediv>
+    <refname>modxslt-parse</refname>
+    <refpurpose>program to convert .xml files using .xsl stylesheet and libmodxslt</refpurpose>
+  </refnamediv>
+
+  <refsynopsisdiv>
+    <cmdsynopsis>
+      <command>modxslt-parse</command>
+
+      <arg><replaceable>FILE</replaceable></arg>
+    </cmdsynopsis>
+  </refsynopsisdiv>
+
+  <refsect1>
+    <title>DESCRIPTION</title>
+
+    <para><command>modxslt-parse</command> can be used to parse a .xml
+      file using a .xsl stylesheet. modxslt-parse uses libmodxslt,
+      based upon libxml2 and libxslt1, of xmlsoft.org (GNOME Project).
+    </para>
+
+    <para>
+      modxslt-parse was not meant to be a general purpose replacement
+      for xsltproc. Its main purpose is for debugging libmodxslt and
+      to test .xml files that use libmodxslt extensions.
+    </para>
+      
+    <para>libmodxslt was written to ease the task of integrating an
+      xml/xslt parser into web servers or web applications.</para>
+  </refsect1>
+
+  <refsect1>
+    <title>OPTIONS</title>
+
+    <variablelist>
+      <varlistentry>
+        <term>
+          <replaceable>FILE</replaceable>
+        </term>
+
+        <listitem>
+          <para>The name of the .xml file to parse. The stylesheet is loaded depending
+	    on the PIs contained in the .xml file, supporting modxslt extensions. Output
+	    is sent to standard output</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </refsect1>
+  
+  <refsect1>
+    <title>EXAMPLES</title>
+<literallayout>
+<prompt>$</prompt> <userinput>modxslt-parse file.xml</userinput>
+&lt;?xml version="1.0"...
+</literallayout>
+  </refsect1>
+
+  <refsect1>
+    <title>SEE ALSO</title>
+
+    <para>xsltproc(1), modxslt-perror(1), modxslt-config(1), modxslt manual, http://www.mod-xslt2.com</para>
+  </refsect1>
+
+  <refsect1>
+    <title>LICENSE</title>
+
+    <para>This manual page was written by Carlo Contavalli <email>ccontavalli at inscatolati.net</email>.
+      Permission is granted to copy, distribute and/or modify this document under
+      the terms of the GNU General Public License, Version 2 any 
+	  later version published by the Free Software Foundation.
+    </para>
+  </refsect1>
+</refentry>

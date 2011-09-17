@@ -1,0 +1,96 @@
+#!/bin/sh
+
+set -e
+
+  # Verify environment correctness
+test -f "tools/include/config" || {
+  echo "must be run from mod-xslt source top level directory" 1>&2
+  exit 1
+}
+
+  # Include configuration file
+. tools/include/config
+
+  # Check existance of site mirror
+test -d "$dir_mirror" || {
+  echo "couldn't find mod-xslt site mirror directory."
+  echo "Without that, this script is almost useless"
+  exit 1
+}
+
+  # Verify which version this release would be
+curr_patchlevel=`$cmd_tla revisions -A $tla_archive $tla_brench_stable 2>/dev/null |tail -n1|cut -d'-' -f2`
+curr_patchlevel=`expr $curr_patchlevel + 1`
+curr_version="$tla_brench_stable_version"
+echo "snapshotting: $curr_version.$curr_patchlevel ($tla_archive/$tla_brench_stable)"
+
+  # Ok, calculate current versions
+. $dir_library/get-versions
+
+  # verify version specified in config ac, eventually updating it
+test "$lib_version_configac" = "${curr_version}.${curr_patchlevel}" || {
+  echo "  - updating $prj_configure ($lib_version_configac -> ${curr_version}.${curr_patchlevel})"
+
+  library_version_configac="${curr_version}.${curr_patchlevel}"
+  . $dir_library/set-versions
+  curr_changed="true"
+}
+
+  # verify configure.ac and configure are in sync
+. $dir_library/get-versions
+test "$lib_version_configac" = "$lib_version_configure" -a "$prj_configure" -nt "$prj_configac" || {
+  echo "  - configure.ac and configure out of sync, regenerating configure ($lib_version_configac, $lib_version_configure)"
+  . $dir_library/prepare-configure
+  curr_changed="true"
+}
+
+  # Try to update documentation
+. $dir_library/prepare-documentation
+
+  # Verify if we modified the tree and need to commit it
+test -z "$curr_changed" || {
+  test "x`echo \+\+*`" = "x++*" &&
+    cp $dir_data/tla.changelog `tla make-log`
+
+   logfile=`tla make-log 2>/dev/null`
+   cat $dir_data/tla.description >> $logfile
+}
+
+tla changes || {
+  echo "Do you want to commit the pending changes? [YES,no]"
+  read answer
+
+  if test "$answer" == "y" -o "$answer" == "yes" -o -z "$answer"; then
+    $cmd_tla commit
+  fi
+}
+
+  # Now, I need to setup the mirror and sign the snapshot
+echo "  - creating repository"
+. $dir_library/create-repository
+echo "  - created repository $library_repository"
+
+  #  - update the release file
+library_ymd=`basename $library_repository`
+library_file="$file_snapshots"
+
+echo "  - updating changelog"
+. $dir_library/changelog-update
+
+rsync -avz --exclude '.*' --exclude 'build/' --exclude '=build' \
+	--exclude 'LAST_*' --exclude '{arch}' --exclude 'tags' \
+	--exclude 'ID' --exclude '++log.*' --exclude ',,undo*' \
+	. $library_repository/modxslt-`basename $library_repository`/
+(
+  cd $library_repository
+  tar -cvzf modxslt-`basename $library_repository`.tar.gz ./modxslt-`basename $library_repository`
+  touch ./modxslt-`basename $library_repository`.tar.gz.asc
+)
+
+. $dir_library/changelog-checksums
+
+rm $library_repository/modxslt-`basename $library_repository`.tar.gz.asc && (
+  cd $library_repository
+  $cmd_sign ./modxslt-`basename $library_repository`.tar.gz 
+)
+

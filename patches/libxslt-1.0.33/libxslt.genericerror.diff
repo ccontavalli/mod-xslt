@@ -1,0 +1,65 @@
+diff -Naur libxslt-1.0.30/libxslt/transform.c libxslt-1.0.30.carlo/libxslt/transform.c
+--- libxslt-1.0.30/libxslt/transform.c	2003-04-30 21:43:31.000000000 +0200
++++ libxslt-1.0.30.carlo/libxslt/transform.c	2003-08-23 15:04:01.000000000 +0200
+@@ -1448,7 +1448,7 @@
+                      */
+                     ctxt->insert = insert;
+                     if (!xsltApplyFallbacks(ctxt, node, cur)) {
+-                        xsltGenericError(xsltGenericDebugContext,
++                        xsltGenericError(xsltGenericErrorContext,
+                                          "xsltApplyOneTemplate: %s was not compiled\n",
+                                          cur->name);
+                     }
+@@ -1483,7 +1483,7 @@
+             } else if (IS_XSLT_NAME(cur, "message")) {
+                 xsltMessage(ctxt, node, cur);
+             } else {
+-                xsltGenericError(xsltGenericDebugContext,
++                xsltGenericError(xsltGenericErrorContext,
+                                  "xsltApplyOneTemplate: problem with xsl:%s\n",
+                                  cur->name);
+             }
+@@ -2887,11 +2887,11 @@
+ 		    params = param;
+ 		}
+ 	    } else {
+-		xsltGenericError(xsltGenericDebugContext,
++		xsltGenericError(xsltGenericErrorContext,
+ 		     "xsl:call-template: misplaced xsl:%s\n", cur->name);
+ 	    }
+ 	} else {
+-	    xsltGenericError(xsltGenericDebugContext,
++	    xsltGenericError(xsltGenericErrorContext,
+ 		 "xsl:call-template: misplaced %s element\n", cur->name);
+ 	}
+ 	cur = cur->next;
+@@ -3101,17 +3101,17 @@
+ 		}
+ 	    } else if (IS_XSLT_NAME(cur, "sort")) {
+ 		if (nbsorts >= XSLT_MAX_SORT) {
+-		    xsltGenericError(xsltGenericDebugContext,
++		    xsltGenericError(xsltGenericErrorContext,
+ 			"xsl:apply-template: %s too many sort\n", node->name);
+ 		} else {
+ 		    sorts[nbsorts++] = cur;
+ 		}
+ 	    } else {
+-		xsltGenericError(xsltGenericDebugContext,
++		xsltGenericError(xsltGenericErrorContext,
+ 		    "xsl:apply-template: misplaced xsl:%s\n", cur->name);
+ 	    }
+         } else {
+-            xsltGenericError(xsltGenericDebugContext,
++            xsltGenericError(xsltGenericErrorContext,
+                  "xsl:apply-template: misplaced %s element\n", cur->name);
+         }
+         cur = cur->next;
+@@ -3461,7 +3461,7 @@
+     replacement = inst->children;
+     while (IS_XSLT_ELEM(replacement) && (IS_XSLT_NAME(replacement, "sort"))) {
+ 	if (nbsorts >= XSLT_MAX_SORT) {
+-	    xsltGenericError(xsltGenericDebugContext,
++	    xsltGenericError(xsltGenericErrorContext,
+ 		"xsl:for-each: too many sorts\n");
+ 	} else {
+ 	    sorts[nbsorts++] = replacement;

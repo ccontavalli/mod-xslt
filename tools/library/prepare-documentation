@@ -1,0 +1,28 @@
+#!/bin/bash
+
+test -f "tools/include/config" || {
+  echo 1>&2 "Must be run from mod-xslt root!"
+  exit 1
+}
+
+test -d "$dir_mirror" || {
+  echo 1>&2 "$dir_mirror does not exist, or missing dir_mirror parameter!"
+  exit 1
+}
+
+  # copy documentation to the internet site
+rsync -av --delete --exclude xslt/ --exclude site/ --exclude Makefile \
+  --exclude ".arch-ids" ./doc/ "$dir_mirror"/http/doc/download
+
+  # adapt the manual to be published on the web
+(
+  cat ./tools/data/prefix-sdope.pxml
+  cat "$dir_mirror"/http/doc/download/manual/manual.xml | grep -v '^<!DOCTYPE Article' |\
+    sed -e 's@<Article>@<Article xmlns="http://www.masobit.net/ns/sdope/1.0">@'
+) > "$dir_mirror"/http/doc/manual.xml
+
+  # update the FAQ
+ln -fs download/faq/faq.xml "$dir_mirror"/http/doc/faq.xml
+
+  # copy the site .xsl stylesheets here
+rsync -avz "$dir_mirror"/http/main/ ./doc/site/

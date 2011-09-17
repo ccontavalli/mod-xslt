@@ -1,0 +1,61 @@
+.\"     Title: modxslt-perror
+.\"    Author: Carlo Contavalli <ccontavalli at inscatolati.net>
+.\" Generator: DocBook XSL Stylesheets v1.73.2 <http://docbook.sf.net/>
+.\"      Date: September 6, 2004
+.\"    Manual: 
+.\"    Source: 
+.\"
+.TH "MODXSLT\-PERROR" "1" "September 6, 2004" "" ""
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.SH "NAME"
+modxslt-perror \- program to convert numeric error values into human readable strings
+.SH "SYNOPSIS"
+.HP 15
+\fBmodxslt\-perror\fR [\fIERRNO\fR]
+.SH "DESCRIPTION"
+.PP
+\fBmodxslt\-perror\fR
+can be used to convert a numeric error number into a human readable string\&. All it does, is reading the specified error
+\fIERRNO\fR
+from the command line, and convert it into a string using
+\fBstrerror\fR\&.
+.PP
+\fBmodxslt\-perror\fR
+exists since modxslt and libmodxslt can be used from multithreaded application, but strerror is not reentrant and cannot be used directly\&.
+.PP
+modxslt and libmodxslt will thus always output numeric error values, not very useful to human beings\&.
+.SH "OPTIONS"
+.PP
+\fIERRNO\fR
+.RS 4
+The numeric error value, usually referred as system errno\&.
+.RE
+.SH "EXAMPLES"
+.sp
+.RS 4
+.nf
+$ \fBmodxslt\-perror 13\fR
+13: Permission denied
+$ \fBmodxslt\-perror 23\fR
+23: Too many open files in system
+.fi
+.RE
+.SH "SEE ALSO"
+.PP
+errno (3), strerror (3), modxslt manual, http://www\&.modxslt2\&.com
+.SH "LICENSE"
+.PP
+This manual page was written by Carlo Contavalli
+<ccontavalli at inscatolati\&.net>\&. Permission is granted to copy, distribute and/or modify this document under the terms of the GNU General Public License, Version 2 any later version published by the Free Software Foundation\&.
+.SH "AUTHOR"
+.PP
+\fBCarlo Contavalli\fR <\&ccontavalli at inscatolati\&.net\&>
+.sp -1n
+.IP "" 4
+Author.
+.SH "COPYRIGHT"
+Copyright \(co 2002-2008 Carlo Contavalli
+.br

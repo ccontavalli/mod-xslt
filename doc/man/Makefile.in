@@ -1,0 +1,88 @@
+#
+#   mod-xslt -- Copyright (C) 2002-2008
+# 		 Carlo Contavalli 
+# 		 <ccontavalli at masobit.net>
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+#  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+
+
+@SET_MAKE@
+VPATH = @srcdir@
+
+  # Basic directories
+srcdir=@srcdir@
+abs_srcdir=@abs_srcdir@
+top_srcdir=@top_srcdir@
+abs_top_srcdir=@abs_top_srcdir@
+
+builddir=@builddir@
+abs_builddir=@abs_builddir@
+top_builddir=@top_builddir@
+abs_top_builddir=@abs_top_builddir@
+
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+bindir=@bindir@
+sbindir=@sbindir@
+datarootdir=@datarootdir@
+libexecdir=@libexecdir@
+
+datadir=@datadir@
+sysconfdir=@sysconfdir@
+sharedstatedir=@sharedstatedir@
+localstatedir=@localstatedir@
+libdir=@libdir@
+infodir=@infodir@
+includedir=@includedir@
+mandir=@mandir@
+
+  # Basic commands
+CC := @CC@
+LD := @LD@
+
+  # Additional parameters
+LIBTOOL := @LIBTOOL@
+INSTALL := @INSTALL@
+
+
+XSLT="xsltproc"
+XSLTPARAM=-''-nonet /usr/share/sgml/docbook/stylesheet/xsl/nwalsh/manpages/docbook.xsl
+
+
+default: all
+
+.PHONY: clean all default
+
+all: modxslt-config.1 modxslt-perror.1 modxslt-parse.1
+
+modxslt-config.1: modxslt-config.xml
+	$(XSLT) $(XSLTPARAM) modxslt-config.xml 
+
+modxslt-perror.1: modxslt-perror.xml
+	$(XSLT) $(XSLTPARAM) modxslt-perror.xml 
+
+modxslt-parse.1: modxslt-parse.xml
+	$(XSLT) $(XSLTPARAM) modxslt-parse.xml 
+
+install: modxslt-config.1 modxslt-perror.1 modxslt-parse.1
+	$(INSTALL) -d $(DESTDIR)$(mandir)/man1
+	$(INSTALL) -m 0644 $^ $(DESTDIR)$(mandir)/man1
+
+uninstall:	
+	rm $(DESTDIR)$(mandir)/man1/{modxslt-config.1,modxslt-parse.1,modxslt-perror.1}
+
+clean:
+	rm -f ./*.1

@@ -1,0 +1,60 @@
+mod_xslt 1.5 (http://sf.net/projects/modxslt)
+	- sablotron library
+	- last update on 2001/10/21
+	- apache 1.3
+
+	- does not parse dynamic documents
+	- non standard method used to handle stylesheets 
+	- non standard method used to handle html documents
+	    (requests are made for .html document, which is then
+	     translated to .xml)
+	- non standard method to handle SSI 
+	+ document cacheing (by storing results on disk)
+
+modxslt (http://modxslt.userworld.com)
+	- sablotron library
+	- last update on 2000/08/24? (file timestamp)
+	- apache 1.3
+
+	+ handles dynamic documents
+	+ handles dynamic stylesheets
+	+ loop detection code
+	- does not handle remote stylesheets (can only be 
+	    stored locally)
+	- handles only GET method 
+	- non standard method to handle stylesheet (DOCTYPE?)
+	- serious limitations on where .xsl files are stored
+
+mod_xslt (part of the xalan project)
+	- Apache libxalan
+	- continuosly updated
+	- apache 1.3
+	- it is in the ``samples'' directory
+
+	- does not handle dynamic documents
+	- does not handle dynamic stylesheets
+	- non standard way to find stylesheet (changes extension)
+	- non standard way to find document (changes extension)
+
+mod-xslt (www.mod-xslt.com)
+	- GNOME libxslt libxml2
+	- part of the official libxml project
+	- last update on 2002/10/27
+	- apache 2.0
+
+	+ does handle dynamic documents
+	+ does handle dynamic stylesheets
+	+ standard way to find stylesheet
+	+ standard way to find document
+	+ does handle remote stylesheets
+	- no chacheing
+
+why mod-xslt 2?
+	+ apache 1.3 and apache 2.0
+	+ much improved code base (many bugs have been corrected)
+	+ more standard way to handle remote urls
+	+ better way to handle static documents
+	+ internal language to choos xslt stylesheet
+	+ abstract API which allows other web servers to
+	  be supported
+	+ loop detection code

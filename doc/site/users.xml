@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<?modxslt-stylesheet type="text/xsl" method="http" 
+	href="${xsltRoot}/translator.xsl" 
+	media="screen and ! $GET[format]" 
+	alternate="no" title="For any web browser" 
+	charset="ISO-8859-1"?>
+
+<?xml-stylesheet 
+	type="text/xsl" 
+	method="http" 
+	href="xslt/sdope/docbook.xsl"
+	media="screen" alternate="no" 
+	title="Per l'utibrowser" charset="ISO-8859-1"?>
+	
+<!--
+   mod-xslt - Copyright (C) 2002, 2003 Carlo Contavalli 
+ 			 <ccontavalli at masobit.net> -->
+
+
+<article xmlns="http://www.masobit.net/ns/sdope/1.0">
+  <articleinfo>
+    <title>Are using mod-xslt...</title>  
+
+  <author>
+    <firstname>Carlo</firstname>
+    <surname>Contavalli</surname>
+    <affiliation>
+      <address>
+        <email>ccontavalli at masobit.net</email>
+      </address>
+    </affiliation>
+  </author> 
+
+  <abstract><para>
+    Right now, some projects and sites are starting to use
+    mod-xslt2. This page lists some of the projects/sites.
+    If you would like your site/project to be added here, please
+    send a mail to &lt;dev at ml.pigeonair.net&gt;.
+  </para></abstract> 
+  </articleinfo>
+
+  <para>                                                 
+    <bf>Projects:</bf>
+    <itemizedlist>
+      <listitem>
+        <ulink url="http://puzzlecms.sourceforge.net">Puzzle Apps &amp; CMS</ulink>, a web site content management tool, which
+	uses a template engine based upon .xsl files
+      </listitem>
+      <listitem>
+        <ulink url="http://reader.pigeonair.net">PigeonReader</ulink>, a scalable web mail, which uses skins written in .xsl
+      </listitem>
+      <listitem>
+        <ulink url="http://admin.pigeonair.net">PigeonAdmin</ulink>, a scalable mail administration interface, which uses skins written in .xsl
+      </listitem>
+    </itemizedlist>
+  </para> 
+
+  <para>
+    <bf>Internet sites:</bf>
+    <itemizedlist>
+      <listitem>
+        <ulink url="http://www.hanhart-onlineshop.com/">HSM Chronographs</ulink>
+      </listitem>
+      <listitem>
+        <ulink url="http://www.dovebulgaria.org/">DOVE Bulgaria</ulink>
+      </listitem>
+      <listitem>
+        <ulink url="http://www.planicus.com/">Planicus.COM</ulink>
+      </listitem>
+      <listitem>
+        <ulink url="http://www.pigeonair.net/">PigeonAir Project</ulink>
+      </listitem>
+      <listitem>
+        <ulink url="http://www.masobit.net/">Masobit Corp. SRL</ulink>
+      </listitem>
+    </itemizedlist>
+  </para>
+</article>	

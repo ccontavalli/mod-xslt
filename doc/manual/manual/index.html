@@ -1,0 +1,451 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>mod-xslt2 Users and Administrators Manual</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="NEXT"
+TITLE="Introduction"
+HREF="x18.html"></HEAD
+><BODY
+CLASS="ARTICLE"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="ARTICLE"
+><DIV
+CLASS="TITLEPAGE"
+><H1
+CLASS="TITLE"
+><A
+NAME="AEN2"
+>mod-xslt2 Users and Administrators Manual</A
+></H1
+><H3
+CLASS="AUTHOR"
+><A
+NAME="AEN4"
+>Carlo Contavalli</A
+></H3
+><P
+CLASS="PUBDATE"
+>Date: 2004/02/17 02:59:38 - Revision: 1.3<BR></P
+><DIV
+><DIV
+CLASS="ABSTRACT"
+><P
+></P
+><A
+NAME="AEN7"
+></A
+><P
+>mod-xslt2 is a web server module able to transform xml documents
+in any format using xslt stylesheets, doing what might be called
+server side parsing of xml files.</P
+><P
+></P
+></DIV
+></DIV
+><HR></DIV
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+>1. <A
+HREF="index.html#AEN9"
+>License, copyright and...</A
+></DT
+><DT
+>2. <A
+HREF="x18.html"
+>Introduction</A
+></DT
+><DT
+>3. <A
+HREF="x44.html"
+>History</A
+></DT
+><DT
+>4. <A
+HREF="x49.html"
+>Installation</A
+></DT
+><DD
+><DL
+><DT
+>4.1. <A
+HREF="x49.html#AEN51"
+>Prerequisites</A
+></DT
+><DD
+><DL
+><DT
+>4.1.1. <A
+HREF="x49.html#AEN63"
+>Apache 1.3.x</A
+></DT
+><DT
+>4.1.2. <A
+HREF="x49.html#AEN67"
+>Apache 2.{1,2}.x</A
+></DT
+></DL
+></DD
+><DT
+>4.2. <A
+HREF="x49.html#AEN79"
+>Quick start</A
+></DT
+><DT
+>4.3. <A
+HREF="x49.html#AEN89"
+>Configure parameters</A
+></DT
+><DD
+><DL
+><DT
+>4.3.1. <A
+HREF="x49.html#AEN93"
+>Installation related parameters</A
+></DT
+><DT
+>4.3.2. <A
+HREF="x49.html#AEN117"
+>Compilation related parameters</A
+></DT
+><DT
+>4.3.3. <A
+HREF="x49.html#AEN165"
+>SAPI Specific configure parameters</A
+></DT
+></DL
+></DD
+></DL
+></DD
+><DT
+>5. <A
+HREF="x187.html"
+>mod-xslt2 Setup and Usage</A
+></DT
+><DD
+><DL
+><DT
+>5.1. <A
+HREF="x187.html#AEN189"
+>Apache 1.3.x</A
+></DT
+><DD
+><DL
+><DT
+>5.1.1. <A
+HREF="x187.html#AEN192"
+>Request life</A
+></DT
+><DT
+>5.1.2. <A
+HREF="x187.html#AEN206"
+>Using the ``AddHandler'' directive</A
+></DT
+><DT
+>5.1.3. <A
+HREF="x187.html#AEN215"
+>Using the XSLT directives</A
+></DT
+><DT
+>5.1.4. <A
+HREF="x187.html#AEN231"
+>Mixing the two</A
+></DT
+><DT
+>5.1.5. <A
+HREF="x187.html#AEN236"
+>Loading the module</A
+></DT
+><DT
+>5.1.6. <A
+HREF="x187.html#AEN240"
+>mod-xslt Configuration parameters</A
+></DT
+><DT
+>5.1.7. <A
+HREF="x187.html#AEN297"
+>Parameters usage examples</A
+></DT
+><DT
+>5.1.8. <A
+HREF="x187.html#AEN322"
+>Logging</A
+></DT
+><DT
+>5.1.9. <A
+HREF="x187.html#AEN327"
+>Increasing performance</A
+></DT
+><DT
+>5.1.10. <A
+HREF="x187.html#AEN344"
+>Subrequest Issues</A
+></DT
+></DL
+></DD
+><DT
+>5.2. <A
+HREF="x187.html#AEN360"
+>Apache 2.x.x</A
+></DT
+><DD
+><DL
+><DT
+>5.2.1. <A
+HREF="x187.html#AEN365"
+>Configuring Apache 2.x for mod-xslt</A
+></DT
+><DT
+>5.2.2. <A
+HREF="x187.html#AEN392"
+>mod-xslt Configuration parameters</A
+></DT
+><DT
+>5.2.3. <A
+HREF="x187.html#AEN426"
+>Apache 2.x.x, mod-xslt and PHP4</A
+></DT
+></DL
+></DD
+></DL
+></DD
+><DT
+>6. <A
+HREF="x440.html"
+>Writing XML for mod-xslt2</A
+></DT
+><DD
+><DL
+><DT
+>6.1. <A
+HREF="x440.html#AEN443"
+>XSLT Parameters</A
+></DT
+><DT
+>6.2. <A
+HREF="x440.html#AEN497"
+>mod-xslt2 Extensions</A
+></DT
+><DD
+><DL
+><DT
+>6.2.1. <A
+HREF="x440.html#AEN512"
+>header-set</A
+></DT
+><DT
+>6.2.2. <A
+HREF="x440.html#AEN518"
+>value-of - modxslt expressions</A
+></DT
+><DT
+>6.2.3. <A
+HREF="x440.html#AEN566"
+>Verifying availability of mod-xslt2 extensions</A
+></DT
+></DL
+></DD
+><DT
+>6.3. <A
+HREF="x440.html#AEN590"
+>Setting the Content-Type (MIME type) of the parsed document</A
+></DT
+><DT
+>6.4. <A
+HREF="x440.html#AEN596"
+>Choosing the stylesheet to use</A
+></DT
+><DD
+><DL
+><DT
+>6.4.1. <A
+HREF="x440.html#AEN607"
+>xml-stylesheet and modxslt-stylesheet</A
+></DT
+></DL
+></DD
+><DT
+>6.5. <A
+HREF="x440.html#AEN795"
+>Using external DTDs</A
+></DT
+><DT
+>6.6. <A
+HREF="x440.html#AEN802"
+>Testing xml files and stylesheets from the command line</A
+></DT
+><DD
+><DL
+><DT
+>6.6.1. <A
+HREF="x440.html#AEN806"
+>xsltproc</A
+></DT
+><DT
+>6.6.2. <A
+HREF="x440.html#AEN811"
+>modxslt-parse</A
+></DT
+><DT
+>6.6.3. <A
+HREF="x440.html#AEN815"
+>rxp</A
+></DT
+></DL
+></DD
+><DT
+>6.7. <A
+HREF="x440.html#AEN819"
+>Other tools provided</A
+></DT
+><DD
+><DL
+><DT
+>6.7.1. <A
+HREF="x440.html#AEN821"
+>modxslt-perror</A
+></DT
+><DT
+>6.7.2. <A
+HREF="x440.html#AEN826"
+>modxslt-config</A
+></DT
+></DL
+></DD
+></DL
+></DD
+><DT
+>7. <A
+HREF="x830.html"
+>Security considerations</A
+></DT
+><DD
+><DL
+><DT
+>7.1. <A
+HREF="x830.html#AEN833"
+>Variables substitution</A
+></DT
+><DT
+>7.2. <A
+HREF="x830.html#AEN842"
+>Avoiding deadlocks under heavy loads</A
+></DT
+><DT
+>7.3. <A
+HREF="x830.html#AEN853"
+>Avoiding remote URLs in substitutions</A
+></DT
+></DL
+></DD
+><DT
+>8. <A
+HREF="x870.html"
+>Reporting BUGS / Helping out the project</A
+></DT
+></DL
+></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN9"
+>1. License, copyright and...</A
+></H1
+><P
+>This document was written by Carlo Contavalli &lt;ccontavalli at inscatolati.net&gt; 
+and is thus Copyright (C) Carlo Contavalli 2002-2008.</P
+><P
+>Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, no Front-Cover Texts and no Back-Cover Texts.</P
+><P
+>Any example of program code available in this document should be
+considered protected by the terms of the GNU General Public License.</P
+><P
+>mod-xslt2, the software described in this document, is free software; you
+can redistribute it and/or modify it under the terms of the GNU 
+General Public License as published by the Free Software Foundation; either
+version 2 of the License, or (at your option) any later version.</P
+><P
+>mod-xslt2 is distributed in the
+hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
+PURPOSE. See the GNU General Public License for more details.</P
+><P
+>You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.</P
+><P
+>Trademarks are owned by their respective owners.</P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="x18.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Introduction</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

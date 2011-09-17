@@ -1,0 +1,47 @@
+#! /bin/bash
+
+# Reads a LAST_RELEASE file and outputs
+# a xml log of changes since that release
+
+. tools/include/config || {
+  echo "must be run from mod-xslt source top level directory" 1>&2 
+  exit 1
+}
+
+test -n "$library_ymd" || test -n "$library_mmp" || {
+  echo "missing both library_ymd and library_mmp"
+  exit 1
+}
+
+  # Work either on the last snapshot or
+  # on the last release file
+if test -z "$library_mmp"; then
+  tla_last="$tla_last_snapshot_file"
+else
+  tla_last="$tla_last_release_file"
+fi
+
+archive=`$tla_brench_release | sed -e s@/.*@@`
+version=`$tla_brench_release | sed -e s@.*/@@`
+
+  # Ok, for which revisions do we need to generate a tla changelog
+$cmd_tla revisions 2>/dev/null| sed -ne /`cat "$tla_last"| sed -e 's/.*--//'`/,\$p |tail -n+2 |\
+	sed -e "s/^/${version}--/" |tac|xargs -i sh -c "$cmd_tla cat-log \"${archive}/{}\"|./tools/changelog-xml"
+
+  # If this is a snapshot, we also need to update the Changes file
+if test -z "$library_mmp"; then
+  test -f "$file_changes" || touch "$file_changes"
+  mv "$file_changes" "$file_changes".old
+  echo "  =========== SNAPSHOT $library_ymd ===========" > "$file_changes"
+  $cmd_tla revisions 2>/dev/null| sed -ne /`cat "$tla_last"| sed -e 's/.*--//'`/,\$p |tail -n+2 |\
+	sed -e "s/^/${version}--/" |tac|xargs -i sh -c "$cmd_tla cat-log \"${archive}/{}\"|./tools/changelog-txt" \
+	>>"$file_changes"
+  cat "$file_changes".old >> "$file_changes"
+  rm -f "$file_changes".old
+fi
+
+  # Update LAST file
+test -n "$PRESERVE_FILES" || {
+  mv "$tla_last" "$tla_last.old"
+  echo "${tla_brench_current}--`$cmd_tla revisions |tail -n1`" >"$tla_last"
+}

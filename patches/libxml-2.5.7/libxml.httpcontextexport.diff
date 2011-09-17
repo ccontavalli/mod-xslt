@@ -1,0 +1,64 @@
+diff -Naur libxml2-2.5.7.orig/include/libxml/nanohttp.h libxml2-2.5.7/include/libxml/nanohttp.h
+--- libxml2-2.5.7.orig/include/libxml/nanohttp.h	2002-11-12 10:40:18.000000000 +0100
++++ libxml2-2.5.7/include/libxml/nanohttp.h	2003-09-20 13:36:58.000000000 +0200
+@@ -13,6 +13,28 @@
+ 
+ #ifdef LIBXML_HTTP_ENABLED
+ 
++typedef struct xmlNanoHTTPCtxt {
++    char *protocol;	/* the protocol name */
++    char *hostname;	/* the host name */
++    int port;		/* the port */
++    char *path;		/* the path within the URL */
++    SOCKET fd;		/* the file descriptor for the socket */
++    int state;		/* WRITE / READ / CLOSED */
++    char *out;		/* buffer sent (zero terminated) */
++    char *outptr;	/* index within the buffer sent */
++    char *in;		/* the receiving buffer */
++    char *content;	/* the start of the content */
++    char *inptr;	/* the next byte to read from network */
++    char *inrptr;	/* the next byte to give back to the client */
++    int inlen;		/* len of the input buffer */
++    int last;		/* return code for last operation */
++    int returnValue;	/* the protocol return value */
++    int ContentLength;  /* specified content length from HTTP header */
++    char *contentType;	/* the MIME type for the input */
++    char *location;	/* the new URL in case of redirect */
++    char *authHeader;	/* contents of {WWW,Proxy}-Authenticate header */
++} xmlNanoHTTPCtxt, *xmlNanoHTTPCtxtPtr;
++
+ #ifdef __cplusplus
+ extern "C" {
+ #endif
+diff -Naur libxml2-2.5.7.orig/nanohttp.c libxml2-2.5.7/nanohttp.c
+--- libxml2-2.5.7.orig/nanohttp.c	2003-09-20 13:28:49.000000000 +0200
++++ libxml2-2.5.7/nanohttp.c	2003-09-20 13:37:03.000000000 +0200
+@@ -108,28 +108,6 @@
+ #define XML_NANO_HTTP_READ	2
+ #define XML_NANO_HTTP_NONE	4
+ 
+-typedef struct xmlNanoHTTPCtxt {
+-    char *protocol;	/* the protocol name */
+-    char *hostname;	/* the host name */
+-    int port;		/* the port */
+-    char *path;		/* the path within the URL */
+-    SOCKET fd;		/* the file descriptor for the socket */
+-    int state;		/* WRITE / READ / CLOSED */
+-    char *out;		/* buffer sent (zero terminated) */
+-    char *outptr;	/* index within the buffer sent */
+-    char *in;		/* the receiving buffer */
+-    char *content;	/* the start of the content */
+-    char *inptr;	/* the next byte to read from network */
+-    char *inrptr;	/* the next byte to give back to the client */
+-    int inlen;		/* len of the input buffer */
+-    int last;		/* return code for last operation */
+-    int returnValue;	/* the protocol return value */
+-    int ContentLength;  /* specified content length from HTTP header */
+-    char *contentType;	/* the MIME type for the input */
+-    char *location;	/* the new URL in case of redirect */
+-    char *authHeader;	/* contents of {WWW,Proxy}-Authenticate header */
+-} xmlNanoHTTPCtxt, *xmlNanoHTTPCtxtPtr;
+-
+ static int initialized = 0;
+ static char *proxy = NULL;	 /* the proxy name if any */
+ static int proxyPort;	/* the proxy port if any */

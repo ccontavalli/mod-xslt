@@ -1,0 +1,252 @@
+.faq {
+  text-indent: 0px;
+  margin-left: 0px;
+  padding-left: 0px;
+  margin-right: 0px;
+  padding-right: 0px;
+  vertical-align: top;
+  font-size: 14px;
+  color: #000000;
+}
+
+
+ /* faq-index -> when content is opened
+    faq-index-sectX -> when a sect is opened 
+    faq-index-entryX -> when an entry is opened
+    faq-index-questionX -> when a question is to be added to the index
+
+    faq-text -> when content is opened
+    faq-text-sectXE -> when entry for a sect is opened
+    faq-text-sectXT -> when title is written
+    faq-text-sectXB -> for the body of the table
+
+    faq-text-entryX
+    faq-text-questionX
+    faq-text-answerX
+  */
+
+.faq-text-question1 {
+  text-align: justify;
+  font-size: 12px;
+  vertical-align: top;
+  color: #000000;
+}
+
+
+TR.faq-index1 {
+  border: 0px;
+}
+
+TD.faq-index1 {
+  font-size: 12px;
+  vertical-align: top;
+  
+  text-indent: 0px;
+  margin-left: 0px ! important;
+} 
+
+A.faq-index1:LINK {
+  font-size: 12px;
+  text-decoration: none;
+  color: #000000;
+}
+
+A.faq-index1:HOVER {
+  font-size: 12px;
+  text-decoration: underline ! important;
+  color: #000000;
+}
+
+A.faq-index1:VISITED {
+  font-size: 12px;
+  text-decoration: none;
+  color: #000000;
+}
+
+A.faq-index2:LINK {
+  font-size: 12px;
+  text-decoration: none;
+  color: #000000;
+}
+
+A.faq-index2:HOVER {
+  font-size: 12px;
+  text-decoration: underline ! important;
+  color: #000000;
+}
+
+A.faq-index2:VISITED {
+  font-size: 12px;
+  text-decoration: none;
+  color: #000000;
+}
+
+.faq-text-question2 {
+  text-align: justify;
+  font-size: 12px;
+  vertical-align: top;
+  color: #000000;
+}
+
+.faq-text-sect1T {
+  text-align: justify;
+  font-size: 13px;
+  vertical-align: top;
+  color: #000000;
+}
+
+.faq-text-answer1 {
+  text-align: justify;
+  font-size: 13px;
+  vertical-align: top;
+  color: #000000;
+}
+
+
+
+.faq-text-answer2 {
+  text-align: justify;
+  font-size: 13px;
+  vertical-align: top;
+  color: #000000;
+}
+
+.faq-text-sect0T {
+  text-align: justify;
+  font-size: 13px;
+  vertical-align: top;
+  color: #000000;
+}
+
+
+
+.faq-index-sect0 {
+
+  padding-top: 0px;
+
+  margin-top: 0px;
+
+  margin-bottom: 0px;
+
+  padding-bottom: 0px;
+
+  
+
+  font-size: 11px;
+
+  border-width: 0px;
+
+  color: #000000;
+
+}
+
+
+
+.faq-index-sect1 {
+
+  padding-top: 0px;
+
+  margin-top: 0px;
+
+  margin-bottom: 0px;
+
+  padding-bottom: 0px;
+
+
+
+  font-size: 10px;
+
+  border-width: 0px;
+  
+  color: #000000;
+
+}
+
+
+
+.faq-index-question1 {
+
+  text-align: justify;
+
+
+
+  font-size: 10px;
+
+  vertical-align: top;
+  
+  color: #000000;
+
+}
+
+
+
+.faq-index-question2 {
+
+  font-size: 10px;
+
+  text-align: justify;
+
+  vertical-align: top;
+
+  color: #000000;
+
+}
+
+
+
+TR.faq-answer:first-letter {
+
+  text-transform: capitalize;
+
+  font-size: 20;
+
+}
+
+
+
+P.faq-answer:first-letter {
+
+  text-transform: capitalize;
+
+}
+
+
+
+.faq-text {
+
+  font-size: 10;
+
+}
+
+
+
+.faq-contributed {
+
+  text-align: right;
+
+  font-size: 10px;
+
+}
+
+
+
+TABLE.faq-contributed {
+
+  width: 100%;
+
+}
+
+
+
+TR.faq-contributed {
+  width: 100%;
+  text-align: right;
+}
+
+
+
+TD.faq-contributed {
+  width: 100%;
+  text-align: right;
+}
+

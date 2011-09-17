@@ -1,0 +1,4 @@
+MXSLT_DO_DEBUG -> replaced by:
+	MXSLT_DEBUG_MEMORY in many places
+where left, it means some code is missing
+which should be replaced

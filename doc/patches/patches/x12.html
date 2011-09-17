@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>libxml - libxml.setglobalstate.diff</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="Patches for libxslt/libxml"
+HREF="index.html"><LINK
+REL="PREVIOUS"
+TITLE="Patches for libxslt/libxml"
+HREF="index.html"><LINK
+REL="NEXT"
+TITLE="libxslt - libxslt.genericerror.diff"
+HREF="x18.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>Patches for libxslt/libxml</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="index.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="x18.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN12"
+>2. libxml - libxml.setglobalstate.diff</A
+></H1
+><P
+>The setglobalstate patch allows an application
+to make use of the internal ``xmlGetGlobalState''
+function provided by libxml2 and adds 
+and adds a ``xmlSetGlobalState''.</P
+><P
+>libxml makes use of many global variables kept
+in a task specific area (when multithreading
+is enabled) to avoid race conditions with other
+threads. However, this is not enough for mod-xslt:
+many apache modules share the same thread of execution
+and thus share the same ``task specific'' libxml
+data. To avoid interactions with other modules
+using libxml, mod-xslt saves the global execution
+state and restore it for each processed request.
+The process of ``storing'' and ``restoring'' is
+in facts a ``copy'' of a memory area (using memcpy).
+However, libxml internally uses a much more efficient
+mechanism that would allow mod-xslt to ``store'' and
+``restore'' a single pointer on most POSIX systems (using
+POSIX threads).</P
+><P
+>The highlited patch allows an application (like mod-xslt) 
+to make use of those functions improving overall performance.</P
+><P
+>The patch is automatically detected by mod-xslt ``configure''
+and should not cause any harm to other applications.</P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="x18.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Patches for libxslt/libxml</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>libxslt - libxslt.genericerror.diff</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

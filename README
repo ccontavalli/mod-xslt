@@ -1,0 +1,94 @@
+What is this?  
+=============
+  The tarball you just decompressed contains the sources
+for mod-xslt2. mod-xslt2 is a server side module able to
+parse xml data and apply xslt stylesheets on the fly.
+  It has _many_ features and, at time of writing, can
+be used with apache 1.3 and apache 2.0.
+  The API provided allows to easily add support for other
+web servers, and work is under way to provide a cgi-bin
+wrapper and a proxy module.
+  The main site for the mod-xslt2 project is
+
+	http://www.mod-xslt2.com/
+
+  where you can find documentation, this file and all
+related material. To get help or to know more about
+mod-xslt2, you can also subscribe to the mailing 
+lists. You can find a web interface to subscribe to
+the mailing lists at http://ml.mod-xslt2.com/ml/.
+
+
+Installation and Usage
+======================
+  For instruction on how to install, use, compile
+package mod-xslt2 or on how to employ it in your own
+applications, please take a look to the `doc' directory.
+  In this directory, you can find other direcotries:
+
+    manual - contains mod-xslt2 installation, 
+	  usage, packaging and configuration manual 
+	  in various formats (docbook, pdf, html, 
+	  txt ...)
+
+    man - contains mod-xslt2 unix manual pages
+          for command line utilities.
+
+    faq - contains mod-xslt2 faq mainly in .xml
+    	  and .html format.
+
+    patches - contains documentation about troubles
+     	  you may encounter due to bugs you may find
+	  in some versions of libxml2 or libxslt,
+	  and the description of the provided patches
+	  you may use to `solve' the problem.
+
+     misc - mainly two files: why.txt - I used to justify
+       	  to myself the time I spent behind mod-xslt2
+	  while I could have done many more pleasant
+	  things. comparison.txt - which contains a
+	  list of other mod-xslt modules for apache
+	  and outlines their strenghts and features.
+
+     dev - mainly junk written while developing 
+          mod-xslt2 (thoughts about loop handling
+	  and on how to implement cacheing).
+
+     site - which contains most of the pages you can
+          find on the web site in a docbook compatible
+	  xml (hopefully :).
+
+     xslt - which contains the .xslt stylesheets used
+      	  for the internet site (thanks to Marco Merlin,
+	  <mmerlin at masobit.net>)
+
+
+License
+=======
+  mod-xslt2 is derived from work by Philipp Dunkel 
+<philipp at dunkel.org> and others. This version was 
+almost completely rewritten by Carlo Contavalli,
+<ccontavalli at inscatolati.net>, thanks to help by many
+other people and to its employer who supported him
+while working on the project (http://www.masobit.net/).
+  For a complete list of the people who helped the
+project, please read the CREDITS file.
+  
+  Unless otherwise specified, mod-xslt2 and all the files
+part of the mod-xslt2 project are free software; you can 
+redistribute and/or modify them under the terms of the GNU 
+General Public License as published by the Free Software 
+Foundation; either version 2 of the License, or (at your 
+option) any later version.
+
+  mod-xslt2 is distributed in the hope that it will be 
+useful, but WITHOUT ANY WARRANTY; without even the implied 
+warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
+PURPOSE. See the GNU General Public License for more 
+details.
+
+  You should have received a copy of the GNU General 
+Public License along with this program; if not, write 
+to the Free Software Foundation, Inc., 59 Temple Place, 
+Suite 330, Boston, MA 02111-1307 USA.
+

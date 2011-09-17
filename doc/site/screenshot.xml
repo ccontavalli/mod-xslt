@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<?modxslt-stylesheet type="text/xsl" method="http" href="${xsltRoot}/translator.xsl" 
+	media="screen and ! $GET[format]" alternate="no" title="For any web browser" charset="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" method="http" href="xslt/sdope/docbook.xsl"
+	media="screen" alternate="no" title="For any web browser" charset="ISO-8859-1"?>
+	
+<!--
+   mod-xslt - Copyright (C) 2002, 2003 Carlo Contavalli 
+ 			 <ccontavalli at masobit.net> -->
+
+
+<article xmlns="http://www.masobit.net/ns/sdope/1.0">
+
+  <articleinfo>
+    <title><bf>mod-xslt</bf> screenshots</title>  
+  <!--
+  <author>
+    <firstname>Carlo</firstname>
+    <surname>Contavalli</surname>
+    <affiliation>
+      <address>
+        <email>ccontavalli at masobit.net</email>
+      </address>
+    </affiliation>
+  </author> -->
+
+  <abstract><para>
+    This section will provide some .xml files, their .xslt
+    stylesheet and a screenshot of their rendering on many
+    browsers on the market, with and without mod-xslt.
+  </para></abstract>
+  </articleinfo>
+
+  <para>                                                 
+  </para> 
+</article>	

@@ -1,0 +1,325 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Security considerations</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="mod-xslt2 Users and Administrators Manual"
+HREF="index.html"><LINK
+REL="PREVIOUS"
+TITLE="Writing XML for mod-xslt2"
+HREF="x440.html"><LINK
+REL="NEXT"
+TITLE="  Reporting BUGS / Helping out the project"
+HREF="x870.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>mod-xslt2 Users and Administrators Manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="x440.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="x870.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN830"
+>7. Security considerations</A
+></H1
+><P
+>As any code that runs with the same privileges as your web 
+server, there are some dangers you should be aware of and
+some considerations that should be made.</P
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN833"
+>7.1. Variables substitution</A
+></H2
+><P
+>In the previous sections, you have seen you can use 
+mod-xslt2 variables to build up hrefs to be used as the
+url of the xslt to be used.</P
+><P
+>Keep in mind, however, that GET and HEADER variables
+were given to you by the browser and that their values
+cannot be trusted.</P
+><P
+>As an example, you could specify something like:
+
+<PRE
+CLASS="SCREEN"
+>&lt;modxslt-stylesheet ... href="/data/xslt/$GET[lang].xsl" ...</PRE
+>
+
+But what happens here if ``$GET[lang]'' contains characters
+like ``../../../etc/passwd''? We cannot tell for sure. For sure, mod-xslt2
+would try to open a file like ``/etc/passwd'' and use it as 
+a stylesheet. Obviously, this wouldn't be considered a valid
+stylesheet and a 500 error returned back to the client. But,
+keep in mind that mod-xslt2 both in apache 1.3 and 2.x runs
+with the same privileges as the web server itself, and would
+thus be able to read others .xsl files if you specify
+variables like that in the href of the stylesheet.</P
+><P
+>Unless you have very good reasons to do so, I would suggest
+you to always use ``local://'' or ``http://'' urls when you
+need to make use of untrusted variables, and specify those
+variables as arguments to cgi or php scripts, which, in turn,
+may verify the genuinity of untrusted variables. The
+example above, could be made more ``security aware'' by
+using something like:
+<PRE
+CLASS="SCREEN"
+>&lt;modxslt-stylesheet ... 
+    href="local:///getxsllang.php?lang=$GET[lang]" ...</PRE
+>&#13;</P
+><P
+>Another solution would be to use one single stylesheet, and
+verify from there the validity of variables by using standard 
+``xsl:...'' constructs and act accordingly.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN842"
+>7.2. Avoiding deadlocks under heavy loads</A
+></H2
+><P
+>Ok, let's say you have a .xml file that needs a .xsl file
+to be fetched from a remote url in order to be correctly parsed.</P
+><P
+>Let's say you are using apache 1.3 and that a browser issues
+a request to get the content of that file. Now, apache would 
+receive the request, mod-xslt2 would be called to handle
+that request and a connection be open to fetch the remote
+stylesheet. Now, beshide the risks involved with letting your 
+customers upload ``static'' pages able to force your apache
+to make outgoing connections, if, for any reason, that connection
+comes back to your site, your apache is at risk: if we set
+up apache to handle at most 100 requests at a time 
+(100 children) and we get 100 requests for that page 
+<SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>at the same time</I
+></SPAN
+>, mod-xslt2 
+will not be able to connect to the remote host to fetch
+the stylesheet (no more children available), and will
+wait for an apache child to become available. However,
+no apache child will become available until at least
+one mod-xslt2 is done, and no mod-xslt2 will be done until
+at least one child becomes available or the tcp connection
+expires (after a long time).</P
+><P
+>Thus, by having .xml files that use .xsl stylesheet through
+http urls that in a way or another point back to the
+same apache server, we are at risk. Somebody could easily
+DoS us by simply running something like: 
+``while :; do wget http://remote.url/file.xml &amp; done;''</P
+><P
+>  Most of the other apache modules (not limited to .xml parsing
+  modules) out there on the internet simply don't worry about this
+  kind of problem.</P
+><P
+>However, mod-xslt tries as hard as it can to avoid
+this kind of deadlock: any local:// request is handled
+using a sub request, which doesn't use any other apache
+process, exactly like http:// connections that resolve to 
+any of the addresses you set up apache to listen on.</P
+><P
+>Beware, however, that if you have NAT boxes or redirectors, mod-xslt2
+will not be able to distinguish between local and 
+remote urls and won't be able to avoid this kind of deadlock.</P
+><P
+>Keep also in mind that if mod-xslt2 does not know
+the ip addresses your server is listening on, it won't
+be able to help you out neither. So, your OS must
+support the IOCTL needed to get all the ip addresses
+it is listening on or you must explicitly list them
+in the apache ``Listen'' directive (instead of using ``*'').</P
+><P
+>Experimental code to autodetect this sort of condition
+is under testing, but it may introduce security risks.
+If you want to know more about it, please contact
+one of the authors.</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN853"
+>7.3. Avoiding remote URLs in substitutions</A
+></H2
+><P
+>If I were you, I'd also try to avoid as much as possible
+using variables when indicating path for:
+
+<P
+></P
+><UL
+><LI
+><P
+>other files to be included</P
+></LI
+><LI
+><P
+>dtds or xslt to be used</P
+></LI
+></UL
+>
+
+or, at least, I'd try to explicitly specify the url scheme
+to be used. For example, if I'd really need to do something 
+like:
+
+<PRE
+CLASS="SCREEN"
+>&lt;?modxslt-stylesheet ... href="$GET[theme].xsl" ... ?&gt;</PRE
+>
+
+I'd change ``$GET[theme].xsl'' either in ``file://$GET[theme].xsl'',
+``http://hostname/dir/$GET[theme].xsl'' or ``local:///path/$GET[theme].xsl''.
+The first one in facts is quite dangerous:
+
+<P
+></P
+><UL
+><LI
+><P
+>an attacker could use your server for a DoS againsta somebody
+else (by specifying the http:// url of somebody else)</P
+></LI
+><LI
+><P
+>could specify urls to gather data about remote hosts</P
+></LI
+><LI
+><P
+>could specify urls to very big files and make lot of requests
+and make you eat up all your bandwidth</P
+></LI
+></UL
+>
+
+By always specifying the url scheme and host explicitly, we would limitate
+the range of action of an attacker significantly.</P
+><P
+>This is just another issue about using untrusted variables.</P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="x440.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="x870.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Writing XML for mod-xslt2</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Reporting BUGS / Helping out the project</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

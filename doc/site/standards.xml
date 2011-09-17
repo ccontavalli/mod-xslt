@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<?modxslt-stylesheet type="text/xsl" method="http" href="${xsltRoot}/translator.xsl" 
+	media="screen and ! $GET[format]" alternate="no" title="For any web browser" charset="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" method="http" href="../xslt/docbook.xsl"
+	media="screen" alternate="no" title="For any web browser" charset="ISO-8859-1"?>
+	
+<!--
+   mod-xslt - Copyright (C) 2002, 2003 Carlo Contavalli 
+ 			 <ccontavalli at masobit.net> -->
+
+<article xmlns="http://www.masobit.net/ns/sdope/1.0">
+
+<articleinfo>
+  <title>XML/XSLT Standards</title>  
+  <author>
+    <firstname>Carlo</firstname>
+    <surname>Contavalli</surname>
+    <affiliation>
+      <address>
+        <email>ccontavalli at masobit.net</email>
+      </address>
+    </affiliation>
+  </author> 
+</articleinfo>
+
+  <para>  
+    <itemizedlist>
+      <listitem>
+    <bf><ulink url="http://www.w3.org/TR/xslt" /></bf><para>XSL Transformations (XSLT)</para></listitem>
+    <listitem><bf><ulink url="http://www.w3.org/TR/REC-xml" /></bf><para>Extensible Markup Language (XML)</para></listitem>
+    <listitem><bf><ulink url="http://www.w3.org/TR/xpath" /></bf><para>XML Path Language (XPath)</para></listitem>
+    <listitem><bf><ulink url="http://www.w3.org/TR/xinclude" /></bf><para>XML Inclusions (XInclude)</para></listitem>
+    <listitem><bf><ulink url="http://www.w3.org/TR/xlink" /></bf><para>XML Linking Language (XLink)</para></listitem>
+    <listitem><bf><ulink url="http://www.w3.org/TR/xhtml1" /></bf><para>XHTML(TM) 1.0: The Extensible HyperText Markup Language</para></listitem>
+    </itemizedlist>
+  </para>
+</article>	

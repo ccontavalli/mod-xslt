@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+
+<refentry>
+  <refentryinfo>
+    <address>
+      <email>ccontavalli at inscatolati.net</email>
+    </address>
+    <author>
+      <firstname>Carlo</firstname>
+      <surname>Contavalli</surname>
+      <email>ccontavalli at inscatolati.net</email>
+    </author>
+    <copyright>
+      <year>2002-2008</year>
+      <holder>Carlo Contavalli</holder>
+    </copyright>
+    <date>September 6, 2004</date>
+  </refentryinfo>
+
+  <refmeta>
+    <refentrytitle>modxslt-perror</refentrytitle>
+    <manvolnum>1</manvolnum>
+  </refmeta>
+
+  <refnamediv>
+    <refname>modxslt-perror</refname>
+    <refpurpose>program to convert numeric error values into human readable strings</refpurpose>
+  </refnamediv>
+
+  <refsynopsisdiv>
+    <cmdsynopsis>
+      <command>modxslt-perror</command>
+
+      <arg><replaceable>ERRNO</replaceable></arg>
+    </cmdsynopsis>
+  </refsynopsisdiv>
+
+  <refsect1>
+    <title>DESCRIPTION</title>
+
+    <para><command>modxslt-perror</command> can be used to convert a 
+      numeric error number into a human readable string. All it does,
+      is reading the specified error <replaceable>ERRNO</replaceable>
+      from the command line, and convert it into a string using <command>strerror</command>.</para>
+
+    <para><command>modxslt-perror</command> exists since modxslt and
+      libmodxslt can be used from multithreaded application, but 
+      strerror is not reentrant and cannot be used directly.</para>
+
+    <para>modxslt and libmodxslt will thus always output numeric error
+      values, not very useful to human beings.</para>
+  </refsect1>
+
+  <refsect1>
+    <title>OPTIONS</title>
+
+    <variablelist>
+      <varlistentry>
+        <term>
+          <replaceable>ERRNO</replaceable>
+        </term>
+
+        <listitem>
+          <para>The numeric error value, usually referred as system errno.</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </refsect1>
+  
+  <refsect1>
+    <title>EXAMPLES</title>
+<literallayout>
+<prompt>$</prompt> <userinput>modxslt-perror 13</userinput>
+13: Permission denied
+<prompt>$</prompt> <userinput>modxslt-perror 23</userinput>
+23: Too many open files in system
+</literallayout>
+  </refsect1>
+
+  <refsect1>
+    <title>SEE ALSO</title>
+
+    <para>errno (3), strerror (3), modxslt manual, http://www.modxslt2.com</para>
+  </refsect1>
+
+  <refsect1>
+    <title>LICENSE</title>
+
+    <para>This manual page was written by Carlo Contavalli <email>ccontavalli at inscatolati.net</email>.
+      Permission is granted to copy, distribute and/or modify this document under
+      the terms of the GNU General Public License, Version 2 any 
+	  later version published by the Free Software Foundation.
+    </para>
+  </refsect1>
+</refentry>

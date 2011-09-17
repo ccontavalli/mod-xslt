@@ -1,0 +1,36 @@
+- problems:
+    - making libxml allocate the document
+      tree from a shared memory segment
+        - libxml provides hooks for 
+	  malloc replacements
+
+    - libxml is quite 
+    	- memory hungry 
+	- malloc and free friendly
+	  (called probably at least
+	   twice for each function)
+	- won't using shared memory
+	  actually slow down (slower
+	  malloc and free)?
+	    - we could: keep a normal
+	      memory cache of ``candidates''
+	      to be inserted in the cache.
+	      When a ``candidate'' shows
+	      to be actually called with
+	      an higher frequency than other
+	      cached documents, the next
+	      time it is used it is allocated
+	      in the shared memory pool.
+
+    - multithreaded related. I probably
+      cannot pass any additional argument
+      to the malloc routines
+        - use a global tsd which mantains
+	  the descriptor used by the malloc
+	  library
+
+   
+- apache1 -> must rely on an external library: mm
+- apache2 -> provides wrappers that work both
+	when the model is multithreaded and
+	when it is not

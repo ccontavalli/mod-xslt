@@ -1,0 +1,14 @@
+diff -Naur libxslt-1.0.32/libxslt/transform.c libxslt-1.0.32.patched/libxslt/transform.c
+--- libxslt-1.0.32/libxslt/transform.c	2003-08-10 00:20:28.000000000 +0200
++++ libxslt-1.0.32.patched/libxslt/transform.c	2003-09-14 14:58:53.000000000 +0200
+@@ -1490,8 +1490,8 @@
+ 
+             if (info == NULL) {
+                 if (IS_XSLT_NAME(cur, "message")) {
+-                    xsltMessage(ctxt, node, cur);
+-                } else {
++                  xsltMessage(ctxt, node, cur);
++                } else if (!IS_XSLT_NAME(cur, "fallback")) {
+                     /*
+                      * That's an error try to apply one of the fallback cases
+                      */

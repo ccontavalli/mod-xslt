@@ -1,0 +1,19 @@
+diff -Naur libxml2-2.5.7.orig/nanohttp.c libxml2-2.5.7/nanohttp.c
+--- libxml2-2.5.7.orig/nanohttp.c	2003-09-20 13:28:49.000000000 +0200
++++ libxml2-2.5.7/nanohttp.c	2003-09-20 13:33:29.000000000 +0200
+@@ -1238,6 +1238,15 @@
+ 	return(NULL);
+     }
+ 
++    if(ctxt->returnValue != 200) {
++#ifdef DEBUG_HTTP
++      xmlGenericError(xmlGenericErrorContext,
++		"xmlNanoHTTPMethodRedir: Skipping document, since status != 200 (%d)...\n", ctxt->returnValue);
++#endif
++      xmlNanoHTTPFreeCtxt(ctxt);
++      return NULL;
++    }
++
+     if (contentType != NULL) {
+ 	if (ctxt->contentType != NULL)
+ 	    *contentType = xmlMemStrdup(ctxt->contentType);
