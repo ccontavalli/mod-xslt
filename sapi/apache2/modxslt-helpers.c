@@ -361,8 +361,6 @@ int mxslt_ap2_file_parse(ap_filter_t * f, apr_bucket_brigade * brigade,
     /* Initialize document parsing */
   mxslt_doc_init(&document, APOS("apache2"), state, recursion, mxslt_ap2_error, f, f);
   mxslt_debug_enable(&document, config->dbglevel, mxslt_ap2_debug, f->r->server);
-  if(config->signature == MXSLT_DCS_TRUE)
-    mxslt_doc_flags_disable_signature(&document, MXSLT_TRUE);
 
     /* Add headers to parameters */
   mxslt_ap2_doc_param_header(&document, f->r->headers_in); 

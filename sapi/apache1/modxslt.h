@@ -59,12 +59,6 @@
 #  define MXSLT_MAX_REDIR 15
 # endif
 
-typedef enum mxslt_dir_config_signature_e {
-  MXSLT_DCS_UNSET=-1,
-  MXSLT_DCS_FALSE,
-  MXSLT_DCS_TRUE
-} mxslt_dir_config_signature_e;
-
   /* Boolean variables */
 typedef enum mxslt_dir_config_state_e {
   MXSLT_STATE_UNSET=-1,

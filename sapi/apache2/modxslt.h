@@ -97,12 +97,6 @@ typedef struct mxslt_ap2_ctx_t {
   apr_size_t size;
 } mxslt_ap2_ctx_t;
 
-typedef enum mxslt_dir_config_signature_e {
-  MXSLT_DCS_UNSET=-1,
-  MXSLT_DCS_FALSE,
-  MXSLT_DCS_TRUE
-} mxslt_dir_config_signature_e;
-
 typedef struct mxslt_dir_config_t {
   apr_table_t * mime_styles;
   apr_table_t * default_styles;

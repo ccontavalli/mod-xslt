@@ -250,7 +250,7 @@ static void *mxslt_create_dir_config(apr_pool_t *p, char *dir) {
   nconf->params=apr_table_make(p, 0);
   nconf->rules=apr_table_make(p, 0);
   nconf->dbglevel=mxslt_ap2_global_dbglevel;
-  nconf->signature=MXSLT_DCS_UNSET;
+  nconf->signature=0;
 
   return nconf;
 }
@@ -268,7 +268,7 @@ static void *mxslt_merge_dir_config(apr_pool_t *p, void *basev, void *overridesv
   nconf->rules=apr_table_overlay(p, override->rules, base->rules);
 
   nconf->dbglevel=base->dbglevel | override->dbglevel;
-  nconf->signature=(override->signature != MXSLT_DCS_UNSET ? override->signature : base->signature);
+  nconf->signature=0;
 
   return nconf;
 }
@@ -391,7 +391,8 @@ static const command_rec mxslt_cmds[] = {
 		OR_OPTIONS, "XSLTNoDefaultStylesheet <MimeType>"),
   AP_INIT_FLAG("XSLTDisableSignature", ap_set_flag_slot, 
  	       (void *)APR_OFFSETOF(mxslt_dir_config_t, signature), OR_OPTIONS,
-	       "XSLTDisableSignature <on|off> - set to On to disable the addition of modxslt copyright notice"),
+	       "XSLTDisableSignature <on|off> - ignored, "
+               "provided for backward compatibility only"),
   AP_INIT_TAKE1("XSLTDebugMask", ap_set_int_slot, 
 		(void *)APR_OFFSETOF(mxslt_dir_config_t, dbglevel), OR_OPTIONS,
 		"XSLTDebugMask <[0-9]+>"),

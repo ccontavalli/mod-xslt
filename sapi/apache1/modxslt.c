@@ -850,7 +850,7 @@ static void * mxslt_ap1_create_dir_config(pool *p, char * dir) {
   nconf->state=MXSLT_STATE_UNSET;
   nconf->tmpdir=NULL;
   nconf->unlink=1;
-  nconf->signature=MXSLT_DCS_UNSET;
+  nconf->signature=0;
 
   nconf->dbglevel=mxslt_global_dbglevel;
 
@@ -890,7 +890,7 @@ static void * mxslt_ap1_merge_dir_config(pool * p, void * basev, void * override
   nconf->state=(override->state == MXSLT_STATE_UNSET) ? base->state : override->state;
   nconf->tmpdir=override->tmpdir ? override->tmpdir : base->tmpdir;
   nconf->unlink=override->unlink;
-  nconf->signature=(override->signature == MXSLT_DCS_UNSET ? base->signature : override->signature)
+  nconf->signature=0;
   nconf->dbglevel=base->dbglevel|override->dbglevel;
 
   if(mxslt_debug_compare(nconf->dbglevel, MXSLT_DBG_SAPI | MXSLT_DBG_DEBUG | MXSLT_DBG_VERBOSE2)) {
@@ -1048,7 +1048,7 @@ static const command_rec mxslt_ap1_cmds[] = {
   {"XSLTEngine", ap_set_flag_slot, (void *)XtOffsetOf(mxslt_dir_config_t, state), OR_OPTIONS, TAKE1, 
     	"XSLTEngine <on|off> - Set this to On to enable xslt parsing" },
   {"XSLTDisableSignature", ap_set_flag_slot, (void *)XtOffsetOf(mxslt_dir_config_t, signature), OR_OPTIONS, TAKE1, 
-    	"XSLTDisableSignature <on|off> - Set to On to disable the addition of modxslt copyright notice"},
+    	"XSLTDisableSignature <on|off> - Ignored, for backward compatibility only"},
   {"XSLTTmpDir", mxslt_ap1_set_tmp_dir, NULL, OR_OPTIONS, TAKE1,
     	"XSLTTmpDir <Directory> - Takes the name of a directory we can use to store temporary files"},
   {"XSLTDebug", mxslt_ap1_set_debug, NULL, OR_OPTIONS, RAW_ARGS,

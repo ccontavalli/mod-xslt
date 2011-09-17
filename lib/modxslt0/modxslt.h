@@ -103,12 +103,7 @@ typedef enum mxslt_doc_flags_e {
   MXSLT_BERAW=BIT(0),  /* Return raw result */
   MXSLT_ISWRG=BIT(1),  /* Document contains errors */
   MXSLT_STYLE=BIT(3),  /* We're loading stylesheet */
-  MXSLT_SIGNA=BIT(15)  /* Signature in documents is disabled */
 } mxslt_doc_flags_e;
-
-  /* Disables outputting modxslt signature in generated documents */
-# define mxslt_doc_flags_disable_signature(document, value) (value ? \
-    ((document)->flags |= MXSLT_SIGNA) : ((document)->flags &= ~MXSLT_SIGNA))
 
   /* Holds call backs to be called to output data */
 typedef struct mxslt_callback_t {
