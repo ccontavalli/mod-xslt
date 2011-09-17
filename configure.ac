@@ -19,14 +19,14 @@
 #
 
 # Process this file with helpers/release to produce a configure script.
-AC_PREREQ(2.57)
+AC_PREREQ([2.68])
 AC_COPYRIGHT(
-  [Copyright (C) 2003,2004 Carlo Contavalli <ccontavali at masobit.net>]
+  [Copyright (C) 2003-2011 Carlo Contavalli <ccontavali at masobit.net>]
   [mod-xslt and this configure script are free software; you can ]
   [redistribute them and/or modify them under the terms of the GNU ]
   [General Public License. Read the provided documentation to know ]
   [more about this license and usage terms.])
-AC_INIT(mod-xslt, 1.3.9, [ccontavalli at inscatolati.net], mod-xslt)
+AC_INIT([mod-xslt],[1.4.0],[ccontavalli at inscatolati.net],[mod-xslt])
 AC_LANG(C)
 
 # Libtool versioning
@@ -46,7 +46,9 @@ AC_PROG_INSTALL
 AC_PROG_MAKE_SET
 AC_CACHE_SAVE
 
-AC_PROG_LIBTOOL
+LT_INIT
+LT_OUTPUT
+AC_SUBST(LIBTOOL_DEPS)
 AC_CACHE_SAVE
 
 # Check for basic functions
@@ -56,7 +58,7 @@ AC_FUNC_MMAP
 AC_FUNC_MEMCMP
 
 # Check for C compiler/library features
-AC_ISC_POSIX
+AC_SEARCH_LIBS([strerror],[cposix])
 AC_C_CONST
 AC_C_INLINE
 AC_C_PROTOTYPES
@@ -64,46 +66,44 @@ AC_TYPE_SIZE_T
 AC_CACHE_SAVE
 
 # Check for standard headers
-AC_STDC_HEADERS
+AC_HEADER_STDC
 AC_CHECK_HEADERS([stdlib.h fcntl.h string.h unistd.h],, AC_MSG_ERROR([Missing needed header file ]))
 AC_CHECK_HEADERS([syslog.h])
 
 # Check if debugging is required
-AC_ARG_ENABLE(xslt-debug, AC_HELP_STRING([[--enable-xslt-debug]], [Enable libxslt debugging]),
+AC_ARG_ENABLE(xslt-debug, AS_HELP_STRING([[--enable-xslt-debug]],[Enable libxslt debugging]),
 	   [AC_DEFINE(MXSLT_LIBXSLT_DEBUG,, [Enable libxslt debugging]) AC_SUBST(EN_XSLT_DEBUG, "enabled")],
 	   [AC_SUBST(EN_XSLT_DEBUG, "disabled")])
-AC_ARG_ENABLE(debug, AC_HELP_STRING([[--enable-debug]], [Compile code with gdb support without optimizations]), 
+AC_ARG_ENABLE(debug, AS_HELP_STRING([[--enable-debug]],[Compile code with gdb support without optimizations]), 
 	      [ 
 	        DEFAULT_TARGET="debug"; 
               ], 
 	      [ 
 	        DEFAULT_TARGET="all"; 
               ])
-AC_ARG_ENABLE(memory, AC_HELP_STRING([[--enable-memory]], [Place sentinels and perform strict checks upon memory allocations/free]), 
+AC_ARG_ENABLE(memory, AS_HELP_STRING([[--enable-memory]],[Place sentinels and perform strict checks upon memory allocations/free]), 
 	      [ 
 		AC_DEFINE(MXSLT_DEBUG_MEMORY,, [Enable strict memory checks])
               ])
 
 
-AC_ARG_ENABLE(thread, AC_HELP_STRING([[--disable-thread]], [Disable threading support]), 
+AC_ARG_ENABLE(thread, AS_HELP_STRING([[--disable-thread]],[Disable threading support]), 
 	      [PROBE_THREADS="no"; AC_SUBST(EN_THREAD, "disabled")],
 	      [PROBE_THREADS="yes"; AC_SUBST(EN_THREAD, "enabled") AC_DEFINE(MXSLT_THREAD,, [Enable multithreading support])])
-AC_ARG_ENABLE(extensions, AC_HELP_STRING([[--disable-extensions]], [Disable compilation of xslt extensions]),
+AC_ARG_ENABLE(extensions, AS_HELP_STRING([[--disable-extensions]],[Disable compilation of xslt extensions]),
 	   [AC_DEFINE(MXSLT_DISABLE_EXTENSIONS,, [Disable compilation of xslt extensions]) 
 	    AC_SUBST(EN_EXTENSIONS, "disabled")],
 	   [AC_SUBST(EN_EXTENSIONS, "enabled")])
-AC_ARG_ENABLE(xinclude, AC_HELP_STRING([[--disable-xinclude]], [Disable modxslt usage of xinclude]),
+AC_ARG_ENABLE(xinclude, AS_HELP_STRING([[--disable-xinclude]],[Disable modxslt usage of xinclude]),
 	   [AC_DEFINE(MXSLT_DISABLE_XINCLUDE,, [Disable modxslt usage of xinclude])
 	    AC_SUBST(EN_XINCLUDE, "disabled")],
 	   [AC_SUBST(EN_XINCLUDE, "enabled")])
-AC_ARG_ENABLE(libxslt-hack, AC_HELP_STRING([[--enable-libxslt-hack]], 
-	   [Enable the xsltDebugError wrapper to avoid SEGFAULTS due to a libxslt bug (read the FAQ)]),
+AC_ARG_ENABLE(libxslt-hack, AS_HELP_STRING([[--enable-libxslt-hack]],[Enable the xsltDebugError wrapper to avoid SEGFAULTS due to a libxslt bug (read the FAQ)]),
 	   [AC_DEFINE(MXSLT_LIBXSLT_HACK,, 
 	     [Enable compilation of a wrapper for xsltDebugError to work around a libxslt bug])
 	    AC_SUBST(EN_LIBXSLT_HACK, "enabled")
 	   ], [ AC_SUBST(EN_LIBXSLT_HACK, "disabled") ])
-AC_ARG_ENABLE(fallback-wraparound, AC_HELP_STRING([[--enable-fallback-wraparound]], 
-	   [Stop the ``fallback'' error to be shown in the web servers log]),
+AC_ARG_ENABLE(fallback-wraparound, AS_HELP_STRING([[--enable-fallback-wraparound]],[Stop the ``fallback'' error to be shown in the web servers log]),
 	   [AC_DEFINE(MXSLT_FALLBACK_WRAPAROUND,, 
 	     [Avoid the error ``fallback was not compiled'' to be shown in the web servers log])
 	     AC_SUBST(EN_FALLBACK_WRAPAROUND, "enabled")
@@ -111,13 +111,13 @@ AC_ARG_ENABLE(fallback-wraparound, AC_HELP_STRING([[--enable-fallback-wraparound
 
 # Check for needed wrappers 
 #   - if command line is not specified, then the path value is taken
-AC_ARG_WITH(sapi, AC_HELP_STRING([[--with-sapi=(apache1|apache2|none)]], [Web server interface to be used]), 
+AC_ARG_WITH(sapi, AS_HELP_STRING([[--with-sapi=(apache1|apache2|none)]],[Web server interface to be used]), 
 	    [ SAPI="$withval" ], [ SAPI="detect" ])
-AC_ARG_WITH(xml2-config, AC_HELP_STRING([[--with-xml2-config=FILE]], [Path to xml2-config program]), 
+AC_ARG_WITH(xml2-config, AS_HELP_STRING([[--with-xml2-config=FILE]],[Path to xml2-config program]), 
 	    [ XML2="$withval" ], [ AC_PATH_PROG(XML2, xml2-config, [], [$PATH:/usr/sbin/]) ])
-AC_ARG_WITH(xslt-config, AC_HELP_STRING([[--with-xslt-config=FILE]], [Path to xslt-config program]), 
+AC_ARG_WITH(xslt-config, AS_HELP_STRING([[--with-xslt-config=FILE]],[Path to xslt-config program]), 
 	    [ XSLT="$withval" ], [ AC_PATH_PROG(XSLT, xslt-config, [], [$PATH:/usr/sbin/]) ])
-AC_ARG_WITH(pcre-config, AC_HELP_STRING([[--with-pcre-config=FILE]], [Path to pcre-config program]), 
+AC_ARG_WITH(pcre-config, AS_HELP_STRING([[--with-pcre-config=FILE]],[Path to pcre-config program]), 
 	    [ PCRE="$withval" ], [ AC_PATH_PROG(PCRE, pcre-config, [], [$PATH:/usr/sbin/]) ])
 
 # Check if we found the wrapper 
@@ -222,7 +222,7 @@ if test "$XSLTF" = "yes"; then
   LIBS="$LIBS `$XSLT --libs`"
 
     # Check if exslt was asked
-  AC_ARG_ENABLE([exslt], AC_HELP_STRING([[--disable-exslt]], [Disable exslt extensions for libxslt. Default enabled ]),
+  AC_ARG_ENABLE([exslt], AS_HELP_STRING([[--disable-exslt]],[Disable exslt extensions for libxslt. Default enabled ]),
 	    [ EXSLT="no" ], [ EXSLT="yes" ])
 
 
@@ -257,7 +257,7 @@ AC_CACHE_SAVE
 # at least 32 bits long (we rely on it in apache1/2 sapi 
 # to store an ip address in place of a void * pointer in
 # an hashing table
-AC_CHECKING([if pointers (void *) are at least 32 bits long]);
+AS_MESSAGE([checking if pointers (void *) are at least 32 bits long...]);
 AC_RUN_IFELSE([AC_LANG_PROGRAM(, [[ if(sizeof(void *) < 4) exit(1); exit(0); ]])],,
 	      [AC_MSG_ERROR([For mod-xslt to be compiled, pointers (void *) must be at least 32 bits long]
 	      		    [If you really need to compile mod-xslt on this architecture, please contact]
@@ -317,14 +317,14 @@ while $true_var; do
      		        [AC_MSG_ERROR([apache1: '$APXS', or apxs is not executable or is not Apache apxs. Please use '--with-apxs'.])] )
 
 # Verify we have ioctl available
-AC_TRY_COMPILE([
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
   #include <stdio.h>
   #include <sys/types.h>
   #include <sys/socket.h>
   #include <sys/ioctl.h>
   #include <net/if.h>
   #include <netinet/in.h>
-], [
+]], [[
   struct ifconf ifc;
   int fd, status, i;
   struct ifreq * ifrp, ifr;
@@ -364,7 +364,7 @@ AC_TRY_COMPILE([
   }
 
   exit(0);
-], [AC_DEFINE(HAVE_NETWORK_IOCTLS,,[enable this if SIOCGIFADDR is available])], [AC_MSG_WARN([]
+]])],[AC_DEFINE(HAVE_NETWORK_IOCTLS,,[enable this if SIOCGIFADDR is available])],[AC_MSG_WARN([]
 [*************************]
 [* Cannot use SIOCGIFADDR ioctl]
 [* If you know how to get the ip addresses]
@@ -433,7 +433,7 @@ AC_TRY_COMPILE([
        fi
       
          # Look for apr_config
-       AC_ARG_WITH(apr-config, AC_HELP_STRING([[--with-apr-config=FILE]], [Path to apr-config program]), 
+       AC_ARG_WITH(apr-config, AS_HELP_STRING([[--with-apr-config=FILE]],[Path to apr-config program]), 
 	    [ APRC="$withval" ], [ 
 	      AC_PATH_PROG(APRC, apr-config, [], [$PATH:/usr/sbin/:/usr/local/apache2/bin]) 
 	      AC_DEFINED(APRC,,[
@@ -462,7 +462,7 @@ AC_TRY_COMPILE([
        AC_SUBST(APRC)
 
          # Look for apu_config
-       AC_ARG_WITH(apu-config, AC_HELP_STRING([[--with-apu-config=FILE]], [Path to apu-config program]), 
+       AC_ARG_WITH(apu-config, AS_HELP_STRING([[--with-apu-config=FILE]],[Path to apu-config program]), 
 	    [ APUC="$withval" ], [ 
 	      AC_PATH_PROG(APUC, apu-config, [], [$PATH:/usr/sbin/:/usr/local/apache2/bin]) 
 	      AC_DEFINED(APUC,,[

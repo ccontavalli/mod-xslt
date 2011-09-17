@@ -32,13 +32,13 @@ test -f ./tools/include/config || {
   exit 1
 }
 
-rm ./.in &>/dev/null && \
+rm -f ./.in &>/dev/null && \
   echo "- .in (yes, it sucks)" 
-rm ./debug.out &>/dev/null && \
+rm -f ./debug.out &>/dev/null && \
   echo "- debug.out"
-rm ./configure &>/dev/null && \
+rm -f ./configure &>/dev/null && \
   echo "- configure"
-rm ./aclocal.m4 &>/dev/null && \
+rm -f ./aclocal.m4 &>/dev/null && \
   echo "- aclocal.m4"
 
 set -e 

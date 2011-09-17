@@ -19,6 +19,7 @@
 #
 
 
+SHELL=@SHELL@
 @SET_MAKE@
 VPATH = @srcdir@
 

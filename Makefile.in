@@ -18,9 +18,14 @@
 #  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #
 @SET_MAKE@
+SHELL=@SHELL@
 sapi=@SAPI@
 
-all: library sapi utils
+all: libtool library sapi utils
+
+LIBTOOL_DEPS = @LIBTOOL_DEPS@
+libtool: $(LIBTOOL_DEPS)
+	$(SHELL) ./config.status --recheck
 
 .PHONY: all library sapi utils doc \
 	install install-library install-sapi install-utils install-man install-strip \

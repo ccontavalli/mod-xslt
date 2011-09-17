@@ -1,4 +1,11 @@
 ALL SORTS OF TODO ITEMS
+- drop support for apache 1.3
+- do we want support for other web servers?
+- add support for showing the error on the 500 page.
+- make sure yaslt parameters work as the should.
+  (mailing list says that only the first 11 bytes are accessible,
+  reports of crashes).
+- make sure networking is never used to validate pages.
 - c99 strip, has been renamed, and refers to MXSLT_DEBUG.
   Should update docs and regular expressions.
 - add support to retrieve ENVIRONMENT variables from xslt
