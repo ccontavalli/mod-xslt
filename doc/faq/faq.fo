@@ -208,7 +208,7 @@ mxslt_debug_firstlevel
                 <fo:basic-link internal-destination="1.8">
 			-
     Hem.. I don't like to have a comment in my HTML output stating 
-    the page was parsed with mod-xslt. How can I disable it?
+    that the page was parsed with mod-xslt. How can I disable it?
     </fo:basic-link>
               </fo:block>
             </fo:block>
@@ -873,28 +873,13 @@ mxslt_debug_firstlevel
           <fo:block id="1.8">
             <fo:block font-weight="bold">1.8<fo:basic-link internal-destination="I1.8"><fo:inline id=""/></fo:basic-link>
     Hem.. I don't like to have a comment in my HTML output stating 
-    the page was parsed with mod-xslt. How can I disable it?
+    that the page was parsed with mod-xslt. How can I disable it?
     </fo:block>
             <fo:block margin-left="10pt" space-after="0.5em" margin-right="10pt">
     <fo:block>
-      At time of writing, to disable the ``signature'' at the end
-      of the page, you can either recompile mod-xslt with the MXSLT_DISABLE_SIGNATURE
-      macro defined, or use the ``XSLTDisableSignature on'' parameter, working both
-      in apache 1.3 and 2.x.x.
-    </fo:block>
-    <fo:block>
-      If you want to recompile, you should run: ./configure CFLAGS="-DMXSLT_DISABLE_SIGNATURE" ...,
-      or, CFLAGS="-DMXSLT_DISABLE_SIGNATURE" make or make CFLAGS="-DMXSLT_DISABLE_SIGNATURE",
-      depending on your shell or your own taste...
-    </fo:block>
-
-    <fo:block>
-      To use the run-time parameter, read the section in the manual related to the web
-      server you are using. Most likely, you will need to add a line like:
-      
-        XSLTDisableSignature on
-      
-      in your configuration file.
+    Latest version of mod-xslt don't add any comment at the end of your
+    page. Just upgrade :). If you still see comments, they must be added
+    by something else.
     </fo:block>
     </fo:block>
           </fo:block>
@@ -913,7 +898,7 @@ mxslt_debug_firstlevel
     have a problem in handling doctype-public and doctype-system
     attributes in the &lt;xsl:output element. If you can't install/don't
     have any newer version, you can either:
-    <fo:block><fo:list-block margin-left="10pt" provisional-distance-between-starts="7mm" provisional-label-separation="2mm" start-indent="2mm" space-before.optimum="4pt" space-after.optimum="4pt"><fo:list-item><fo:list-item-label end-indent="label-end()"><fo:block font-family="Courier" font-size="15pt" line-height="14pt" padding-before="2pt">•</fo:block></fo:list-item-label><fo:list-item-body start-indent="body-start()"><fo:block>remove any of doctype-public or doctype-system attributes</fo:block></fo:list-item-body></fo:list-item><fo:list-item><fo:list-item-label end-indent="label-end()"><fo:block font-family="Courier" font-size="15pt" line-height="14pt" padding-before="2pt">•</fo:block></fo:list-item-label><fo:list-item-body start-indent="body-start()"><fo:block>change the xsl:output method to html, instead of xml</fo:block></fo:list-item-body></fo:list-item><fo:list-item><fo:list-item-label end-indent="label-end()"><fo:block font-family="Courier" font-size="15pt" line-height="14pt" padding-before="2pt">•</fo:block></fo:list-item-label><fo:list-item-body start-indent="body-start()"><fo:block>recompile mod-xslt with something like: CFLAGS='-DMXSLT_DISABLE_SIGNATURE' make</fo:block></fo:list-item-body></fo:list-item></fo:list-block></fo:block>
+    <fo:block><fo:list-block margin-left="10pt" provisional-distance-between-starts="7mm" provisional-label-separation="2mm" start-indent="2mm" space-before.optimum="4pt" space-after.optimum="4pt"><fo:list-item><fo:list-item-label end-indent="label-end()"><fo:block font-family="Courier" font-size="15pt" line-height="14pt" padding-before="2pt">•</fo:block></fo:list-item-label><fo:list-item-body start-indent="body-start()"><fo:block>remove any of doctype-public or doctype-system attributes</fo:block></fo:list-item-body></fo:list-item><fo:list-item><fo:list-item-label end-indent="label-end()"><fo:block font-family="Courier" font-size="15pt" line-height="14pt" padding-before="2pt">•</fo:block></fo:list-item-label><fo:list-item-body start-indent="body-start()"><fo:block>change the xsl:output method to html, instead of xml</fo:block></fo:list-item-body></fo:list-item></fo:list-block></fo:block>
     </fo:block>
           </fo:block>
           <fo:block id="2.2">

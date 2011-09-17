@@ -168,29 +168,14 @@ mxslt_debug_firstlevel
   <entry>
     <question>
     Hem.. I don't like to have a comment in my HTML output stating 
-    the page was parsed with mod-xslt. How can I disable it?
+    that the page was parsed with mod-xslt. How can I disable it?
     </question>
 
     <answer>
     <p>
-      At time of writing, to disable the ``signature'' at the end
-      of the page, you can either recompile mod-xslt with the MXSLT_DISABLE_SIGNATURE
-      macro defined, or use the ``XSLTDisableSignature on'' parameter, working both
-      in apache 1.3 and 2.x.x.
-    </p>
-    <p>
-      If you want to recompile, you should run: ./configure CFLAGS="-DMXSLT_DISABLE_SIGNATURE" ...,
-      or, CFLAGS="-DMXSLT_DISABLE_SIGNATURE" make or make CFLAGS="-DMXSLT_DISABLE_SIGNATURE",
-      depending on your shell or your own taste...
-    </p>
-
-    <p>
-      To use the run-time parameter, read the section in the manual related to the web
-      server you are using. Most likely, you will need to add a line like:
-      <screen>
-        XSLTDisableSignature on
-      </screen>
-      in your configuration file.
+    Latest version of mod-xslt don't add any comment at the end of your
+    page. Just upgrade :). If you still see comments, they must be added
+    by something else.
     </p>
     </answer>
   </entry>
@@ -213,7 +198,6 @@ mxslt_debug_firstlevel
     <itemize>
       <item>remove any of doctype-public or doctype-system attributes</item>
       <item>change the xsl:output method to html, instead of xml</item>
-      <item>recompile mod-xslt with something like: CFLAGS='-DMXSLT_DISABLE_SIGNATURE' make</item>
     </itemize>
     </answer>
   </entry>

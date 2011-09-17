@@ -19,7 +19,7 @@
 #
 
 
-XSLTPROC=xsltproc
+XSLTPROC=xsltproc -nonet
 
 all: faq.html faq.fo faq.pdf faq.ps faq.ps.gz
 
@@ -30,10 +30,10 @@ faq.ps.gz: faq.ps
 	gzip -9c ./faq.ps > ./faq.ps.gz
 
 faq.html: faq.xml ./xslt/faq-html.xsl ./dtd/faq.dtd
-	xsltproc ./xslt/faq-html.xsl ./faq.xml > faq.html
+	$(XSLTPROC) ./xslt/faq-html.xsl ./faq.xml > faq.html
 
 faq.fo: faq.xml ./xslt/faq-fo.xsl ./dtd/faq.dtd
-	xsltproc ./xslt/faq-fo.xsl ./faq.xml > faq.fo
+	$(XSLTPROC) ./xslt/faq-fo.xsl ./faq.xml > faq.fo
 
 faq.pdf: faq.fo 
 	fop -fo ./faq.fo -pdf ./faq.pdf
