@@ -459,9 +459,9 @@ xmlParserInputPtr mxslt_sax_resolve_entity(void * ctx, const xmlChar * publicId,
 
      /* In resolve entity */
   id=mxslt_yy_str_parse(document, (char *)systemId, strlen((char *)systemId));
-  mxslt_debug_print(document, MXSLT_DBG_LIBXML, "%s needs entity publicId: %s, systemId: %s", 
+  mxslt_debug_print(document, MXSLT_DBG_LIBXML, "%s needs entity publicId: %s, systemId: %s\n", 
 	base, mxslt_debug_string(publicId), mxslt_debug_string(systemId));
-  mxslt_debug_print(document, MXSLT_DBG_LIBXML | MXSLT_DBG_DEBUG, "base: %s, filename: %s, directory: %s",
+  mxslt_debug_print(document, MXSLT_DBG_LIBXML | MXSLT_DBG_DEBUG, "base: %s, filename: %s, directory: %s\n",
 	base, mxslt_debug_string(ctxt->input->filename), mxslt_debug_string(ctxt->directory));
 
   if(mxslt_debug_level(document, MXSLT_DBG_LIBXML | MXSLT_DBG_DEBUG | MXSLT_DBG_VERBOSE1)) 
