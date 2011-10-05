@@ -129,7 +129,7 @@ typedef struct mxslt_shoot_t mxslt_shoot_t;
 typedef struct mxslt_doc_t mxslt_doc_t;
 typedef struct mxslt_state_t mxslt_state_t;
 
-typedef struct mxslt_http_handler_t mxslt_http_handler_t;
+typedef struct mxslt_url_handler_t mxslt_url_handler_t;
 
 struct mxslt_shoot_t {
   mxslt_state_t * mxslt_state;
@@ -198,21 +198,20 @@ struct mxslt_doc_t {
 # include "modxslt-memory.h"
 # include "modxslt-debug.h"
 
-/* typedef int (*mxslt_http_data_get_t)(struct mxslt_doc_t **, void **, mxslt_recursion_t **); */
-typedef int (*mxslt_http_handle_f)(struct mxslt_doc_t *, void **, void *, const char *);
-typedef int (*mxslt_http_open_f)(struct mxslt_doc_t *, void *, void *, const char **, void **);
-typedef int (*mxslt_http_read_f)(struct mxslt_doc_t *, void *, const char *, int);
-typedef int (*mxslt_http_close_f)(struct mxslt_doc_t *, void *);
+typedef int (*mxslt_url_handle_f)(struct mxslt_doc_t *, void **, void *, const char *);
+typedef int (*mxslt_url_open_f)(struct mxslt_doc_t *, void *, void *, const char **, void **);
+typedef int (*mxslt_url_read_f)(struct mxslt_doc_t *, void *, const char *, int);
+typedef int (*mxslt_url_close_f)(struct mxslt_doc_t *, void *);
 
-struct mxslt_http_handler_t {
-  mxslt_http_handle_f handle;
-  mxslt_http_close_f close;
-  mxslt_http_read_f read;
-  mxslt_http_open_f open;
+struct mxslt_url_handler_t {
+  mxslt_url_handle_f handle;
+  mxslt_url_close_f close;
+  mxslt_url_read_f read;
+  mxslt_url_open_f open;
 };
 
 struct mxslt_state_t {
-  mxslt_http_handler_t http_handler;
+  mxslt_url_handler_t http_handler;
 
   struct mxslt_recursion_t * recursion;
   struct mxslt_doc_t * document;
@@ -221,7 +220,7 @@ struct mxslt_state_t {
 
   /* Keeps the function pointers
    * used by sapi to override http handling */
-# define MXSLT_HTTP_HANDLER_INIT { mxslt_http_handle, NULL, NULL, NULL }
+# define MXSLT_HTTP_HANDLER_INIT { mxslt_url_handle, NULL, NULL, NULL }
 
   /* Holds the current global state of the library */
 # define MXSLT_STATE_INIT { MXSLT_HTTP_HANDLER_INIT, NULL, NULL, NULL }
@@ -273,7 +272,7 @@ typedef struct mxslt_var_t {
 
   /* Used to call http handlers */
 # ifdef HAVE_PTHREADS
-#  define mxslt_global_http_state (*(mxslt_http_handler_t *)(pthread_getspecific(mxslt_global_http_handler)))
+#  define mxslt_global_http_state (*(mxslt_url_handler_t *)(pthread_getspecific(mxslt_global_http_handler)))
 # else /* HAVE_PTHREADS */
 #  define mxslt_global_http_state mxslt_global_http_handler
 # endif

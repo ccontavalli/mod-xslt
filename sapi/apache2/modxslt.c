@@ -43,8 +43,8 @@ static void mxslt_ectxt_destroy(void * state) {
 }
 
 static void mxslt_recursion_destroy(void * state) {
-  mxslt_http_recurse_pop((mxslt_recursion_t *)state, 
-			 mxslt_http_recurse_level((mxslt_recursion_t *)state));
+  mxslt_url_recurse_pop((mxslt_recursion_t *)state, 
+			 mxslt_url_recurse_level((mxslt_recursion_t *)state));
   xfree(state);
 }
 
@@ -163,7 +163,7 @@ static apr_status_t mxslt_ap2_out_filter(ap_filter_t *f, apr_bucket_brigade *bri
   recursion=get;
 
     /* Verify we are allowed to walk this uri */
-  status=mxslt_http_recurse_allowed(recursion, f->r->uri);
+  status=mxslt_url_recurse_allowed(recursion, f->r->uri);
   if(status != MXSLT_OK) {
     if(status == MXSLT_MAX_LEVEL) 
       ap_log_rerror(APLOG_MARK, APLOG_ERR, 0, f->r, 
@@ -171,16 +171,16 @@ static apr_status_t mxslt_ap2_out_filter(ap_filter_t *f, apr_bucket_brigade *bri
     else
       ap_log_rerror(APLOG_MARK, APLOG_ERR, 0, f->r, 
 	   MXSLT_NAME ": loop detected while processing %s", f->r->uri);
-    mxslt_http_recurse_dump(recursion, &mxslt_ap2_outputter, f->r);
+    mxslt_url_recurse_dump(recursion, &mxslt_ap2_outputter, f->r);
       
     status=HTTP_INTERNAL_SERVER_ERROR;
     goto error;
   }
 
     /* Parse data, avoiding loops */
-  mxslt_http_recurse_push(recursion, f->r->uri);
+  mxslt_url_recurse_push(recursion, f->r->uri);
   status=mxslt_ap2_file_parse(f, data, defaultstyle, forcestyle, conf);
-  mxslt_http_recurse_pop(recursion, 1);
+  mxslt_url_recurse_pop(recursion, 1);
 
   if(status == HTTP_OK)
     return ap_pass_brigade(f->next, f->ctx);

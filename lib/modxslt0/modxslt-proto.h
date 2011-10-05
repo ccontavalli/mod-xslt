@@ -30,9 +30,9 @@ extern const struct mxslt_opr_t *mxslt_opr_cmp_lookup(char *str);
 extern const struct mxslt_opr_t *mxslt_opr_bool_lookup(char *str);
 
 # ifdef MXSLT_LIBXML_HTTP_STATUS
-extern void * mxslt_http_real_open(mxslt_doc_t *, char *);
+extern void * mxslt_url_real_open(mxslt_doc_t *, char *);
 # else
-#  define mxslt_http_real_open(doc, uri) xmlNanoHTTPMethodRedir(uri, NULL, NULL, NULL, NULL, NULL, 0)
+#  define mxslt_url_real_open(doc, uri) xmlNanoHTTPMethodRedir(uri, NULL, NULL, NULL, NULL, NULL, 0)
 # endif
 
 /* ./modxslt-url.c */
@@ -55,8 +55,8 @@ extern int mxslt_doc_parse_stylesheet(mxslt_doc_t *document, char *media, int fl
 extern xsltStylesheetPtr mxslt_doc_load_stylesheet_file(mxslt_doc_t *document, char *file);
 extern int mxslt_doc_load_stylesheet(mxslt_doc_t *document, char *href);
 extern int mxslt_doc_parse_pi(mxslt_doc_t *document);
-extern void mxslt_xml_init(mxslt_shoot_t *, mxslt_http_handle_f, mxslt_http_open_f, 
-			   mxslt_http_close_f, mxslt_http_read_f);
+extern void mxslt_xml_init(mxslt_shoot_t *, mxslt_url_handle_f, mxslt_url_open_f, 
+			   mxslt_url_close_f, mxslt_url_read_f);
 extern void mxslt_xml_done(mxslt_shoot_t * shoot);
 
 /* ./modxslt-io.c */
@@ -85,20 +85,20 @@ extern mxslt_state_t * mxslt_get_state(void);
 extern mxslt_state_t * mxslt_global_state;
 # endif
 
-extern int mxslt_http_match(const char *);
+extern int mxslt_url_match(const char *);
 extern int mxslt_local_match(const char *);
-extern void * mxslt_http_open(const char *);
+extern void * mxslt_url_open(const char *);
 extern void * mxslt_local_open(const char *);
-extern int mxslt_http_read(void *, char *, int);
-extern int mxslt_http_close(void *);
+extern int mxslt_url_read(void *, char *, int);
+extern int mxslt_url_close(void *);
 extern void mxslt_xml_load(void);
 extern void mxslt_xml_unload(void);
 
-# define mxslt_http_recurse_level(rec) ((rec)->rec_level)
-extern int mxslt_http_recurse_allowed(mxslt_recursion_t *, const char * uri);
-extern void mxslt_http_recurse_push(mxslt_recursion_t *, const char * uri); 
-extern void mxslt_http_recurse_pop(mxslt_recursion_t *, int n); 
-extern void mxslt_http_recurse_dump(mxslt_recursion_t *, void (*)(void *, char *, ...), void *);
+# define mxslt_url_recurse_level(rec) ((rec)->rec_level)
+extern int mxslt_url_recurse_allowed(mxslt_recursion_t *, const char * uri);
+extern void mxslt_url_recurse_push(mxslt_recursion_t *, const char * uri); 
+extern void mxslt_url_recurse_pop(mxslt_recursion_t *, int n); 
+extern void mxslt_url_recurse_dump(mxslt_recursion_t *, void (*)(void *, char *, ...), void *);
 
 extern void mxslt_state_init(mxslt_shoot_t *);
 extern void mxslt_recursion_init(mxslt_recursion_t * rec);

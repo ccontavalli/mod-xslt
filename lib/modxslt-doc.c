@@ -61,7 +61,7 @@ mxslt_state_t * mxslt_global_state = NULL;
 
 
   /* Used as a simple yaslt http handler function */
-int mxslt_http_handle(mxslt_doc_t * doc, void ** fuffa, void * foo, const char * bar) { 
+int mxslt_url_handle(mxslt_doc_t * doc, void ** fuffa, void * foo, const char * bar) { 
   return MXSLT_FALSE;
 }
 
@@ -1321,8 +1321,8 @@ void mxslt_xml_load(void) {
   return;
 }
 
-void mxslt_xml_init(mxslt_shoot_t * shoot, mxslt_http_handle_f handle, mxslt_http_open_f open, 
-		    mxslt_http_close_f close, mxslt_http_read_f read) {
+void mxslt_xml_init(mxslt_shoot_t * shoot, mxslt_url_handle_f handle, mxslt_url_open_f open, 
+		    mxslt_url_close_f close, mxslt_url_read_f read) {
   static const mxslt_state_t base = MXSLT_STATE_INIT;
 #ifdef HAVE_LIBXML_THREADS
   xmlGlobalStatePtr prev_xml_state=NULL;
@@ -1357,7 +1357,7 @@ void mxslt_xml_init(mxslt_shoot_t * shoot, mxslt_http_handle_f handle, mxslt_htt
 
     /* IF an handler is provided */
   shoot->mxslt_state=xmalloc(sizeof(mxslt_state_t));
-  memcpy(shoot->mxslt_state, &base, sizeof(mxslt_http_handler_t));
+  memcpy(shoot->mxslt_state, &base, sizeof(mxslt_url_handler_t));
   if(handle) {
     shoot->mxslt_state->http_handler.handle=handle;
     shoot->mxslt_state->http_handler.close=close;
@@ -1365,8 +1365,8 @@ void mxslt_xml_init(mxslt_shoot_t * shoot, mxslt_http_handle_f handle, mxslt_htt
     shoot->mxslt_state->http_handler.open=open;
   } 
 
-  xmlRegisterInputCallbacks(mxslt_http_match, mxslt_http_open, mxslt_http_read,  mxslt_http_close);
-  xmlRegisterInputCallbacks(mxslt_local_match, mxslt_local_open, mxslt_http_read,  mxslt_http_close);
+  xmlRegisterInputCallbacks(mxslt_url_match, mxslt_url_open, mxslt_url_read,  mxslt_url_close);
+  xmlRegisterInputCallbacks(mxslt_local_match, mxslt_local_open, mxslt_url_read,  mxslt_url_close);
 
 #ifdef HAVE_LIBXML_THREADS
   xmlSetGlobalState(prev_xml_state, (xmlGlobalStatePtr *)&(shoot->xml_state));
@@ -1407,7 +1407,7 @@ void mxslt_xml_done(mxslt_shoot_t * shoot) {
   /* Ok, http functions of libxml reads the document
    * even when a 400 or 500 status is returned from
    * the server. This is not what I want */
-void * mxslt_http_real_open(mxslt_doc_t * doc, char * uri) {
+void * mxslt_url_real_open(mxslt_doc_t * doc, char * uri) {
   xmlNanoHTTPCtxt * retval;
 
     /* Open up http connection */
@@ -1435,7 +1435,7 @@ int mxslt_local_match(const char * filename) {
   /* open a local:// url */
 void * mxslt_local_open(const char * uri) {
   mxslt_state_t * state=mxslt_get_state();
-  mxslt_http_t * retval;
+  mxslt_url_t * retval;
   char * uri_new;
   char * uri_mine=NULL;
   char * uri_try=NULL;
@@ -1450,10 +1450,10 @@ void * mxslt_local_open(const char * uri) {
   context=state->ctx;
 
     /* Open up URL */
-  retval=xmalloc(sizeof(mxslt_http_t)); 
+  retval=xmalloc(sizeof(mxslt_url_t)); 
 
     /* Check we didn't reach maximum recursion level */
-  if(mxslt_http_recurse_allowed(recursion, uri) != MXSLT_OK) {
+  if(mxslt_url_recurse_allowed(recursion, uri) != MXSLT_OK) {
     mxslt_error(doc, "maximum recursion level reached or uri already walked for: %s\n", uri);
     retval->handled=MXSLT_FAILURE;
 
@@ -1495,10 +1495,10 @@ void * mxslt_local_open(const char * uri) {
      * Otherwise, build an uri starting from base */
   if(uri_try == NULL) {
     uri_try=(char *)xmlBuildURI((xmlChar *)uri+mxslt_sizeof_str("local://"), (xmlChar *)doc->localurl);
-    retval->data=mxslt_http_real_open(doc, (char *)uri_try);
+    retval->data=mxslt_url_real_open(doc, (char *)uri_try);
     xmlFree(uri_try);
   } else {
-    retval->data=mxslt_http_real_open(doc, (char *)uri_try);
+    retval->data=mxslt_url_real_open(doc, (char *)uri_try);
   }
 
     /* free up local uri, if any */
@@ -1516,11 +1516,11 @@ void * mxslt_local_open(const char * uri) {
 }
 
   /* This is to avoid ugly libxml hacks */
-int mxslt_http_match(const char * filename) {
+int mxslt_url_match(const char * filename) {
   return xmlIOHTTPMatch(filename);
 }
 
-int mxslt_http_recurse_allowed(mxslt_recursion_t * recursion, const char * uri) {
+int mxslt_url_recurse_allowed(mxslt_recursion_t * recursion, const char * uri) {
   mxslt_table_record_t * cur_record;
 
     /* Check we didn't pass maximum recursion level */
@@ -1534,7 +1534,7 @@ int mxslt_http_recurse_allowed(mxslt_recursion_t * recursion, const char * uri) 
   return MXSLT_OK;
 }
 
-void mxslt_http_recurse_dump(mxslt_recursion_t * recursion, void (*outputter)(void *, char *, ...), void * data) {
+void mxslt_url_recurse_dump(mxslt_recursion_t * recursion, void (*outputter)(void *, char *, ...), void * data) {
   mxslt_table_record_t * cur_record=(recursion->rec_lastrecord);
   int i;
 
@@ -1544,13 +1544,13 @@ void mxslt_http_recurse_dump(mxslt_recursion_t * recursion, void (*outputter)(vo
     outputter(data, " * %02d - %s", i, cur_record->key);
 }
 
-void mxslt_http_recurse_push(mxslt_recursion_t * recurse, const char * uri) {
+void mxslt_url_recurse_push(mxslt_recursion_t * recurse, const char * uri) {
     /* Update loop avoiding variables */
   mxslt_table_insert(&(recurse->rec_table), &(recurse->rec_lastrecord), xstrdup(uri), (recurse->rec_lastrecord));
   (recurse->rec_level)++;
 }
 
-void mxslt_http_recurse_pop(mxslt_recursion_t * recurse, int n) {
+void mxslt_url_recurse_pop(mxslt_recursion_t * recurse, int n) {
   mxslt_table_record_t * cur_record;
 
     /* update loop avoiding variables */
@@ -1573,27 +1573,25 @@ void mxslt_http_recurse_pop(mxslt_recursion_t * recurse, int n) {
    *	  We use a weird approach here: we tell libxml everything
    *	  is all right, and then fail the first read... it really
    *	  is a libxml upstream problem... */
-void * mxslt_http_open(const char * uri) {
+void * mxslt_url_open(const char * uri) {
   mxslt_state_t * state=mxslt_get_state();
-  mxslt_http_t * retval;
+  mxslt_url_t * retval;
   mxslt_doc_t * doc;
   mxslt_recursion_t * recursion;
   char * uri_new=(char *)uri;
   void * context, * store = NULL;
   int status;
-/*  xmlURI * URI; */
 
     /* Get needed globals */
   doc=state->document;
   recursion=state->recursion;
   context=state->ctx;
-  /* mxslt_sapi_http_data_get(&doc, &context, &recursion);*/
 
      /* Open up URL */
-  retval=xmalloc(sizeof(mxslt_http_t));
+  retval=xmalloc(sizeof(mxslt_url_t));
     
     /* Check we didn't reach maximum recursion level */
-  if(mxslt_http_recurse_allowed(recursion, uri) != MXSLT_OK) {
+  if(mxslt_url_recurse_allowed(recursion, uri) != MXSLT_OK) {
     mxslt_error(doc, "maximum recursion level reached or url already walked for: %s\n", uri); 
     retval->handled=MXSLT_FAILURE;
 
@@ -1612,12 +1610,12 @@ void * mxslt_http_open(const char * uri) {
 	return retval;
 
       case MXSLT_SKIP:
-        retval->data=mxslt_http_real_open(doc, (char *)uri_new);
+        retval->data=mxslt_url_real_open(doc, (char *)uri_new);
 	break;
     }
   } else {
     retval->handled=MXSLT_SKIP;
-    retval->data=mxslt_http_real_open(doc, (char *)uri);
+    retval->data=mxslt_url_real_open(doc, (char *)uri);
   }
 
     /* Check if open was succesfull */
@@ -1629,18 +1627,18 @@ void * mxslt_http_open(const char * uri) {
   }
 
     /* Update variables to avoid loops */
-  mxslt_http_recurse_push(recursion, uri_new);
+  mxslt_url_recurse_push(recursion, uri_new);
   return (void *)retval;
 }
 
-int mxslt_http_read(void * ptr, char * buffer, int len) {
-  mxslt_http_t * ctx=(mxslt_http_t *)ptr;
+int mxslt_url_read(void * ptr, char * buffer, int len) {
+  mxslt_url_t * ctx=(mxslt_url_t *)ptr;
   mxslt_doc_t * doc=mxslt_get_state()->document;
 
   if(ctx == NULL) 
     return 0;
 
-    /* XXX: read the comment about mxslt_http_open */
+    /* XXX: read the comment about mxslt_url_open */
   if(ctx->handled == MXSLT_FAILURE) {
     errno=EIO;
     return -1;
@@ -1652,9 +1650,9 @@ int mxslt_http_read(void * ptr, char * buffer, int len) {
   return xmlIOHTTPRead(ctx->data, (char *)buffer, len);
 }
 
-int mxslt_http_close(void * ptr) {
+int mxslt_url_close(void * ptr) {
   mxslt_state_t * state=mxslt_get_state();
-  mxslt_http_t * ctx=(mxslt_http_t *)ptr;
+  mxslt_url_t * ctx=(mxslt_url_t *)ptr;
   mxslt_recursion_t * recursion;
   int retval=0;
   mxslt_doc_t * doc;
@@ -1686,7 +1684,7 @@ int mxslt_http_close(void * ptr) {
   xfree(ctx);
 
     /* Done... good, un recurse from site */
-  mxslt_http_recurse_pop(recursion, 1);
+  mxslt_url_recurse_pop(recursion, 1);
 
   return retval;
 }

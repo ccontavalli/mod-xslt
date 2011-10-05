@@ -199,10 +199,10 @@ static int mxslt_ap1_http_open(mxslt_doc_t * doc, void * store, void * context, 
   }
 
   realuri=(char *)*uri;
-  reclevel=mxslt_http_recurse_level(doc->state->recursion);
+  reclevel=mxslt_url_recurse_level(doc->state->recursion);
   while(1) {
     if(!tmpreq) {
-      mxslt_http_recurse_pop(doc->state->recursion, (mxslt_http_recurse_level(doc->state->recursion))-(reclevel)); 
+      mxslt_url_recurse_pop(doc->state->recursion, (mxslt_url_recurse_level(doc->state->recursion))-(reclevel)); 
       return MXSLT_FAILURE;
     }
 
@@ -214,24 +214,24 @@ static int mxslt_ap1_http_open(mxslt_doc_t * doc, void * store, void * context, 
     realuri=(char *)ap_table_get(subr->headers_in, "Location");
 
       /* Check if we already walked the new uri */
-    if(mxslt_http_recurse_allowed(doc->state->recursion, realuri) != MXSLT_OK) {
+    if(mxslt_url_recurse_allowed(doc->state->recursion, realuri) != MXSLT_OK) {
         /* Output error */
       mxslt_error(doc, "warning - maximum recursion level reached" 
 		       "or url already walked: %s (%s)\n", realuri, *uri);
       ap_destroy_sub_req(tmpreq);
 
         /* Dump stack trace */
-      mxslt_http_recurse_dump(doc->state->recursion, &mxslt_ap1_outputter, r); 
+      mxslt_url_recurse_dump(doc->state->recursion, &mxslt_ap1_outputter, r); 
 
         /* Pop last walked urls */
-      mxslt_http_recurse_pop(doc->state->recursion, (mxslt_http_recurse_level(doc->state->recursion))-(reclevel)); 
+      mxslt_url_recurse_pop(doc->state->recursion, (mxslt_url_recurse_level(doc->state->recursion))-(reclevel)); 
 
       return MXSLT_FAILURE;
     }
 
       /* Check if we can handle the uri */
     if(mxslt_ap1_http_handle(doc, &store, context, realuri) == MXSLT_FALSE) {
-      mxslt_http_recurse_pop(doc->state->recursion, (mxslt_http_recurse_level(doc->state->recursion))-(reclevel)); 
+      mxslt_url_recurse_pop(doc->state->recursion, (mxslt_url_recurse_level(doc->state->recursion))-(reclevel)); 
 
         /* Uhm... can we do this? eg, if we destroy the sub request, are
 	 * we sure location will survive? make sure by copying the uri in
@@ -250,7 +250,7 @@ static int mxslt_ap1_http_open(mxslt_doc_t * doc, void * store, void * context, 
     fd=open(tmpfile, O_RDWR | O_TRUNC);
     if(fd < 0) {
       ap_destroy_sub_req(tmpreq);
-      mxslt_http_recurse_pop(doc->state->recursion, (mxslt_http_recurse_level(doc->state->recursion))-(reclevel)); 
+      mxslt_url_recurse_pop(doc->state->recursion, (mxslt_url_recurse_level(doc->state->recursion))-(reclevel)); 
 
       return MXSLT_FAILURE;
     }
@@ -259,10 +259,10 @@ static int mxslt_ap1_http_open(mxslt_doc_t * doc, void * store, void * context, 
     tmpreq=mxslt_ap1_sub_request(config, r, fd, &(data->ip), &(data->URI), &status);
 
       /* Remember we already walked this uri */
-    mxslt_http_recurse_push(doc->state->recursion, realuri);
+    mxslt_url_recurse_push(doc->state->recursion, realuri);
   } 
     /* Forget about those urls */
-  mxslt_http_recurse_pop(doc->state->recursion, (mxslt_http_recurse_level(doc->state->recursion))-(reclevel)); 
+  mxslt_url_recurse_pop(doc->state->recursion, (mxslt_url_recurse_level(doc->state->recursion))-(reclevel)); 
 
     /* Check request was succesful */
   if(tmpreq->status != HTTP_OK) {
@@ -347,7 +347,7 @@ static int mxslt_ap1_fixup(request_rec * r) {
 		    mxslt_debug_string(r->uri), mxslt_debug_string(type));
     }
 
-    status=mxslt_http_recurse_allowed(recursion, r->uri);
+    status=mxslt_url_recurse_allowed(recursion, r->uri);
     if(status != MXSLT_OK) {
       if(status == MXSLT_MAX_LEVEL)
         ap_log_rerror(APLOG_MARK, APLOG_ERR | APLOG_NOERRNO, r, 
@@ -355,7 +355,7 @@ static int mxslt_ap1_fixup(request_rec * r) {
       else
         ap_log_rerror(APLOG_MARK, APLOG_ERR | APLOG_NOERRNO, r, 
             MXSLT_NAME ": loop detected while processing %s", r->uri);
-      mxslt_http_recurse_dump(recursion, &mxslt_ap1_outputter, r);
+      mxslt_url_recurse_dump(recursion, &mxslt_ap1_outputter, r);
 
       return HTTP_RECURSION_ERROR;
     }
@@ -385,7 +385,7 @@ static int mxslt_ap1_std_handler(request_rec * r) {
     return DECLINED;
 
     /* Check if we already opened this file */
-  status=mxslt_http_recurse_allowed(recursion, r->filename);
+  status=mxslt_url_recurse_allowed(recursion, r->filename);
   if(status != MXSLT_OK) {
     if(status == MXSLT_MAX_LEVEL)
       ap_log_rerror(APLOG_MARK, APLOG_ERR | APLOG_NOERRNO, r, 
@@ -393,12 +393,12 @@ static int mxslt_ap1_std_handler(request_rec * r) {
     else
       ap_log_rerror(APLOG_MARK, APLOG_ERR | APLOG_NOERRNO, r, 
             MXSLT_NAME ": loop detected while processing %s", r->uri);
-    mxslt_http_recurse_dump(recursion, &mxslt_ap1_outputter, r);
+    mxslt_url_recurse_dump(recursion, &mxslt_ap1_outputter, r);
 
     return HTTP_RECURSION_ERROR;
   }
 
-  mxslt_http_recurse_push(recursion, r->filename);
+  mxslt_url_recurse_push(recursion, r->filename);
 
     /* Get mime type of the stuff we are going to process */
   if(r->content_type) 
@@ -423,7 +423,7 @@ static int mxslt_ap1_std_handler(request_rec * r) {
 
   status=mxslt_ap1_file_parse(config, r, r->filename, defaultstyle, forcestyle);
 
-  mxslt_http_recurse_pop(recursion, 1);
+  mxslt_url_recurse_pop(recursion, 1);
 
   return status;
 }
@@ -555,11 +555,11 @@ static int mxslt_ap1_dyn_handler(request_rec * r) {
     /* Request is not pushed from fixup handler because it
      * is sometimes called just to check the kind of output
      * that would be generated by the handler (directory index) */
-  mxslt_http_recurse_push(recursion, r->uri);
+  mxslt_url_recurse_push(recursion, r->uri);
 
     /* Parse document */ 
   status=mxslt_ap1_file_parse(config, r, tmpfile, defaultstyle, forcestyle);
-  mxslt_http_recurse_pop(recursion, 1);
+  mxslt_url_recurse_pop(recursion, 1);
 
   return status;
 }
@@ -628,11 +628,11 @@ static int mxslt_ap1_frc_handler(request_rec * r) {
     /* Request is not pushed from fixup handler because fixup
      * is sometimes called just to check the kind of output
      * that would be generated by the handler (directory index) */
-  mxslt_http_recurse_push(recursion, r->uri);
+  mxslt_url_recurse_push(recursion, r->uri);
 
     /* Parse document */ 
   status=mxslt_ap1_file_parse(config, r, tmpfile, defaultstyle, forcestyle);
-  mxslt_http_recurse_pop(recursion, 1);
+  mxslt_url_recurse_pop(recursion, 1);
 
   return status;
 }

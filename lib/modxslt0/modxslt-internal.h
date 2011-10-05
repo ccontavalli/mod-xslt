@@ -74,10 +74,10 @@ typedef struct mxslt_pi_base_t {
 
   /* Keeps temporary state 
    * of a wrapper http handler */
-typedef struct mxslt_http_t {
+typedef struct mxslt_url_t {
   int handled;
   void * data;
-} mxslt_http_t;
+} mxslt_url_t;
 
 
 
