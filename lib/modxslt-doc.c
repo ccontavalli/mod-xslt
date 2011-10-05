@@ -1049,7 +1049,7 @@ xsltStylesheetPtr mxslt_doc_load_stylesheet_file(mxslt_doc_t * document, char * 
 
   mxslt_debug_print(document, MXSLT_DBG_LIBXML, "loading stylesheet: %s", mxslt_debug_string(file));
   mxslt_debug_print(document, MXSLT_DBG_LIBXML | MXSLT_DBG_DEBUG, 
-		    	"stylesheet - base: %s, name (server): %s, path: %s\n", mxslt_debug_string((char *)base), 
+		    	"stylesheet - base: %s, name (server): %s, path: %s", mxslt_debug_string((char *)base), 
 			mxslt_debug_string((char *)URI->server), mxslt_debug_string((char *)URI->path));
 
   if((URI->fragment != NULL) && (URI->scheme == NULL) &&
@@ -1113,20 +1113,7 @@ int mxslt_doc_load_stylesheet(mxslt_doc_t * document, char * href) {
   mxslt_debug_print(document, MXSLT_DBG_LIBXML | MXSLT_DBG_VERBOSE0,
 		"adjusting url for stylesheet: %s", mxslt_debug_string((char *)href));
 
-    /* Mangle file:// urls */
-  if(!strncmp(href, "file://", mxslt_sizeof_str("file://"))) {
-    mxslt_debug_print(document, MXSLT_DBG_LIBXML | MXSLT_DBG_VERBOSE1,
-		"mangling URL for file:// prefix (%s)", mxslt_debug_string((char *)href));
-
-    base=(char *)document->file->URL;
-    document->file->URL=(xmlChar *)document->localfile;
-	    /* (xmlChar *)xmlStrdup((xmlChar *)base); */
-    href+=mxslt_sizeof_str("file://");
-    document->stylesheet=mxslt_doc_load_stylesheet_file(document, href);
-    document->file->URL=(xmlChar *)base;
-  } else {
-    document->stylesheet=mxslt_doc_load_stylesheet_file(document, href);
-  }
+  document->stylesheet=mxslt_doc_load_stylesheet_file(document, href);
 
   if(document->stylesheet)
     return MXSLT_OK;
@@ -1628,8 +1615,7 @@ void * mxslt_http_open(const char * uri) {
         retval->data=mxslt_http_real_open(doc, (char *)uri_new);
 	break;
     }
-  }
-  else {
+  } else {
     retval->handled=MXSLT_SKIP;
     retval->data=mxslt_http_real_open(doc, (char *)uri);
   }
