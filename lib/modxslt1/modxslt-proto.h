@@ -55,8 +55,8 @@ extern int mxslt_doc_parse_stylesheet(mxslt_doc_t *document, char *media, int fl
 extern xsltStylesheetPtr mxslt_doc_load_stylesheet_file(mxslt_doc_t *document, char *file);
 extern int mxslt_doc_load_stylesheet(mxslt_doc_t *document, char *href);
 extern int mxslt_doc_parse_pi(mxslt_doc_t *document);
-extern void mxslt_xml_init(mxslt_shoot_t *, mxslt_url_handle_f, mxslt_url_open_f, 
-			   mxslt_url_close_f, mxslt_url_read_f);
+extern void mxslt_xml_init(mxslt_shoot_t *, mxslt_url_handler_t* http_handler,
+			   mxslt_url_handler_t* file_handler);
 extern void mxslt_xml_done(mxslt_shoot_t * shoot);
 
 /* ./modxslt-io.c */

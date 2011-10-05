@@ -90,7 +90,7 @@ int main(int argc, char ** argv) {
   mxslt_xml_load();
 
     /* Initialize parsing */
-  mxslt_xml_init(&mxslt_state, NULL, NULL, NULL, NULL);
+  mxslt_xml_init(&mxslt_state, NULL, NULL);
   mxslt_doc_init(&document, APOS("shell"), &mxslt_state, &recursion, mxslt_shell_error, NULL, NULL);
 
     /* Prepare input buffer */

@@ -1035,8 +1035,13 @@ static void mxslt_ap1_init(server_rec * s, pool * p) {
 
 static void mxslt_ap1_child_init(server_rec * s, pool *p) {
   ap_log_error(MXSLT_NAME, 0, APLOG_DEBUG | APLOG_NOERRNO, s, "starting child");
-  mxslt_xml_init(&ap1_mxslt_global_state, mxslt_ap1_http_handle, mxslt_ap1_http_open, 
-		 mxslt_ap1_http_close, mxslt_ap1_http_read);
+  mxslt_url_handler_t http_handler = {
+    mxslt_ap1_http_handle,
+    mxslt_ap1_http_close,
+    mxslt_ap1_http_read,
+    mxslt_ap1_http_open
+  };
+  mxslt_xml_init(&ap1_mxslt_global_state, &http_handler, NULL);
 }
 
 static void mxslt_ap1_child_exit(server_rec * s, pool *p) {

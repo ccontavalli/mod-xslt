@@ -1321,8 +1321,8 @@ void mxslt_xml_load(void) {
   return;
 }
 
-void mxslt_xml_init(mxslt_shoot_t * shoot, mxslt_url_handle_f handle, mxslt_url_open_f open, 
-		    mxslt_url_close_f close, mxslt_url_read_f read) {
+void mxslt_xml_init(mxslt_shoot_t * shoot, mxslt_url_handler_t* http_handler,
+		    mxslt_url_handler_t* file_handler) {
   static const mxslt_state_t base = MXSLT_STATE_INIT;
 #ifdef HAVE_LIBXML_THREADS
   xmlGlobalStatePtr prev_xml_state=NULL;
@@ -1357,13 +1357,9 @@ void mxslt_xml_init(mxslt_shoot_t * shoot, mxslt_url_handle_f handle, mxslt_url_
 
     /* IF an handler is provided */
   shoot->mxslt_state=xmalloc(sizeof(mxslt_state_t));
-  memcpy(shoot->mxslt_state, &base, sizeof(mxslt_url_handler_t));
-  if(handle) {
-    shoot->mxslt_state->http_handler.handle=handle;
-    shoot->mxslt_state->http_handler.close=close;
-    shoot->mxslt_state->http_handler.read=read;
-    shoot->mxslt_state->http_handler.open=open;
-  } 
+  (*shoot->mxslt_state)=base;
+  if(http_handler)
+    shoot->mxslt_state->http_handler=*http_handler;
 
   xmlRegisterInputCallbacks(mxslt_url_match, mxslt_url_open, mxslt_url_read,  mxslt_url_close);
   xmlRegisterInputCallbacks(mxslt_local_match, mxslt_local_open, mxslt_url_read,  mxslt_url_close);

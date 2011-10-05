@@ -96,7 +96,7 @@ static void mxslt_ap2_child_init(apr_pool_t *p, server_rec *s) {
   mxslt_ap2_state_set(state);
   mxslt_ap2_recursion_set(recursion);
 
-  mxslt_xml_init(state, NULL, NULL, NULL, NULL);
+  mxslt_xml_init(state, NULL, NULL);
 
   return;
 }
