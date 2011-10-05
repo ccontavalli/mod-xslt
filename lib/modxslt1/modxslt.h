@@ -47,7 +47,7 @@
 # undef PACKAGE_TARNAME
 # undef PACKAGE_VERSION
 
-# include <modxslt0/modxslt-system.h>
+# include <modxslt1/modxslt-system.h>
 # include "modxslt-version.h"
 # include "modxslt-table.h"
 

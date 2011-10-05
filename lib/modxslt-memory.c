@@ -24,7 +24,7 @@
 #include <stdarg.h>
 #include <stdlib.h>
 
-#include "modxslt0/modxslt.h"
+#include "modxslt1/modxslt.h"
 
 #ifdef HAVE_SYSLOG_H
 # include <syslog.h>

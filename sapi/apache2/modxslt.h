@@ -41,7 +41,7 @@
 # include "apr_lib.h"
 # include "apr_uri.h"
 
-# include <modxslt0/modxslt.h>
+# include <modxslt1/modxslt.h>
 
 # define mxslt_ap2_state_set(data) apr_threadkey_private_set(data, mxslt_ap2_global_state)
 # define mxslt_ap2_state_get(data) apr_threadkey_private_get((void **)data, mxslt_ap2_global_state)

@@ -19,7 +19,7 @@
  */
 
 
-#include "modxslt0/modxslt.h"
+#include "modxslt1/modxslt.h"
 #include <string.h>
 #include <pcre.h>
 #include <errno.h>

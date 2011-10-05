@@ -23,7 +23,7 @@
 # define MXSLT_AP1_H
 
   /* Standard includes */
-# include <modxslt0/modxslt.h>
+# include <modxslt1/modxslt.h>
 # include <assert.h>
 # include <unistd.h>
 # include <stdlib.h>

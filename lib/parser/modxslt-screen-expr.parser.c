@@ -113,7 +113,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../modxslt0/modxslt.h"
+#include "../modxslt1/modxslt.h"
 #include "modxslt-screen-expr.parser.h"
 
 extern int mxslt_expr_yy_lex(YYSTYPE *, YYLTYPE *, void *);

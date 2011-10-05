@@ -22,7 +22,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <errno.h>
-#include <modxslt0/modxslt.h>
+#include <modxslt1/modxslt.h>
 
 void mxslt_shell_error(void * null, const char * msg, ...) {
   va_list args;

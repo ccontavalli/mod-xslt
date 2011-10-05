@@ -102,7 +102,7 @@ uninstall:
 
 
 mod_xslt.so: modxslt-helpers.o modxslt.o 
-	$(LD) $(LDFLAGS) $(LIBS) $^ -lmodxslt0 -o mod_xslt.so
+	$(LD) $(LDFLAGS) $(LIBS) $^ -lmodxslt1 -o mod_xslt.so
 
 modxslt-helpers.o: modxslt-helpers.c modxslt.h
 modxslt.o: modxslt.c modxslt.h

@@ -136,7 +136,7 @@ distclean-parser:
 	$(MAKE) -C parser distclean
 
 distclean-library: clean-library
-	rm -f ./modxslt0/modxslt-system.h
+	rm -f ./modxslt1/modxslt-system.h
 
 tidy: tidy-parser tidy-library
 
@@ -144,7 +144,7 @@ tidy-parser:
 	$(MAKE) -C parser tidy
 
 tidy-library: distclean
-	rm -f $(srcdir)/modxslt0/modxslt-system.h
+	rm -f $(srcdir)/modxslt1/modxslt-system.h
 
 release: release-parser release-library
 

@@ -19,8 +19,8 @@
  */
 
 
-#include "modxslt0/modxslt.h"
-#include "modxslt0/modxslt-internal.h"
+#include "modxslt1/modxslt.h"
+#include "modxslt1/modxslt-internal.h"
 
 #ifdef USE_EXSLT
 # include <libexslt/exslt.h>

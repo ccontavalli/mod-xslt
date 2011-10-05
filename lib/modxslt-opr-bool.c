@@ -19,7 +19,7 @@
  */
 
 
-#include "modxslt0/modxslt.h"
+#include "modxslt1/modxslt.h"
 
 static int mxslt_opr_bool_and(mxslt_doc_t * doc, int val1, int val2) {
   return val1 && val2;

@@ -19,7 +19,7 @@
  */
 
 
-#include "modxslt0/modxslt-table.h"
+#include "modxslt1/modxslt-table.h"
 
 # define MSY_FNV_MAGIC 0x01000193
 

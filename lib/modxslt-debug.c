@@ -19,7 +19,7 @@
  */
 
 
-#include "modxslt0/modxslt.h"
+#include "modxslt1/modxslt.h"
 #include <ctype.h>
 
 #ifndef MXSLT_DBGLEVEL_ENV

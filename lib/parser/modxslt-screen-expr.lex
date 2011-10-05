@@ -19,7 +19,7 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-  #include "../modxslt0/modxslt.h"
+  #include "../modxslt1/modxslt.h"
   #include "modxslt-screen-expr.parser.h"
 
   #include <stdio.h>

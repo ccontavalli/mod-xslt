@@ -63,7 +63,7 @@ typedef enum mxslt_debug_e {
   MXSLT_DBG_ALL=0xffff - MXSLT_DBG_ERROR
 } mxslt_debug_e;
 
-  /** Enables libmodxslt0 debugging.
+  /** Enables libmodxslt1 debugging.
    * @param doc Initialized pointer to a struct mxslt_doc_t.
    * @param level Desired debugging level. Should be one of
    *   MXSLT_DBG_VERBOSE0, MXSLT_DBG_VERBOSE1, MXSLT_DBG_VERBOSE2.
@@ -71,7 +71,7 @@ typedef enum mxslt_debug_e {
    * @param ctx Passed blindly and trasparently as the first argument of hdlr */
 extern unsigned int mxslt_debug_enable(mxslt_doc_t * doc, unsigned int level, mxslt_debug_hdlr_f hdlr, void * ctx);
 
-  /** When initializing libmodxslt0 debugging, provides user desired debugging level. 
+  /** When initializing libmodxslt1 debugging, provides user desired debugging level. 
    * This function reads from the user configurations (an environment variable, but
    * in the future it may become a configuration file) the user desired debugging
    * level for the mxslt_ library. This is most useful when initializing the library,

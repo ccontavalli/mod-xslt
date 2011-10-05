@@ -19,7 +19,7 @@
  */
 
 
-#include "modxslt0/modxslt.h"
+#include "modxslt1/modxslt.h"
 
 int mxslt_doc_url_decode(char * url) {
   char * store;

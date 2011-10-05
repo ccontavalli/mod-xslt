@@ -2280,14 +2280,14 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
 # Libtool versioning
-LIB_CURRENT=0
+LIB_CURRENT=1
 LIB_REVISION=0
 LIB_AGE=0
 LIB_VERSION=$LIB_CURRENT
 
 # Check we really are using the correct directory
 
-ac_config_headers="$ac_config_headers lib/modxslt0/modxslt-system.h"
+ac_config_headers="$ac_config_headers lib/modxslt1/modxslt-system.h"
 
 ac_aux_dir=
 for ac_dir in helpers "$srcdir"/helpers; do
@@ -2316,7 +2316,6 @@ fi
 ac_config_guess="$SHELL $ac_aux_dir/config.guess"  # Please don't use this var.
 ac_config_sub="$SHELL $ac_aux_dir/config.sub"  # Please don't use this var.
 ac_configure="$SHELL $ac_aux_dir/configure"  # Please don't use this var.
-
 
 
 
@@ -10904,7 +10903,6 @@ CC="$lt_save_CC"
 # Only expand once:
 
 
-
 : ${CONFIG_LT=./config.lt}
 { $as_echo "$as_me:${as_lineno-$LINENO}: creating $CONFIG_LT" >&5
 $as_echo "$as_me: creating $CONFIG_LT" >&6;}
@@ -12285,6 +12283,7 @@ exec 5>/dev/null
 $SHELL "$CONFIG_LT" $lt_config_lt_args || lt_cl_success=false
 exec 5>>config.log
 $lt_cl_success || as_fn_exit 1
+
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -15087,13 +15086,13 @@ $as_echo "$as_me: WARNING:
 ******************************************** " >&2;};
 
 echo "#define MXSLT_VERSION \"$PACKAGE_VERSION\"" \
-		> $srcdir/lib/modxslt0/modxslt-version.h
+		> $srcdir/lib/modxslt1/modxslt-version.h
 echo "#define MXSLT_MAJOR \"`echo $PACKAGE_VERSION|sed -e 's/\..*//'`\"" \
-		>> $srcdir/lib/modxslt0/modxslt-version.h
+		>> $srcdir/lib/modxslt1/modxslt-version.h
 echo "#define MXSLT_MINOR \"`echo $PACKAGE_VERSION|sed -e 's/[^\.]*\.\([^\.]*\).*/\1/'`\""  \
-		>> $srcdir/lib/modxslt0/modxslt-version.h
+		>> $srcdir/lib/modxslt1/modxslt-version.h
 echo "#define MXSLT_PATCHLEVEL \"`echo $PACKAGE_VERSION|sed -e 's/[^\.]*\.[^\.]*\.//'`\"" \
-		>> $srcdir/lib/modxslt0/modxslt-version.h
+		>> $srcdir/lib/modxslt1/modxslt-version.h
 
   # Probe for multithreading support
 if test "$PROBE_THREADS" = "yes"; then
@@ -16171,7 +16170,7 @@ cat >>$CONFIG_STATUS <<\_ACEOF || ac_write_fail=1
 for ac_config_target in $ac_config_targets
 do
   case $ac_config_target in
-    "lib/modxslt0/modxslt-system.h") CONFIG_HEADERS="$CONFIG_HEADERS lib/modxslt0/modxslt-system.h" ;;
+    "lib/modxslt1/modxslt-system.h") CONFIG_HEADERS="$CONFIG_HEADERS lib/modxslt1/modxslt-system.h" ;;
     "libtool") CONFIG_COMMANDS="$CONFIG_COMMANDS libtool" ;;
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "utils/Makefile") CONFIG_FILES="$CONFIG_FILES utils/Makefile" ;;

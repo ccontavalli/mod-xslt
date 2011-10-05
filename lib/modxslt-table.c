@@ -19,7 +19,7 @@
  */
 
 
-#include "modxslt0/modxslt-table.h"
+#include "modxslt1/modxslt-table.h"
 
   /* Allow those to be defined from compiler */
 # ifndef mxslt_table_calc

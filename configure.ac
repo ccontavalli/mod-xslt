@@ -30,14 +30,14 @@ AC_INIT([mod-xslt],[1.4.0],[ccontavalli at inscatolati.net],[mod-xslt])
 AC_LANG(C)
 
 # Libtool versioning
-LIB_CURRENT=0
+LIB_CURRENT=1
 LIB_REVISION=0
 LIB_AGE=0
 LIB_VERSION=$LIB_CURRENT
 
 # Check we really are using the correct directory
 AC_CONFIG_SRCDIR(lib/modxslt-doc.c)
-AC_CONFIG_HEADER(lib/modxslt0/modxslt-system.h)
+AC_CONFIG_HEADER(lib/modxslt1/modxslt-system.h)
 AC_CONFIG_AUX_DIR([helpers])
 
 # Check for programs
@@ -529,13 +529,13 @@ AC_MSG_WARN([]
 [******************************************** ]);
 
 echo "#define MXSLT_VERSION \"$PACKAGE_VERSION\"" \
-		> $srcdir/lib/modxslt0/modxslt-version.h
+		> $srcdir/lib/modxslt1/modxslt-version.h
 echo "#define MXSLT_MAJOR \"`echo $PACKAGE_VERSION|sed -e 's/\..*//'`\"" \
-		>> $srcdir/lib/modxslt0/modxslt-version.h
+		>> $srcdir/lib/modxslt1/modxslt-version.h
 echo "#define MXSLT_MINOR \"`echo $PACKAGE_VERSION|sed -e 's/[^\.]*\.\([^\.]*\).*/\1/'`\""  \
-		>> $srcdir/lib/modxslt0/modxslt-version.h
+		>> $srcdir/lib/modxslt1/modxslt-version.h
 echo "#define MXSLT_PATCHLEVEL \"`echo $PACKAGE_VERSION|sed -e 's/[^\.]*\.[^\.]*\.//'`\"" \
-		>> $srcdir/lib/modxslt0/modxslt-version.h
+		>> $srcdir/lib/modxslt1/modxslt-version.h
 
   # Probe for multithreading support 
 if test "$PROBE_THREADS" = "yes"; then

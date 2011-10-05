@@ -1,4 +1,4 @@
-/* lib/modxslt0/modxslt-system.h.in.  Generated from configure.ac by autoheader.  */
+/* lib/modxslt1/modxslt-system.h.in.  Generated from configure.ac by autoheader.  */
 
 /* libpcre is installed on the system and is usable */
 #undef HAS_LIBPCRE

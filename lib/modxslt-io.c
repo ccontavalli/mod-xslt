@@ -19,7 +19,7 @@
  */
 
 
-#include "modxslt0/modxslt.h"
+#include "modxslt1/modxslt.h"
 
 #include <sys/types.h>
 #include <sys/stat.h>
