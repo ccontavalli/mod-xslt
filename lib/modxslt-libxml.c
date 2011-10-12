@@ -28,59 +28,59 @@
 #endif
 
 static void mxslt_doc_dump_ctx(xmlParserCtxt * ctx, mxslt_doc_t * doc) {
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx: %08x\n", (unsigned int)ctx);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->sax: %08x\n", (unsigned int)ctx->sax);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->myDoc: %08x\n", (unsigned int)ctx->myDoc);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->wellFormed: %08x\n", (unsigned int)ctx->wellFormed);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->replaceEntities: %08x\n", (unsigned int)ctx->replaceEntities);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->version: %s\n", (char *)ctx->version);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->encoding: %s\n", (char *)ctx->encoding);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->standalone: %08x\n", (unsigned int)ctx->standalone);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->html: %08x\n", (unsigned int)ctx->html);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->input: %08x\n", (unsigned int)ctx->input);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->inputNr: %08x\n", (unsigned int)ctx->inputNr);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->inputMax: %08x\n", (unsigned int)ctx->inputMax);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->inputTab: %08x\n", (unsigned int)ctx->inputTab);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->node: %08x\n", (unsigned int)ctx->node);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->nodeNr: %08x\n", (unsigned int)ctx->nodeNr);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->nodeMax: %08x\n", (unsigned int)ctx->nodeMax);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->nodeTab: %08x\n", (unsigned int)ctx->nodeTab);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->record_info: %08x\n", (unsigned int)ctx->record_info);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->node_seq: %08x\n", (unsigned int)&(ctx->node_seq));
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->errNo: %08x\n", (unsigned int)ctx->errNo);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->hasExternalSubset: %08x\n", (unsigned int)ctx->hasExternalSubset);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->hasPErefs: %08x\n", (unsigned int)ctx->hasPErefs);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->external: %08x\n", (unsigned int)ctx->external);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->valid: %08x\n", (unsigned int)ctx->valid);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->validate: %08x\n", (unsigned int)ctx->validate);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->vctxt: %08x\n", (unsigned int)&(ctx->vctxt));
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->instate: %08x\n", (unsigned int)ctx->instate);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->token: %08x\n", (unsigned int)ctx->token);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->directory: %s\n", (char *)ctx->directory);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->nbChars: %08lx\n", (unsigned long int)ctx->nbChars);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->checkIndex: %08lx\n", (unsigned long int)ctx->checkIndex);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->keepBlanks: %08x\n", (unsigned int)ctx->keepBlanks);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->disableSAX: %08x\n", (unsigned int)ctx->disableSAX);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->inSubset: %08x\n", (unsigned int)ctx->disableSAX);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->intSubName: %s\n", (char *)ctx->intSubName);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->extSubURI: %s\n", (char *)ctx->extSubURI);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->extSubSystem: %s\n", (char *)ctx->extSubSystem);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->space: %08x\n", (unsigned int)ctx->space);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->spaceNr: %08x\n", (unsigned int)ctx->spaceNr);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->spaceMax: %08x\n", (unsigned int)ctx->spaceMax);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->spaceTab: %08x\n", (unsigned int)ctx->spaceTab);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->depth: %08x\n", (unsigned int)ctx->depth);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->entity: %08x\n", (unsigned int)ctx->entity);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->charset: %08x\n", (unsigned int)ctx->charset);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->nodelen: %08x\n", (unsigned int)ctx->nodelen);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->nodemem: %08x\n", (unsigned int)ctx->nodemem);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->pedantic: %08x\n", (unsigned int)ctx->pedantic);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->_private: %08x\n", (unsigned int)ctx->_private);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->loadsubset: %08x\n", (unsigned int)ctx->loadsubset);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->linenumbers: %08x\n", (unsigned int)ctx->linenumbers);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->catalogs: %08x\n", (unsigned int)ctx->catalogs);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->recovery: %08x\n", (unsigned int)ctx->recovery);
-  mxslt_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->progressive: %08x\n", (unsigned int)ctx->progressive);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx: %08x\n", (unsigned int)ctx);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->sax: %08x\n", (unsigned int)ctx->sax);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->myDoc: %08x\n", (unsigned int)ctx->myDoc);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->wellFormed: %08x\n", (unsigned int)ctx->wellFormed);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->replaceEntities: %08x\n", (unsigned int)ctx->replaceEntities);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->version: %s\n", (char *)ctx->version);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->encoding: %s\n", (char *)ctx->encoding);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->standalone: %08x\n", (unsigned int)ctx->standalone);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->html: %08x\n", (unsigned int)ctx->html);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->input: %08x\n", (unsigned int)ctx->input);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->inputNr: %08x\n", (unsigned int)ctx->inputNr);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->inputMax: %08x\n", (unsigned int)ctx->inputMax);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->inputTab: %08x\n", (unsigned int)ctx->inputTab);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->node: %08x\n", (unsigned int)ctx->node);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->nodeNr: %08x\n", (unsigned int)ctx->nodeNr);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->nodeMax: %08x\n", (unsigned int)ctx->nodeMax);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->nodeTab: %08x\n", (unsigned int)ctx->nodeTab);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->record_info: %08x\n", (unsigned int)ctx->record_info);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->node_seq: %08x\n", (unsigned int)&(ctx->node_seq));
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->errNo: %08x\n", (unsigned int)ctx->errNo);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->hasExternalSubset: %08x\n", (unsigned int)ctx->hasExternalSubset);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->hasPErefs: %08x\n", (unsigned int)ctx->hasPErefs);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->external: %08x\n", (unsigned int)ctx->external);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->valid: %08x\n", (unsigned int)ctx->valid);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->validate: %08x\n", (unsigned int)ctx->validate);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->vctxt: %08x\n", (unsigned int)&(ctx->vctxt));
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->instate: %08x\n", (unsigned int)ctx->instate);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->token: %08x\n", (unsigned int)ctx->token);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->directory: %s\n", (char *)ctx->directory);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->nbChars: %08lx\n", (unsigned long int)ctx->nbChars);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->checkIndex: %08lx\n", (unsigned long int)ctx->checkIndex);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->keepBlanks: %08x\n", (unsigned int)ctx->keepBlanks);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->disableSAX: %08x\n", (unsigned int)ctx->disableSAX);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->inSubset: %08x\n", (unsigned int)ctx->disableSAX);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->intSubName: %s\n", (char *)ctx->intSubName);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->extSubURI: %s\n", (char *)ctx->extSubURI);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->extSubSystem: %s\n", (char *)ctx->extSubSystem);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->space: %08x\n", (unsigned int)ctx->space);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->spaceNr: %08x\n", (unsigned int)ctx->spaceNr);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->spaceMax: %08x\n", (unsigned int)ctx->spaceMax);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->spaceTab: %08x\n", (unsigned int)ctx->spaceTab);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->depth: %08x\n", (unsigned int)ctx->depth);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->entity: %08x\n", (unsigned int)ctx->entity);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->charset: %08x\n", (unsigned int)ctx->charset);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->nodelen: %08x\n", (unsigned int)ctx->nodelen);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->nodemem: %08x\n", (unsigned int)ctx->nodemem);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->pedantic: %08x\n", (unsigned int)ctx->pedantic);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->_private: %08x\n", (unsigned int)ctx->_private);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->loadsubset: %08x\n", (unsigned int)ctx->loadsubset);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->linenumbers: %08x\n", (unsigned int)ctx->linenumbers);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->catalogs: %08x\n", (unsigned int)ctx->catalogs);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->recovery: %08x\n", (unsigned int)ctx->recovery);
+  mxslt_doc_debug_write(doc, MXSLT_DBG_DEBUG | MXSLT_DBG_LIBXML, "ctx->progressive: %08x\n", (unsigned int)ctx->progressive);
 
   return;
 }
@@ -152,7 +152,7 @@ void mxslt_sax_processing_instruction(void * ctx, const xmlChar * target, const 
     t_value=0
   };
 
-  mxslt_debug_print(document, MXSLT_DBG_LIBXML, "processing instruction \"%s\", attributes |%s|\n", target, data);
+  mxslt_doc_debug_print(document, MXSLT_DBG_LIBXML, "processing instruction \"%s\", attributes |%s|\n", target, data);
 
     /* Ignore pi when we're parsing the stylesheet */
   if(document->flags & MXSLT_STYLE)
@@ -459,17 +459,17 @@ xmlParserInputPtr mxslt_sax_resolve_entity(void * ctx, const xmlChar * publicId,
 
      /* In resolve entity */
   id=mxslt_yy_str_parse(document, (char *)systemId, strlen((char *)systemId));
-  mxslt_debug_print(document, MXSLT_DBG_LIBXML, "%s needs entity publicId: %s, systemId: %s\n", 
+  mxslt_doc_debug_print(document, MXSLT_DBG_LIBXML, "%s needs entity publicId: %s, systemId: %s\n", 
 	base, mxslt_debug_string(publicId), mxslt_debug_string(systemId));
-  mxslt_debug_print(document, MXSLT_DBG_LIBXML | MXSLT_DBG_DEBUG, "base: %s, filename: %s, directory: %s\n",
+  mxslt_doc_debug_print(document, MXSLT_DBG_LIBXML | MXSLT_DBG_DEBUG, "base: %s, filename: %s, directory: %s\n",
 	base, mxslt_debug_string(ctxt->input->filename), mxslt_debug_string(ctxt->directory));
 
-  if(mxslt_debug_level(document, MXSLT_DBG_LIBXML | MXSLT_DBG_DEBUG | MXSLT_DBG_VERBOSE1)) 
+  if(mxslt_doc_debug_level(document, MXSLT_DBG_LIBXML | MXSLT_DBG_DEBUG | MXSLT_DBG_VERBOSE1)) 
     mxslt_doc_dump_ctx(ctxt, document);
 
   URI=xmlBuildURI((xmlChar *)id, (const xmlChar *)base);
 
-  mxslt_debug_print(document, MXSLT_DBG_LIBXML | MXSLT_DBG_VERBOSE0, 
+  mxslt_doc_debug_print(document, MXSLT_DBG_LIBXML | MXSLT_DBG_VERBOSE0, 
 		"loading entity: %s, publicid: %s\n", mxslt_debug_string(URI), mxslt_debug_string(publicId));
   ret = xmlLoadExternalEntity((const char *) URI, (const char *) publicId, ctxt);
 
@@ -488,7 +488,7 @@ xmlDocPtr mxslt_doc_xml_parse(mxslt_doc_t * document, xmlParserInputBufferPtr bu
   xmlParserInputPtr input;
   xmlDocPtr retval;
 
-  mxslt_debug_print(document, MXSLT_DBG_LIBXML | MXSLT_DBG_DEBUG | MXSLT_DBG_VERBOSE0,
+  mxslt_doc_debug_print(document, MXSLT_DBG_LIBXML | MXSLT_DBG_DEBUG | MXSLT_DBG_VERBOSE0,
 		"xml_parse/xmlCreateMemoryParserCtxt -- replacing entities: %08x\n", xmlSubstituteEntitiesDefaultValue);
 
   if(buf == NULL)
@@ -545,7 +545,7 @@ xmlDocPtr mxslt_doc_xml_parse(mxslt_doc_t * document, xmlParserInputBufferPtr bu
     ctx->directory=xmlParserGetDirectory(localfile);
     /* END SNIPPET */
 
-  if(mxslt_debug_level(document, MXSLT_DBG_LIBXML | MXSLT_DBG_DEBUG | MXSLT_DBG_VERBOSE2)) 
+  if(mxslt_doc_debug_level(document, MXSLT_DBG_LIBXML | MXSLT_DBG_DEBUG | MXSLT_DBG_VERBOSE2)) 
     mxslt_doc_dump_ctx(ctx, document);
 
     /* Parse document */
@@ -574,7 +574,7 @@ void mxslt_transform_header(xsltTransformContextPtr ctxt, xmlNodePtr node, xmlNo
   xmlNodePtr tmp, tofree;
 #endif
 
-  mxslt_debug_print(document, MXSLT_DBG_LIBXML | MXSLT_DBG_DEBUG | MXSLT_DBG_VERBOSE0, 
+  mxslt_doc_debug_print(document, MXSLT_DBG_LIBXML | MXSLT_DBG_DEBUG | MXSLT_DBG_VERBOSE0, 
 		    "%s: <modxslt:header-set called\n", mxslt_debug_string(document->localfile));
 
     /* Check input parameters */
@@ -629,7 +629,7 @@ void mxslt_transform_header(xsltTransformContextPtr ctxt, xmlNodePtr node, xmlNo
 
     /* Look for text value */
   value=(char *)xsltEvalTemplateString(ctxt, node, inst);
-  mxslt_debug_print(document, MXSLT_DBG_LIBXML, "requesting header '%s' to be set to value '%s'\n", 
+  mxslt_doc_debug_print(document, MXSLT_DBG_LIBXML, "requesting header '%s' to be set to value '%s'\n", 
 		    mxslt_debug_string(header), mxslt_debug_string(value));
 
     /* Shrink spaces in value, only if needed */
@@ -656,7 +656,7 @@ void mxslt_transform_header(xsltTransformContextPtr ctxt, xmlNodePtr node, xmlNo
       *store='\0';
     }
   }
-  mxslt_debug_print(document, MXSLT_DBG_LIBXML | MXSLT_DBG_DEBUG, "reply header '%s' has been shrinked to '%s'\n", 
+  mxslt_doc_debug_print(document, MXSLT_DBG_LIBXML | MXSLT_DBG_DEBUG, "reply header '%s' has been shrinked to '%s'\n", 
 		    mxslt_debug_string(header), mxslt_debug_string(value));
 
     /* Now, let's do it... */
@@ -672,7 +672,7 @@ void mxslt_transform_value_of(xsltTransformContextPtr ctxt, xmlNodePtr node, xml
   mxslt_doc_t * document=mxslt_get_state()->document;
   char * var, * value;
 
-  mxslt_debug_print(document, MXSLT_DBG_LIBXML | MXSLT_DBG_DEBUG | MXSLT_DBG_VERBOSE0, 
+  mxslt_doc_debug_print(document, MXSLT_DBG_LIBXML | MXSLT_DBG_DEBUG | MXSLT_DBG_VERBOSE0, 
 		    "%s: <modxslt:value-of called\n", mxslt_debug_string(document->localfile));
 
     /* Check input parameters */
@@ -710,7 +710,7 @@ void mxslt_transform_value_of(xsltTransformContextPtr ctxt, xmlNodePtr node, xml
   if(!value)
     value="";
 
-  mxslt_debug_print(document, MXSLT_DBG_LIBXML, "setting variable '%s' to value '%s'\n", 
+  mxslt_doc_debug_print(document, MXSLT_DBG_LIBXML, "setting variable '%s' to value '%s'\n", 
 		    mxslt_debug_string(var), value);
 
     /* XXX: uhm... how do I know I always need escaping? what 
@@ -761,7 +761,7 @@ xmlDocPtr mxslt_doc_xml_load_entity(mxslt_doc_t * document, char * localfile) {
   xmlDocPtr retval;
   xmlChar * filename;
 
-  mxslt_debug_print(document, MXSLT_DBG_LIBXML | MXSLT_DBG_DEBUG | MXSLT_DBG_VERBOSE0,
+  mxslt_doc_debug_print(document, MXSLT_DBG_LIBXML | MXSLT_DBG_DEBUG | MXSLT_DBG_VERBOSE0,
 		"load_entity/xmlCreateMemoryParserCtxt -- replacing entities: %08x\n", xmlSubstituteEntitiesDefaultValue);
 
     /* SNIPPET: This is a good mix&shake of 

@@ -80,7 +80,7 @@ int mxslt_doc_param_urlparse(mxslt_doc_t * document, const char * query) {
   char * key, * value;
   const char * ch=query, * start;
 
-  mxslt_debug_print(document, MXSLT_DBG_DEBUG | MXSLT_DBG_PROTO, "decoding URL arguments: %s\n", query);
+  mxslt_doc_debug_print(document, MXSLT_DBG_DEBUG | MXSLT_DBG_PROTO, "decoding URL arguments: %s\n", query);
 
   if(!query)
     return MXSLT_OK;
@@ -129,7 +129,7 @@ int mxslt_doc_param_urlparse(mxslt_doc_t * document, const char * query) {
        * otherwise remember we found the key anyway */
     if(start == ch) {
       mxslt_doc_param_add(document, key, NULL);
-      mxslt_debug_print(document, MXSLT_DBG_DEBUG | MXSLT_DBG_VARIABLES, "url parser - setting as seen: %s\n", key);
+      mxslt_doc_debug_print(document, MXSLT_DBG_DEBUG | MXSLT_DBG_VARIABLES, "url parser - setting as seen: %s\n", key);
     } else {
       value=xstrndup(start, ch-start);
       status=mxslt_doc_url_decode(value);
@@ -139,7 +139,7 @@ int mxslt_doc_param_urlparse(mxslt_doc_t * document, const char * query) {
         return status;
       }
       mxslt_doc_param_add(document, key, value);
-      mxslt_debug_print(document, MXSLT_DBG_DEBUG | MXSLT_DBG_VARIABLES, "url parser - setting to value: %s = \"%s\"\n", key, value);
+      mxslt_doc_debug_print(document, MXSLT_DBG_DEBUG | MXSLT_DBG_VARIABLES, "url parser - setting to value: %s = \"%s\"\n", key, value);
     }
 
       /* If we found an '&', move on */

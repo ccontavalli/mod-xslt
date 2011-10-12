@@ -1397,7 +1397,7 @@ YY_RULE_SETUP
 
       /* Unescape variables and return string */
     (*yylval).string=mxslt_yy_str_parse(scan->document, yytext+1, yyleng-2);
-    mxslt_debug_print(scan->document, MXSLT_DBG_DEBUG | MXSLT_DBG_PARSER, "string=\"%s\"\n", (*yylval).string);
+    mxslt_doc_debug_print(scan->document, MXSLT_DBG_DEBUG | MXSLT_DBG_PARSER, "string=\"%s\"\n", (*yylval).string);
 
     return TOKEN_LIT; 
   } 

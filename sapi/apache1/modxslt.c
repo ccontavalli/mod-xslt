@@ -79,7 +79,7 @@ static int mxslt_ap1_http_handle(mxslt_doc_t * doc, void ** store, void * contex
     /* Slice up URI in pieces */
   status=ap_parse_uri_components(r->pool, uri, &URI);
   if(!status) {
-    mxslt_debug_print(doc, MXSLT_DBG_SAPI, "couldn't parse uri |%s| with ap_parse_uri_components\n", mxslt_debug_string(uri));
+    mxslt_doc_debug_print(doc, MXSLT_DBG_SAPI, "couldn't parse uri |%s| with ap_parse_uri_components\n", mxslt_debug_string(uri));
       /* Let's see what the standard handler is able to do... */
     return MXSLT_FALSE;
   }
@@ -92,19 +92,19 @@ static int mxslt_ap1_http_handle(mxslt_doc_t * doc, void ** store, void * contex
   hp=gethostbyname(URI.hostname);
 
   if(!hp) {
-    mxslt_debug_print(doc, MXSLT_DBG_SAPI, "couldn't resolve hostname |%s|, status: %d\n", mxslt_debug_string(URI.hostname), h_errno);
+    mxslt_doc_debug_print(doc, MXSLT_DBG_SAPI, "couldn't resolve hostname |%s|, status: %d\n", mxslt_debug_string(URI.hostname), h_errno);
     return MXSLT_SKIP;
   }
 
   for(address=(struct in_addr **)(hp->h_addr_list); address && *address; address++) {
-    mxslt_debug_print(doc, MXSLT_DBG_SAPI | MXSLT_DBG_VERBOSE0 | MXSLT_DBG_DEBUG,
+    mxslt_doc_debug_print(doc, MXSLT_DBG_SAPI | MXSLT_DBG_VERBOSE0 | MXSLT_DBG_DEBUG,
 		      "looking up address: %s for |%s|, aka: %s\n", inet_ntoa(**address), uri, URI.hostname);
 
       /* XXX: how do we deal with ipv6 addresses? from gethostbyname(3): ``the only
        *      valid address type is currently AF_INET'' */
     status=mxslt_table_search(&mxslt_global_ips, NULL, (void *)((*address)->s_addr), NULL);
     if(status == MXSLT_TABLE_FOUND) {
-      mxslt_debug_print(doc, MXSLT_DBG_SAPI | MXSLT_DBG_VERBOSE0, "handling request for |%s| as an internal"
+      mxslt_doc_debug_print(doc, MXSLT_DBG_SAPI | MXSLT_DBG_VERBOSE0, "handling request for |%s| as an internal"
 			" request, using apache internals\n", uri);
 
         /* If a store pointer was provided */ 
@@ -190,7 +190,7 @@ static int mxslt_ap1_http_open(mxslt_doc_t * doc, void * store, void * context, 
       /* Slice up URI in pieces */
     status=ap_parse_uri_components(r->pool, *uri, &URI);
     if(!status) {
-      mxslt_debug_print(doc, MXSLT_DBG_SAPI, "couldn't parse uri |%s| with ap_parse_uri_components\n", mxslt_debug_string(uri));
+      mxslt_doc_debug_print(doc, MXSLT_DBG_SAPI, "couldn't parse uri |%s| with ap_parse_uri_components\n", mxslt_debug_string(uri));
       return MXSLT_FAILURE;
     }
 

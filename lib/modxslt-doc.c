@@ -486,7 +486,7 @@ int mxslt_doc_load(mxslt_doc_t * document, xmlParserInputBufferPtr buf, char * f
   if(!document)
     return MXSLT_FAILURE;
 
-  mxslt_debug_print(document, MXSLT_DBG_LIBXML | MXSLT_DBG_VERBOSE0, 
+  mxslt_doc_debug_print(document, MXSLT_DBG_LIBXML | MXSLT_DBG_VERBOSE0, 
 	"parsing document: %s aka http://%s:%d%s\n", mxslt_debug_string(filename), 
 	mxslt_debug_string(hostname), port ? port : 80, mxslt_debug_string(path));
 
@@ -894,7 +894,7 @@ int mxslt_doc_send(mxslt_doc_t * document, mxslt_callback_t * callback, void * c
 	  mxslt_set_static_attr((char *)pi_style->node->content, xml_stylesheet, xml_stylesheet_values, 
 				       mxslt_sizeof_array(xml_stylesheet), &result);
 
-          mxslt_debug_print(document, MXSLT_DBG_LIBXML | MXSLT_DBG_VERBOSE0, 
+          mxslt_doc_debug_print(document, MXSLT_DBG_LIBXML | MXSLT_DBG_VERBOSE0, 
  	           "while returning raw document -- original: '%s', replacement: '%s'\n", 
 		   mxslt_debug_string(pi_style->node->content), result);
 
@@ -949,7 +949,7 @@ int mxslt_doc_send(mxslt_doc_t * document, mxslt_callback_t * callback, void * c
 	  mxslt_set_static_attr((char *)pi_style->node->content, xml_stylesheet, xml_stylesheet_values, 
 				       mxslt_sizeof_array(xml_stylesheet), &result);
 
-          mxslt_debug_print(document, MXSLT_DBG_LIBXML | MXSLT_DBG_VERBOSE0, 
+          mxslt_doc_debug_print(document, MXSLT_DBG_LIBXML | MXSLT_DBG_VERBOSE0, 
  	           "while returning raw document -- original: '%s', replacement: '%s'\n", 
 		   mxslt_debug_string(pi_style->node->content), result);
 
@@ -1047,8 +1047,8 @@ xsltStylesheetPtr mxslt_doc_load_stylesheet_file(mxslt_doc_t * document, char * 
     return(NULL);
   }
 
-  mxslt_debug_print(document, MXSLT_DBG_LIBXML, "loading stylesheet: %s\n", mxslt_debug_string(file));
-  mxslt_debug_print(document, MXSLT_DBG_LIBXML | MXSLT_DBG_DEBUG, 
+  mxslt_doc_debug_print(document, MXSLT_DBG_LIBXML, "loading stylesheet: %s\n", mxslt_debug_string(file));
+  mxslt_doc_debug_print(document, MXSLT_DBG_LIBXML | MXSLT_DBG_DEBUG, 
 		    	"stylesheet - base: %s, name (server): %s, path: %s\n", mxslt_debug_string((char *)base), 
 			mxslt_debug_string((char *)URI->server), mxslt_debug_string((char *)URI->path));
 
@@ -1083,12 +1083,12 @@ xsltStylesheetPtr mxslt_doc_load_stylesheet_file(mxslt_doc_t * document, char * 
   } else {
     URL = xmlBuildURI((xmlChar *)file, base);
     if (URL != NULL) {
-      mxslt_debug_print(document, MXSLT_DBG_LIBXML | MXSLT_DBG_VERBOSE0, 
+      mxslt_doc_debug_print(document, MXSLT_DBG_LIBXML | MXSLT_DBG_VERBOSE0, 
 		"parsing stylesheet: %s\n", mxslt_debug_string((char *)URL));
       tmp=mxslt_doc_xml_load_entity(document, (char *)URL); 
       xmlFree(URL);
     } else {
-      mxslt_debug_print(document, MXSLT_DBG_LIBXML | MXSLT_DBG_VERBOSE0,
+      mxslt_doc_debug_print(document, MXSLT_DBG_LIBXML | MXSLT_DBG_VERBOSE0,
 		"parsing stylesheet: %s\n", mxslt_debug_string((char *)file));
       tmp=mxslt_doc_xml_load_entity(document, (char *)file);
     }
@@ -1110,7 +1110,7 @@ xsltStylesheetPtr mxslt_doc_load_stylesheet_file(mxslt_doc_t * document, char * 
 int mxslt_doc_load_stylesheet(mxslt_doc_t * document, char * href) {
   char * base=NULL;
 
-  mxslt_debug_print(document, MXSLT_DBG_LIBXML | MXSLT_DBG_VERBOSE0,
+  mxslt_doc_debug_print(document, MXSLT_DBG_LIBXML | MXSLT_DBG_VERBOSE0,
 		"adjusting url for stylesheet: %s\n", mxslt_debug_string((char *)href));
 
   document->stylesheet=mxslt_doc_load_stylesheet_file(document, href);

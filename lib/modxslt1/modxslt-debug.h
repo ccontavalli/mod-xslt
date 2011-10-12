@@ -31,16 +31,16 @@
 
 # define mxslt_debug_compare(dbglevel, levels) \
 		(((dbglevel) & (levels)) == (levels))
-# define mxslt_debug_level(document, levels) \
-		mxslt_debug_compare((document)->dbglevel, levels)
 
-# define mxslt_debug_print(doc, level, ...) \
+# define mxslt_doc_debug_level(document, levels) \
+		mxslt_debug_compare((document)->dbglevel, levels)
+# define mxslt_doc_debug_print(doc, level, ...) \
 		do { 										\
 		  if((((doc)->dbglevel) & (level)) == (level)) 					\
 		    (doc)->dbghdlr((doc)->dbgctx, (level), (doc)->dbglevel, __VA_ARGS__); 	\
 		} while(0)
 
-# define mxslt_debug_write(doc, level, ...) \
+# define mxslt_doc_debug_write(doc, level, ...) \
 		do { 										\
 		  assert(doc->dbghdlr);								\
 		  (doc)->dbghdlr((doc)->dbgctx, (level), (doc)->dbglevel, __VA_ARGS__); 	\
