@@ -346,21 +346,18 @@ int mxslt_ap2_file_parse(ap_filter_t * f, apr_bucket_brigade * brigade,
     /* Remember recursion pointer */
   recursion=get;
 
-    /* f is the context used by the mxslt_ap2_error
-     * function.
-     * Context is passed to the libxslt library and
-     * is saved in a global variable. The problem
-     * here is that if apache2 uses a multithreaded
-     * model, the global context is overwritten by
-     * any other executed thread. */
-    /* Purpose of the following code is to save
-     * the context (f) in a tsd, and use that instead */
-    /* mxslt_doc_init(&document, &state, mxslt_ap2_error, f); */
+    /* f is the context used by the mxslt_ap2_error function.  Context is
+     * passed to the libxslt library and is saved in a global variable. The
+     * problem here is that if apache2 uses a multithreaded model, the global
+     * context is overwritten by any other executed thread. */
+    /* Purpose of the following code is to save the context (f) in a tsd, and
+     * use that instead */
+  /* mxslt_doc_init(&document, &state, mxslt_ap2_error, f); */
   mxslt_ap2_ectxt_set(f);
 
     /* Initialize document parsing */
   mxslt_doc_init(&document, APOS("apache2"), state, recursion, mxslt_ap2_error, f, f);
-  mxslt_debug_enable(&document, config->dbglevel, mxslt_ap2_debug, f->r->server);
+  mxslt_doc_debug_enable(&document, config->dbglevel, mxslt_ap2_debug, f->r->server);
 
     /* Add headers to parameters */
   mxslt_ap2_doc_param_header(&document, f->r->headers_in); 

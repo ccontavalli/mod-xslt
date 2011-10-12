@@ -394,7 +394,7 @@ void mxslt_recursion_init(mxslt_recursion_t * rec) {
 void mxslt_doc_null(void) {
 }
 
-unsigned int mxslt_debug_enable(mxslt_doc_t * document, unsigned int level, mxslt_debug_hdlr_f dbghdlr, void * dbgctx) {
+unsigned int mxslt_doc_debug_enable(mxslt_doc_t * document, unsigned int level, mxslt_debug_hdlr_f dbghdlr, void * dbgctx) {
   int old;
 
   assert(document);

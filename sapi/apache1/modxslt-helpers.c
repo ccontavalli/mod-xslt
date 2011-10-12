@@ -451,7 +451,7 @@ int mxslt_ap1_file_parse(mxslt_dir_config_t * config, request_rec * r,
     /* Initialize document parsing */
   mxslt_doc_init(&document, APOS("apache1"), &ap1_mxslt_global_state, 
 		 &mxslt_global_recursion, mxslt_ap1_error, r, r);
-  mxslt_debug_enable(&document, config->dbglevel, mxslt_ap1_debug, r->server);
+  mxslt_doc_debug_enable(&document, config->dbglevel, mxslt_ap1_debug, r->server);
 
     /* Parse url & header arguments */
   mxslt_ap1_doc_param_header(&document, r->headers_in);

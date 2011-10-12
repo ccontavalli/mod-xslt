@@ -114,14 +114,13 @@ static apr_status_t mxslt_ap2_out_filter(ap_filter_t *f, apr_bucket_brigade *bri
   const char * forcestyle, * defaultstyle;
   void * get;
 
-    /* ignore headers only requests, redirects (!200 status)
-     * or requests when the environment has "no-xslt" set */
+    /* ignore headers only requests, redirects (!200 status) or requests when
+     * the environment has "no-xslt" set */
   if(f->r->header_only || f->r->status != HTTP_OK ||
      apr_table_get(f->r->subprocess_env, "no-xslt"))
     return ap_pass_brigade(f->next, brigade);
 
-    /* drop the previously calculated lengths, which is
-     * no longer correct */
+    /* drop the previously calculated length, which is no longer correct */
   apr_table_unset(f->r->headers_out, "Content-Length");
 
   data=(apr_bucket_brigade *)f->ctx;
@@ -131,8 +130,8 @@ static apr_status_t mxslt_ap2_out_filter(ap_filter_t *f, apr_bucket_brigade *bri
   if(!mxslt_ap2_brigade_isfinal(data)) 
     return APR_SUCCESS;
 
-    /* Get any mime style that may have been specifyed
-     * with httpd.conf parameters */
+    /* Get any mime style that may have been specifyed with httpd.conf
+     * parameters */
   forcestyle=(char *)apr_table_get(conf->mime_styles, f->r->content_type);
   defaultstyle=(char *)apr_table_get(conf->default_styles, f->r->content_type);
 
@@ -144,10 +143,9 @@ static apr_status_t mxslt_ap2_out_filter(ap_filter_t *f, apr_bucket_brigade *bri
     goto error;
   }
 
-    /* Ok, maybe this is the worker model... which calls child
-     * init only once per child, but where every child has many threads ... 
-     * so, this is the first time we got called for a thread... prepare global
-     * variables ... */
+    /* Ok, maybe this is the worker model... which calls child init only once
+     * per child, but where every child has many threads ...  so, this is the
+     * first time we got called for a thread... prepare global variables ... */
   if(!get) {
     mxslt_ap2_child_init(f->r->server->process->pool, f->r->server);
 
@@ -349,8 +347,8 @@ static const char * mxslt_ap2_set_debug(cmd_parms * cmd, void * pcfg, const char
   unsigned char * ch=(unsigned char *)l;
   int mask;
 
-    /* If this is made only of digits, consider this the 
-     * debugging mask directly, as with XSLTDebugMask */
+    /* If this is made only of digits, consider this the debugging mask
+     * directly, as with XSLTDebugMask */
   if(isdigit(*ch) || *ch == '-') {
     for(ch++; isdigit(*ch); ch++)
       ;

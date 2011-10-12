@@ -69,7 +69,7 @@ typedef enum mxslt_debug_e {
    *   MXSLT_DBG_VERBOSE0, MXSLT_DBG_VERBOSE1, MXSLT_DBG_VERBOSE2.
    * @param hdlr Pointer to a function able to output debugging messages.
    * @param ctx Passed blindly and trasparently as the first argument of hdlr */
-extern unsigned int mxslt_debug_enable(mxslt_doc_t * doc, unsigned int level, mxslt_debug_hdlr_f hdlr, void * ctx);
+extern unsigned int mxslt_doc_debug_enable(mxslt_doc_t * doc, unsigned int level, mxslt_debug_hdlr_f hdlr, void * ctx);
 
   /** When initializing libmodxslt1 debugging, provides user desired debugging level. 
    * This function reads from the user configurations (an environment variable, but
