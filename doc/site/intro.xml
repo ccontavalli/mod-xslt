@@ -35,37 +35,38 @@
     <title>XML and XSLT</title>
 
     <para>                                                 
-    As many of you already know, xml is a relatively new
-    language studied to represent any kind of information 
-    using simple text files.
+    XML is a language which allows to represent any kind of
+    information using simple text files.
     </para> 
 
     <para>
-    The nicest thing about XML is that it is used
-    to store data, but it does not carry information
-    about how that data should be displayed (rendered) 
-    on a generic media (like a screen, or a printer, ...).
+    One of the nice things about XML is that it allows
+    to store and represent the semantic meaning of data,
+    while not carrying information about how that data
+    should be displayed on a media, may it be your
+    screen, a .pdf file, or a screen reader.
     </para>
 
     <para>
-    Informations about how to render XML files on a
-    given media are carried along in Stylesheet files, 
-    either CSS version 2 or XSLT stylesheets.
+    However, XML provides mechanisms so information
+    on how to render an XML file on a given media can
+    be provided through separate stylesheets, either
+    CSS or XSL stylesheets.
     </para>
 
     <para>
-    XSLT is a generic language which can be used to transform
+    XSL is a generic language which can be used to transform
     XML files to almost any other language or format. It is most used
     to convert XML files into HTML files (to be displayed
-    on a screen) or to FOP (to be printed or converted to PDF).
+    by a browser) or to FOP (to be printed or converted to PDF).
     </para>
 
     <para>
     By having a file carrying the data and one
-    carrying informations about how that data should
+    carrying details about how that data should
     be rendered on a device, you can separate the 
-    task of writing your web softwares from that
-    of designing good and nice interfaces.
+    task of writing softwares and storing data from
+    that of designing good and nice interfaces.
     </para>
   </sect>
 
@@ -81,12 +82,10 @@
     </para>
 
     <para>
-    Although many companies are nowdays pushing the 
-    XML market by commercializing their wonderful XML support,
-    very few products do have even a good support for
-    it. As usual, many of them developed their own 
-    extensions or decided that the standards were not 
-    that good to follow, and made their products
+    Although many companies are pushing the XML market by commercializing their
+    XML support, very few products do have even a good support for
+    it. As usual, many of them developed their own extensions or decided that
+    the standards were not that good to follow, and made their products
     incompatible even with different versions of 
     themselves.
     </para>
@@ -104,7 +103,7 @@
   </sect>
 
   <sect>
-    <title>mod-xslt2 comes to help</title>
+    <title>mod-xslt2 comes to the rescue</title>
 
     <para>
     The idea behind mod-xslt2 is to cut away all

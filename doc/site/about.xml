@@ -37,8 +37,8 @@
     to xml data on the fly. mod-xslt2 as it is today is almost a complete
     rewrite of the original mod-xslt2 written by Philipp Dunkel, with
     many new features added and a complete code clean up. <bf>mod-xslt2</bf>
-    is <bf>Free Software</bf>, as it will always be, it is released under
-    the terms of the <bf>GPL</bf> and anybody is welcome to join its development.
+    is <bf>Free Software</bf> and is released under the terms of the
+    <bf>GPL</bf> and anybody is welcome to join its development.
   </para> 
 
   <para>
@@ -65,7 +65,7 @@
 	features</listitem>
     </itemizedlist>
     At time of writing, <bf>mod-xslt2</bf> works with <bf>Apache 1.3</bf>
-    and <bf>Apache 2.0</bf>. However, it provides an <bf>API</bf>
+    and <bf>Apache 2.{0,1,2}</bf>. However, it provides an <bf>API</bf>
     based on an external library that should make it easy to port 
     <bf>mod-xslt2</bf> to <bf>any other web server</bf>. Work is under way to provide 
     a <bf>Proxy</bf> translator, a <bf>CGI</bf> handler, and many
