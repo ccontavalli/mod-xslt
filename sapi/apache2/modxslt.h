@@ -67,21 +67,23 @@ typedef struct mxslt_ap2_debug_buffer_t {
 } mxslt_ap2_debug_buffer_t;
 
 # ifdef MXSLT_DO_DEBUG
-#  define AP2_DEBUG_DUMP_TABLE(str, table) ({ int __i; \
-					      apr_array_header_t * __harr = (apr_array_header_t *)apr_table_elts(table);\
-					      apr_table_entry_t * __entry = (apr_table_entry_t *)__harr->elts;\
-					      if(__harr) { \
-					      MXSLT_DEBUG(str); \
-					      for(__i=0; __i < __harr->nelts; __i++) \
-					        MXSLT_DEBUG("    %s -> %s\n", __entry[__i].key, __entry[__i].val); } })
-#  define mxslt_ap2_get_config(a, b) ({ mxslt_dir_config_t * __var; \
-				      	__var=(mxslt_dir_config_t *)ap_get_module_config(a,b);\
-					MXSLT_DEBUG("Fetched config\n");\
-					MXSLT_DEBUG("* config: %08x\n", (int)__var);\
-					__var; \
-				      })
+#  define AP2_DEBUG_DUMP_TABLE(str, table) \
+  ({ int __i; \
+     apr_array_header_t * __harr = (apr_array_header_t *)apr_table_elts(table);\
+     apr_table_entry_t * __entry = (apr_table_entry_t *)__harr->elts;\
+     if(__harr) { \
+       MXSLT_DEBUG(str); \
+       for(__i=0; __i < __harr->nelts; __i++) \
+         MXSLT_DEBUG("    %s -> %s\n", __entry[__i].key, __entry[__i].val); \
+     } })
 
-		/* AP2_DEBUG_DUMP_TABLE("* config->mime_styles\n", (apr_table_t *)__var->mime_styles); \ */
+#  define mxslt_ap2_get_config(a, b) \
+    ({ mxslt_dir_config_t * __var; \
+       __var=(mxslt_dir_config_t *)ap_get_module_config(a,b);\
+       MXSLT_DEBUG("Fetched config\n");\
+       MXSLT_DEBUG("* config: %08x\n", (int)__var);\
+       __var; \
+    })
 # else 
 #  define mxslt_ap2_get_config(a, b) (mxslt_dir_config_t *)ap_get_module_config(a, b)
 # endif
