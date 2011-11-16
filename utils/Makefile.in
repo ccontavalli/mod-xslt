@@ -53,7 +53,7 @@ CC := @CC@
 LD := @LD@
 
   # Additional parameters
-LIBTOOL := @LIBTOOL@
+LIBTOOL := @LIBTOOL@ @LIBTOOLQUIET@
 INSTALL := @INSTALL@
 
   # Overrideable parameters
@@ -116,8 +116,9 @@ modxslt-config.pre:
 	@echo "* and before you run make!"
 	@exit 1
 
-.c.lo: 
-	$(LIBTOOL) --mode=compile --tag=CC $(CC) $(CFLAGS) $(CPPFLAGS) -c $<
+.c.lo:
+	@echo "* COMPILING $<"
+	@$(LIBTOOL) --mode=compile --tag=CC $(CC) $(CFLAGS) $(CPPFLAGS) -c $< 
 
 clean: 
 	$(LIBTOOL) --mode=clean rm -f ./*.lo ./*.o modxslt-parse modxslt-perror

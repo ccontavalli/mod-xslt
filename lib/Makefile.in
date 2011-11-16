@@ -53,7 +53,7 @@ CC := @CC@
 LD := @LD@
 
   # Additional parameters
-LIBTOOL := @LIBTOOL@
+LIBTOOL := @LIBTOOL@ @LIBTOOLQUIET@
 INSTALL := @INSTALL@
 
   # Overrideable parameters
@@ -84,7 +84,7 @@ default: @DEFAULT_TARGET@
   # Targets
 all: std
 
-debug: CFLAGS += -ggdb -Wall -O0 
+debug: CFLAGS += -ggdb -Wall -O0 -Wformat-nonliteral -Wextra -Wstrict-overflow=5 -Wfloat-equal -Wconversion -Wlogical-op -Wno-unused-parameter
 debug: std
 
 std: parser library
@@ -115,7 +115,8 @@ modxslt-io.lo: modxslt-io.c
 modxslt-debug.lo: modxslt-debug.c
 
 .c.lo:
-	$(LIBTOOL) --mode=compile --tag=CC $(CC) $(CFLAGS) $(CPPFLAGS) -c $<
+	@echo "* COMPILING $<"
+	@$(LIBTOOL) --mode=compile --tag=CC $(CC) $(CFLAGS) $(CPPFLAGS) -c $< 
 
 parser: 
 	$(MAKE) -C parser @DEFAULT_TARGET@

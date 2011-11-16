@@ -53,7 +53,7 @@ CC := @SAPI_CC@
 LD := @SAPI_LD@
 
   # Additional parameters
-LIBTOOL := @LIBTOOL@
+LIBTOOL := @LIBTOOL@ @LIBTOOLQUIET@
 INSTALL := @INSTALL@
 
   # Overrideable parameters
@@ -118,7 +118,8 @@ modxslt-helpers.lo: modxslt-helpers.c modxslt.h
 modxslt.lo: modxslt.c modxslt.h
 
 .c.lo:
-	$(LIBTOOL) --mode=compile --tag=CC $(CC) $(CFLAGS) $(CPPFLAGS) -c $< 
+	@echo "* COMPILING $<"
+	@$(LIBTOOL) --mode=compile --tag=CC $(CC) $(CFLAGS) $(CPPFLAGS) -c $< 
 
 distclean: clean
 	rm -rf ./.libs install-stamp

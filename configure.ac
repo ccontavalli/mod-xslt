@@ -79,7 +79,15 @@ AC_ARG_ENABLE(debug, AS_HELP_STRING([[--enable-debug]],[Compile code with gdb su
 	        DEFAULT_TARGET="debug"; 
               ], 
 	      [ 
+                AC_SUBST(LIBTOOLQUIET, "--quiet")
 	        DEFAULT_TARGET="all"; 
+              ])
+AC_ARG_ENABLE(verbose, AS_HELP_STRING([[--enable-verbose]],[Tell libtool to be verbose when running commands]), 
+	      [ 
+                AC_SUBST(LIBTOOLQUIET, "")
+              ], 
+	      [ 
+                AC_SUBST(LIBTOOLQUIET, "--quiet")
               ])
 AC_ARG_ENABLE(memory, AS_HELP_STRING([[--enable-memory]],[Place sentinels and perform strict checks upon memory allocations/free]), 
 	      [ 

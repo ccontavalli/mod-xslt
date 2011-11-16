@@ -57,7 +57,7 @@ FLEX := flex
 BISON := bison
 
   # Additional parameters
-LIBTOOL := @LIBTOOL@
+LIBTOOL := @LIBTOOL@ @LIBTOOLQUIET@
 INSTALL := @INSTALL@
 
   # Overrideable parameters
@@ -99,10 +99,12 @@ debug: std
 std: modxslt-screen-expr.parser.lo modxslt-screen-expr.lexer.lo
 
 modxslt-screen-expr.lexer.lo: modxslt-screen-expr.lexer.c Makefile
-	$(LIBTOOL) --mode=compile --tag=CC $(CC) $(CPPFLAGS) $(CFLAGS) $(PFLAGS) -c $(srcdir)/modxslt-screen-expr.lexer.c
+	@echo "* COMPILING $<"
+	@$(LIBTOOL) --mode=compile --tag=CC $(CC) $(CPPFLAGS) $(CFLAGS) $(PFLAGS) -c $(srcdir)/modxslt-screen-expr.lexer.c
 
 modxslt-screen-expr.parser.lo: modxslt-screen-expr.parser.c Makefile
-	$(LIBTOOL) --mode=compile --tag=CC $(CC) $(CPPFLAGS) $(CFLAGS) $(PFLAGS) -c $(srcdir)/modxslt-screen-expr.parser.c
+	@echo "* COMPILING $<"
+	@$(LIBTOOL) --mode=compile --tag=CC $(CC) $(CPPFLAGS) $(CFLAGS) $(PFLAGS) -c $(srcdir)/modxslt-screen-expr.parser.c
 
 
 release: modxslt-screen-expr.lexer.c modxslt-screen-expr.parser.c

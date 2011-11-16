@@ -644,6 +644,7 @@ EN_LIBXSLT_HACK
 EN_XINCLUDE
 EN_EXTENSIONS
 EN_THREAD
+LIBTOOLQUIET
 EN_XSLT_DEBUG
 LIBOBJS
 LIBTOOL_DEPS
@@ -740,6 +741,7 @@ with_sysroot
 enable_libtool_lock
 enable_xslt_debug
 enable_debug
+enable_verbose
 enable_memory
 enable_thread
 enable_extensions
@@ -1386,6 +1388,7 @@ Optional Features:
   --disable-libtool-lock  avoid locking (might break parallel builds)
   --enable-xslt-debug     Enable libxslt debugging
   --enable-debug          Compile code with gdb support without optimizations
+  --enable-verbose        Tell libtool to be verbose when running commands
   --enable-memory         Place sentinels and perform strict checks upon
                           memory allocations/free
   --disable-thread        Disable threading support
@@ -13103,7 +13106,22 @@ if test "${enable_debug+set}" = set; then :
 
 else
 
+                LIBTOOLQUIET="--quiet"
+
 	        DEFAULT_TARGET="all";
+
+fi
+
+# Check whether --enable-verbose was given.
+if test "${enable_verbose+set}" = set; then :
+  enableval=$enable_verbose;
+                LIBTOOLQUIET=""
+
+
+else
+
+                LIBTOOLQUIET="--quiet"
+
 
 fi
 
