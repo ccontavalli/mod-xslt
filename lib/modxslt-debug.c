@@ -21,6 +21,7 @@
 
 #include "modxslt1/modxslt.h"
 #include <ctype.h>
+#include <assert.h>
 
 #ifndef MXSLT_DBGLEVEL_ENV
 # define MXSLT_DBGLEVEL_ENV "MXSLT_DBGLEVEL"
@@ -50,10 +51,12 @@ struct mxslt_debug_string_t {
   int nsize;
   int bit;
 } mxslt_debug_strings[] = { 
+    /* IMPORTANT: This list needs to be alphabetically sorted */
   { "all", mxslt_sizeof_str("all"), MXSLT_DBG_ALL },
   { "config", mxslt_sizeof_str("config"), MXSLT_DBG_CONFIG  },
   { "debug", mxslt_sizeof_str("debug"), MXSLT_DBG_DEBUG },
   { "flags", mxslt_sizeof_str("flags"), MXSLT_DBG_FLAGS },
+  { "internal", mxslt_sizeof_str("internal"), MXSLT_DBG_INTERNAL },
   { "libxml", mxslt_sizeof_str("libxml"), MXSLT_DBG_LIBXML },
   { "parser", mxslt_sizeof_str("parser"), MXSLT_DBG_PARSER },
   { "proto", mxslt_sizeof_str("proto"), MXSLT_DBG_PROTO },
@@ -123,4 +126,33 @@ int mxslt_debug_flag(const char * str, int len) {
   }
 
   return MXSLT_DBG_ERROR;
+}
+
+unsigned int mxslt_debug_enable(
+    mxslt_shoot_t * shoot, unsigned int level,
+    mxslt_debug_hdlr_f dbghdlr, void * dbgctx) {
+  int old;
+
+  assert(shoot);
+
+  if (!shoot->mxslt_state)
+    mxslt_shoot_init(shoot);
+
+  old=shoot->mxslt_state->dbglevel;
+  shoot->mxslt_state->dbglevel=level;
+  if(dbghdlr) {
+    shoot->mxslt_state->dbghdlr=(mxslt_debug_hdlr_f)dbghdlr;
+    shoot->mxslt_state->dbgctx=dbgctx;
+  }
+
+  return old;
+}
+
+unsigned long int mxslt_get_tid(void) {
+#ifdef HAVE_PTHREADS
+  pthread_t self = pthread_self();
+  return *(unsigned long int*)(&self);
+#else
+  return 0;
+#endif
 }

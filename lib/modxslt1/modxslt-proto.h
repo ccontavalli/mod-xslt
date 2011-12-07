@@ -55,8 +55,10 @@ extern int mxslt_doc_parse_stylesheet(mxslt_doc_t *document, char *media, int fl
 extern xsltStylesheetPtr mxslt_doc_load_stylesheet_file(mxslt_doc_t *document, char *file);
 extern int mxslt_doc_load_stylesheet(mxslt_doc_t *document, char *href);
 extern int mxslt_doc_parse_pi(mxslt_doc_t *document);
-extern void mxslt_xml_init(mxslt_shoot_t *, mxslt_url_handler_t* http_handler,
-			   mxslt_url_handler_t* file_handler);
+extern void mxslt_shoot_init(mxslt_shoot_t*);
+extern void mxslt_xml_init(
+    mxslt_shoot_t *, mxslt_url_handler_t *http_handler,
+    mxslt_url_handler_t *file_handler);
 extern void mxslt_xml_done(mxslt_shoot_t * shoot);
 
 /* ./modxslt-io.c */
@@ -85,6 +87,15 @@ extern mxslt_state_t * mxslt_get_state(void);
 extern mxslt_state_t * mxslt_global_state;
 # endif
 
+  /** Returns a number representing the current thread.
+   * Note that the concept of Thread Identifier changes from platform to
+   * platform, can be a number, can be a more complex structure.
+   * This function is supposed to return an integer representing the thread
+   * it's running in, which is supposed to be different from any other thread.
+   * Use for debugging purposes, don't rely on it too much.
+   * Current implementation is likely to not work on non-linux systems. */
+extern unsigned long int mxslt_get_tid(void);
+
 extern int mxslt_url_match(const char *);
 extern int mxslt_local_match(const char *);
 extern void * mxslt_url_open(const char *);
@@ -93,6 +104,8 @@ extern int mxslt_url_read(void *, char *, int);
 extern int mxslt_url_close(void *);
 extern void mxslt_xml_load(void);
 extern void mxslt_xml_unload(void);
+
+extern void mxslt_doc_null(void);
 
 # define mxslt_url_recurse_level(rec) ((rec)->rec_level)
 extern int mxslt_url_recurse_allowed(mxslt_recursion_t *, const char * uri);

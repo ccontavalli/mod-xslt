@@ -131,6 +131,9 @@ typedef struct mxslt_state_t mxslt_state_t;
 
 typedef struct mxslt_url_handler_t mxslt_url_handler_t;
 
+  /* Holds current yaslt state. Created at xml_init time, restored on each
+   * request */
+# define MXSLT_SHOOT_INIT  { NULL, NULL }
 struct mxslt_shoot_t {
   mxslt_state_t * mxslt_state;
   void * xml_state;
@@ -210,24 +213,24 @@ struct mxslt_url_handler_t {
   mxslt_url_open_f open;
 };
 
+  /* Holds the current global state of the library */
+# define MXSLT_STATE_INIT() { MXSLT_HTTP_HANDLER_INIT, NULL, NULL, NULL, \
+      (mxslt_debug_hdlr_f)mxslt_doc_null, NULL, mxslt_debug_firstlevel() } 
 struct mxslt_state_t {
   mxslt_url_handler_t http_handler;
 
   struct mxslt_recursion_t * recursion;
   struct mxslt_doc_t * document;
   void * ctx;
+
+  mxslt_debug_hdlr_f dbghdlr;
+  void * dbgctx;
+
+  int dbglevel;
 };
 
-  /* Keeps the function pointers
-   * used by sapi to override http handling */
+  /* Keeps the function pointers used by sapi to override http handling */
 # define MXSLT_HTTP_HANDLER_INIT { mxslt_url_handle, NULL, NULL, NULL }
-
-  /* Holds the current global state of the library */
-# define MXSLT_STATE_INIT { MXSLT_HTTP_HANDLER_INIT, NULL, NULL, NULL }
-
-  /* Holds current yaslt state. Created at
-   * xml_init time, restored on each request */
-# define MXSLT_SHOOT_INIT  { NULL, NULL }
 
 typedef enum mxslt_scan_flag_e {
   MSF_WITHOUT_MEDIA=BIT(0)

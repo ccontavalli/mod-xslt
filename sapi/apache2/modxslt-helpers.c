@@ -231,7 +231,9 @@ void mxslt_ap2_debug(void * ctx, int level, int mask, const char * msg, ...) {
       /* Now, data->buffer contains string to be outputted .. */
     if(mxslt_debug_compare(mask, MXSLT_DBG_FLAGS)) {
       ap_log_error(APLOG_MARK, APLOG_WARNING, 0, s, MXSLT_NAME
-                     ": debug(%08x/%08x): %s", level, mask, data->buffer);
+                     ": debug(level=%08x,mask=%08x,pid=%ld,tid=%lu): %s",
+		     level, mask, (long)getpid(), mxslt_get_tid(),
+		     data->buffer);
     } else {
       ap_log_error(APLOG_MARK, APLOG_WARNING, 0, s, MXSLT_NAME
                      ": debug: %s", data->buffer);

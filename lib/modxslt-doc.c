@@ -380,8 +380,12 @@ void mxslt_doc_error_null(void * f, const char * fu, ...) {
 }
 #endif
 
-void mxslt_state_init(mxslt_shoot_t * shoot) {
+void mxslt_shoot_init(mxslt_shoot_t * shoot) {
+  mxslt_state_t state = MXSLT_STATE_INIT();
+
   memset(shoot, 0, sizeof(mxslt_shoot_t));
+  shoot->mxslt_state=xmalloc(sizeof(mxslt_state_t));
+  (*shoot->mxslt_state)=state;
 }
 
 void mxslt_recursion_init(mxslt_recursion_t * rec) {
@@ -394,7 +398,9 @@ void mxslt_recursion_init(mxslt_recursion_t * rec) {
 void mxslt_doc_null(void) {
 }
 
-unsigned int mxslt_doc_debug_enable(mxslt_doc_t * document, unsigned int level, mxslt_debug_hdlr_f dbghdlr, void * dbgctx) {
+unsigned int mxslt_doc_debug_enable(
+    mxslt_doc_t * document, unsigned int level, mxslt_debug_hdlr_f dbghdlr,
+    void * dbgctx) {
   int old;
 
   assert(document);
@@ -409,9 +415,10 @@ unsigned int mxslt_doc_debug_enable(mxslt_doc_t * document, unsigned int level, 
   return old;
 }
 
-void mxslt_doc_init(mxslt_doc_t * document, char * sapit, mxslt_shoot_t * shoot, 
-		    mxslt_recursion_t * recursion, mxslt_error_hdlr_f mxslt_doc_error, 
-		    void * errctx, void * ctx) {
+void mxslt_doc_init(
+    mxslt_doc_t * document, char * sapit, mxslt_shoot_t * shoot,
+    mxslt_recursion_t * recursion, mxslt_error_hdlr_f mxslt_doc_error, 
+    void * errctx, void * ctx) {
   char * value;
   int len;
 
@@ -591,8 +598,10 @@ int mxslt_doc_done(mxslt_doc_t * document, mxslt_shoot_t * shoot) {
     xfree(document->content_type);
     /* Free up other document parameters */
 
-    /* Restore global state, discarding 
-     * current state */
+    /* Forget about this document */
+  shoot->mxslt_state->document = NULL;
+
+    /* Restore global state, discarding current state */
 #ifdef HAVE_LIBXML_THREADS
   xmlSetGlobalState((xmlGlobalStatePtr)((document->shoot).xml_state), (xmlGlobalStatePtr *)(&(shoot->xml_state)));
 #endif
@@ -1108,8 +1117,6 @@ xsltStylesheetPtr mxslt_doc_load_stylesheet_file(mxslt_doc_t * document, char * 
 }
 
 int mxslt_doc_load_stylesheet(mxslt_doc_t * document, char * href) {
-  char * base=NULL;
-
   mxslt_doc_debug_print(document, MXSLT_DBG_LIBXML | MXSLT_DBG_VERBOSE0,
 		"adjusting url for stylesheet: %s\n", mxslt_debug_string((char *)href));
 
@@ -1227,12 +1234,10 @@ static void mxslt_pthread_destroy(void * ptr) {
 }
 #endif
 
-  /* This piece of code is assumed to be executed
-   * only by the main thread - the counter is not used
-   * to count the number of threads/users of the library, 
-   * but the number of modules using this library, the number
-   * of ``softwares'' that initialized the library from the 
-   * main thread */
+  /* This piece of code is assumed to be executed only by the main thread - the
+   * counter is not used to count the number of threads/users of the library,
+   * but the number of modules using this library, the number of ``softwares''
+   * that initialized the library from the main thread */
 void mxslt_xml_unload(void) {
   if(--mxslt_global_count)
     return;
@@ -1243,9 +1248,9 @@ void mxslt_xml_unload(void) {
 #endif
 }
 
-  /* Precalculate static tables 
-   * this is assumed not to be used from multithreaded
-   * systems */
+  /* Precalculate static tables and sets up globals.
+   * This should be called before any other mxslt_ functions is invoked,
+   * possibly from the main thread of execution. */
 void mxslt_xml_load(void) {
   static const char * const params[] = {
     "MODXSLT[interface]", "2",
@@ -1321,43 +1326,64 @@ void mxslt_xml_load(void) {
   return;
 }
 
-void mxslt_xml_init(mxslt_shoot_t * shoot, mxslt_url_handler_t* http_handler,
-		    mxslt_url_handler_t* file_handler) {
-  static const mxslt_state_t base = MXSLT_STATE_INIT;
-#ifdef HAVE_LIBXML_THREADS
-  xmlGlobalStatePtr prev_xml_state=NULL;
-#endif /* HAVE_LIBXML_THREADS */
+void mxslt_xml_init(
+    mxslt_shoot_t * shoot, mxslt_url_handler_t* http_handler,
+    mxslt_url_handler_t* file_handler) {
+  if (!shoot->mxslt_state)
+    mxslt_shoot_init(shoot);
 
 #ifdef HAVE_LIBXML_THREADS
+  xmlGlobalStatePtr prev_xml_state=NULL;
+
     /* Get current state */
   shoot->xml_state=xmlNewGlobalState();
   xmlSetGlobalState(shoot->xml_state, &prev_xml_state);
+
+  mxslt_debug_print(
+      shoot->mxslt_state, MXSLT_DBG_INTERNAL,
+      "threading enabled in libxml - setup global state\n");
 #endif /* HAVE_LIBXML_THREADS */
 
     /* Initialize xml parser */
   xmlInitParser();
 #ifdef USE_EXSLT
   exsltRegisterAll();
+  mxslt_debug_print(
+      shoot->mxslt_state, MXSLT_DBG_INTERNAL,
+      "initialized libxml - registered EXSLT extensions\n");
+#else /* USE_EXSLT */
+  mxslt_debug_print(
+      shoot->mxslt_state, MXSLT_DBG_INTERNAL,
+      "initialized libxml - *NO* EXSLT extensions\n");
 #endif /* USE_EXSLT */
 
   xmlKeepBlanksDefault(0);
   xmlLineNumbersDefault(1);
   xmlSubstituteEntitiesDefault(1);
   xmlLoadExtDtdDefaultValue=MXSLT_XSLT_OPTIONS;
-/*	  XML_PARSE_NOENT|XML_PARSE_DTDLOAD|XML_PARSE_DTDATTR|XML_PARSE_NSCLEAN|XML_PARSE_NOCDATA|XML_PARSE_XINCLUDE; */
 
 #ifndef MXSLT_DISABLE_XINCLUDE 
   xsltSetXIncludeDefault(1);
+  mxslt_debug_print(
+      shoot->mxslt_state, MXSLT_DBG_INTERNAL, "libxml - xinclude enabled\n");
+#else /* MXSLT_DISABLE_XINCLUDE */
+  mxslt_debug_print(
+      shoot->mxslt_state, MXSLT_DBG_INTERNAL, "libxml - xinclude disabled\n");
 #endif
 
 #ifndef MXSLT_DISABLE_EXTENSIONS
     /* Register extension module */
-  xsltRegisterExtModule((xmlChar *)MXSLT_NS_URI, mxslt_xslt_module_init, mxslt_xslt_module_done);
-#endif
+  xsltRegisterExtModule(
+      (xmlChar *)MXSLT_NS_URI, mxslt_xslt_module_init, mxslt_xslt_module_done);
+  mxslt_debug_print(
+      shoot->mxslt_state, MXSLT_DBG_INTERNAL,
+      "libxml - registered yaslt extensions as "MXSLT_NS_URI" namespace.");
+#else /* MXSLT_DISABLE_EXTENSIONS */
+  mxslt_debug_print(
+      shoot->mxslt_state, MXSLT_DBG_INTERNAL, "libxml - yaslt extensions not registered\n");
+#endif /* MXSLT_DISABLE_EXTENSIONS */
 
     /* IF an handler is provided */
-  shoot->mxslt_state=xmalloc(sizeof(mxslt_state_t));
-  (*shoot->mxslt_state)=base;
   if(http_handler)
     shoot->mxslt_state->http_handler=*http_handler;
 
@@ -1368,6 +1394,8 @@ void mxslt_xml_init(mxslt_shoot_t * shoot, mxslt_url_handler_t* http_handler,
   xmlSetGlobalState(prev_xml_state, (xmlGlobalStatePtr *)&(shoot->xml_state));
 #endif /* HAVE_LIBXML_THREADS */
 
+  mxslt_debug_print(shoot->mxslt_state, MXSLT_DBG_INTERNAL|MXSLT_DBG_VERBOSE1,
+		    "initialization completed\n");
   return;
 }
 

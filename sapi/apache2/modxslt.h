@@ -111,4 +111,6 @@ typedef struct mxslt_dir_config_t {
 
   /* Extern functions */
 extern int mxslt_ap2_file_parse(ap_filter_t *, apr_bucket_brigade *, const char *, const char *, mxslt_dir_config_t * config);
+extern void mxslt_ap2_debug(void * ctx, int level, int mask, const char * msg, ...);
+
 #endif

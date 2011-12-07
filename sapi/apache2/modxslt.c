@@ -26,7 +26,7 @@ apr_threadkey_t * mxslt_ap2_global_dbgbuffer;
 apr_threadkey_t * mxslt_ap2_global_state;
 apr_threadkey_t * mxslt_ap2_global_ectxt;
 apr_threadkey_t * mxslt_ap2_global_recursion;
-unsigned int mxslt_ap2_global_dbglevel=0;
+static unsigned int mxslt_ap2_global_dbglevel=0;
 
   /* Declare apache 2 module */
 module AP_MODULE_DECLARE_DATA mxslt_module;
@@ -79,24 +79,29 @@ void mxslt_ap2_brigade_dump(apr_bucket_brigade * brigade) {
 
 static void mxslt_ap2_child_init(apr_pool_t *p, server_rec *s) {
   mxslt_recursion_t * recursion;
-  mxslt_shoot_t * state;
+  mxslt_shoot_t * shoot;
+  mxslt_dir_config_t * config =
+      mxslt_ap2_get_config(s->lookup_defaults, &mxslt_module);
 
-  ap_log_error(APLOG_MARK, APLOG_STARTUP | APLOG_DEBUG, 0, NULL,
-	 	 MXSLT_NAME ": starting child");
+  ap_log_error(
+    APLOG_MARK, APLOG_STARTUP | APLOG_DEBUG, 0, NULL,
+    MXSLT_NAME ": starting child");
 
     /* Ok, seems like server pool is really for the whole process,
      * not just the thread... so, use our own memory allocation routines,
      * just to make sure they are correctly freed when the thread dies */
-  state=(mxslt_shoot_t *)xmalloc(sizeof(mxslt_shoot_t));
+  shoot=(mxslt_shoot_t *)xmalloc(sizeof(mxslt_shoot_t));
   recursion=(mxslt_recursion_t *)xmalloc(sizeof(mxslt_recursion_t));
 
-  mxslt_state_init(state);
+  mxslt_shoot_init(shoot);
+  mxslt_debug_enable(shoot, config->dbglevel, mxslt_ap2_debug, s);
+
   mxslt_recursion_init(recursion);
 
-  mxslt_ap2_state_set(state);
+  mxslt_ap2_state_set(shoot);
   mxslt_ap2_recursion_set(recursion);
 
-  mxslt_xml_init(state, NULL, NULL);
+  mxslt_xml_init(shoot, NULL, NULL);
 
   return;
 }
@@ -342,7 +347,7 @@ static const char * mxslt_ap2_nodefault_stylesheet(cmd_parms *cmd, void *pcfg, c
 }
 
 static const char * mxslt_ap2_set_debug(cmd_parms * cmd, void * pcfg, const char * l) {
-  mxslt_dir_config_t * conf=(mxslt_dir_config_t *) pcfg;
+  mxslt_dir_config_t * conf=(mxslt_dir_config_t *)pcfg;
 
   unsigned char * ch=(unsigned char *)l;
   int mask;
@@ -402,10 +407,10 @@ static const command_rec mxslt_cmds[] = {
 /* Dispatch list for API hooks */
 module AP_MODULE_DECLARE_DATA mxslt_module = {
   STANDARD20_MODULE_STUFF, 
-  mxslt_create_dir_config,      /* create per-dir    config structures */
-  mxslt_merge_dir_config,       /* merge  per-dir    config structures */
+  mxslt_create_dir_config, /* create per-dir config structures    */
+  mxslt_merge_dir_config,  /* merge  per-dir config structures    */
   NULL,                    /* create per-server config structures */
   NULL,                    /* merge  per-server config structures */
-  mxslt_cmds,                   /* table of config file commands       */
-  mxslt_register_hooks    /* register hooks                      */
+  mxslt_cmds,              /* table of config file commands       */
+  mxslt_register_hooks     /* register hooks                      */
 };
