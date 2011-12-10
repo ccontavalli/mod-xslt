@@ -56,8 +56,8 @@ int mxslt_doc_url_decode(char * url) {
 	  return MXSLT_FAILURE;
 	}
 
-	(*store)=(decode[(unsigned short int)*(url+1)])<<4;
-	(*store)+=decode[(unsigned short int)*(url+2)];
+	(*store)=(char)(decode[(unsigned short int)*(url+1)]<<4) |
+	         (char)(decode[(unsigned short int)*(url+2)]);
 	  /* Do not allow to add a \0 */
 	if(*store == '\0')
 	  return MXSLT_FAILURE;
@@ -105,11 +105,10 @@ int mxslt_doc_param_urlparse(mxslt_doc_t * document, const char * query) {
     if(!*ch && ch == start)
       return MXSLT_OK;
 
-      /* In any other case, decode key and
-       * format it correctly -- XXX: are we sure we 
-       * should decode key? Doesn't this lead to sometimes
-       * weird results? */ 
-    key=(char *)xmalloc(sizeof("GET[]")+ch-start);
+      /* In any other case, decode key and format it correctly -- XXX: are we
+       * sure we should decode key? Doesn't this lead to sometimes weird
+       * results? */ 
+    key=(char *)xmalloc(sizeof("GET[]")+(size_t)(ch-start));
     sprintf(key, "GET[%.*s]", ch-start, start); 
     status=mxslt_doc_url_decode(key+4);
     if(status != MXSLT_OK) {
@@ -131,7 +130,7 @@ int mxslt_doc_param_urlparse(mxslt_doc_t * document, const char * query) {
       mxslt_doc_param_add(document, key, NULL);
       mxslt_doc_debug_print(document, MXSLT_DBG_DEBUG | MXSLT_DBG_VARIABLES, "url parser - setting as seen: %s\n", key);
     } else {
-      value=xstrndup(start, ch-start);
+      value=xstrndup(start, (size_t)(ch-start));
       status=mxslt_doc_url_decode(value);
       if(status != MXSLT_OK) {
         xfree(value);

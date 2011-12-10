@@ -48,6 +48,8 @@
 # undef PACKAGE_VERSION
 
 # include <modxslt1/modxslt-system.h>
+# include <modxslt1/modxslt-integers.h>
+
 # include "modxslt-version.h"
 # include "modxslt-table.h"
 
@@ -256,7 +258,7 @@ typedef struct mxslt_opr_t {
    * to be looked for in an array */
 typedef struct mxslt_attr_search_t {
   xmlChar * name;
-  int size;
+  size_t size;
 } mxslt_attr_search_t;
 
   /* Holds a variable for the yaslt

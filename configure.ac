@@ -56,6 +56,7 @@ AC_CHECK_FUNCS([malloc memcmp memset realloc stat vprintf memset strdup],, [
 		AC_MSG_ERROR([Necessary function is missing. Can't continue])])
 AC_FUNC_MMAP
 AC_FUNC_MEMCMP
+AX_CREATE_STDINT_H(lib/modxslt1/modxslt-integers.h)
 
 # Check for C compiler/library features
 AC_SEARCH_LIBS([strerror],[cposix])

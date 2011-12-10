@@ -229,7 +229,7 @@ static int mxslt_opr_cmp_regequal(mxslt_doc_t * doc, char * str1, char * str2) {
   char * pattern;	/* Portion of str1 */
   int options;
 
-  int str1len;
+  size_t str1len;
 
   int status;
   int erroroffset;
@@ -256,12 +256,12 @@ static int mxslt_opr_cmp_regequal(mxslt_doc_t * doc, char * str1, char * str2) {
   }
 
   str1len=strlen(str1);
-  if(str1len < 0) {
+  if(str1len > INT_MAX) {
     mxslt_error(doc, "string too long is overflowing an int in regular expression compare\n"); 
     return MXSLT_ERROR; 
   }
 
-  status=pcre_exec(regex, NULL,  str1, str1len, 0, PCRE_NOTEMPTY, NULL, 0);
+  status=pcre_exec(regex, NULL,  str1, (int)str1len, 0, PCRE_NOTEMPTY, NULL, 0);
   free(regex);
 
   if(status >= 0)
@@ -306,7 +306,7 @@ static int mxslt_opr_cmp_notregequal(mxslt_doc_t * doc, char * str1, char * str2
 
 const struct mxslt_opr_t * mxslt_opr_cmp_lookup (char * str) {
   static const struct mxslt_opr_t mxslt_cmp_opr[] = {
-    {NULL}, {NULL},
+    {NULL, NULL}, {NULL, NULL},
     {"=", (mxslt_opr_call_f)mxslt_opr_cmp_equal},
     {">", (mxslt_opr_call_f)mxslt_opr_cmp_greater},
     {"==", (mxslt_opr_call_f)mxslt_opr_cmp_equal},
@@ -315,7 +315,7 @@ const struct mxslt_opr_t * mxslt_opr_cmp_lookup (char * str) {
     {"=~", (mxslt_opr_call_f)mxslt_opr_cmp_regequal},
     {"<=", (mxslt_opr_call_f)mxslt_opr_cmp_lessequal},
     {"!=", (mxslt_opr_call_f)mxslt_opr_cmp_notequal},
-    {NULL}, {NULL},
+    {NULL, NULL}, {NULL, NULL},
     {"!~", (mxslt_opr_call_f)mxslt_opr_cmp_notregequal}
   };
 

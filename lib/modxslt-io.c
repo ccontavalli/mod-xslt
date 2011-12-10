@@ -68,7 +68,7 @@ xmlParserInputBufferPtr mxslt_create_input_fd(mxslt_doc_t * doc, int fd) {
   xmlParserInputBufferPtr retval;
   mxslt_mmap_ctx_t * mmapd;
   struct stat buf;
-  char * tmp;
+  char * tmp = MAP_FAILED;
 
   if(fstat(fd, &buf) < 0) {
     mxslt_error(doc, "couldn't stat fd: %d, errno: %d\n", fd, errno);
@@ -94,22 +94,28 @@ xmlParserInputBufferPtr mxslt_create_input_fd(mxslt_doc_t * doc, int fd) {
   }
 
 #ifdef HAVE_MMAP
-  tmp=mmap(NULL, buf.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
+    /* make sure the file is no larger than what we can hold on
+     * a size_t - unlikely, but you never know whose files mod-xslt
+     * is trying to load - let's be paranoid for once */
+  if (buf.st_size >= 0 && (uintmax_t)((size_t)-1) >= (uintmax_t)(buf.st_size)
+      && (uintmax_t)(INT_MAX) >= (uintmax_t)(buf.st_size))
+    tmp=mmap(NULL, (size_t)buf.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
 
     /* If mmap succedes, we should be done */
   if(tmp != MAP_FAILED) {
-    retval=xmlParserInputBufferCreateMem(tmp, buf.st_size, XML_CHAR_ENCODING_NONE);
+    retval=xmlParserInputBufferCreateMem(
+        tmp, buf.st_size, XML_CHAR_ENCODING_NONE);
     if(retval) {
       mmapd=(mxslt_mmap_ctx_t *)(xmalloc(sizeof(mxslt_mmap_ctx_t)));
       mmapd->mem=tmp;
-      mmapd->size=buf.st_size;
+      mmapd->size=(size_t)buf.st_size;
       mmapd->fd=fd;
 
       retval->closecallback=mxslt_destroy_input_mmap;
       retval->context=mmapd;
       return retval;
     }
-    munmap(tmp, buf.st_size);
+    munmap(tmp, (size_t)buf.st_size);
   }
 #endif /* HAVE_MMAP */
 
