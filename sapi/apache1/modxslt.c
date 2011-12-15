@@ -40,7 +40,7 @@ module MODULE_VAR_EXPORT mxslt_module;
 mxslt_shoot_t ap1_mxslt_global_state = MXSLT_SHOOT_INIT;
 mxslt_recursion_t mxslt_global_recursion = MXSLT_RECURSION_INIT;
 mxslt_table_t mxslt_global_ips = mxslt_table_init_static();
-int mxslt_global_dbglevel = 0;
+unsigned int mxslt_global_dbglevel = 0;
 
   /* Set when fixup phase should not be run */
 int mxslt_global_skip_fixup = 0;
@@ -131,7 +131,9 @@ static int mxslt_ap1_http_handle(mxslt_doc_t * doc, void ** store, void * contex
   return MXSLT_FALSE;
 }
 
-static void mxslt_ap1_dump_table(mxslt_dir_config_t * config, int level, request_rec * r, const char * str, table * table) {
+static void mxslt_ap1_dump_table(
+    mxslt_dir_config_t * config, unsigned int level, request_rec * r,
+    const char * str, table * table) {
   array_header * harr = ap_table_elts(table);
   table_entry * entry = (table_entry *)harr->elts; 
   int i;
@@ -143,7 +145,8 @@ static void mxslt_ap1_dump_table(mxslt_dir_config_t * config, int level, request
   }
 }
 
-static void mxslt_ap1_dump_config(mxslt_dir_config_t * config, int level, request_rec * r) {
+static void mxslt_ap1_dump_config(
+    mxslt_dir_config_t * config, unsigned int level, request_rec * r) {
   mxslt_ap1_debug(r->server, level, config->dbglevel, "fetched config (%08x):\n", level);
   mxslt_ap1_debug(r->server, level, config->dbglevel, "* config: %08x\n", (int)config); 
   mxslt_ap1_debug(r->server, level, config->dbglevel, "* config->state: %d\n", config->state); 
@@ -904,7 +907,8 @@ static void * mxslt_ap1_merge_dir_config(pool * p, void * basev, void * override
 #ifdef HAVE_NETWORK_IOCTLS
 # include <net/if.h>
 
-static int mxslt_ap1_setanyiplist(server_rec * s, int level, mxslt_table_t * ips_table) {
+static int mxslt_ap1_setanyiplist(
+    server_rec * s, unsigned int level, mxslt_table_t * ips_table) {
   struct ifconf ifc;
   int fd, status;
   struct ifreq * ifrp, ifr;

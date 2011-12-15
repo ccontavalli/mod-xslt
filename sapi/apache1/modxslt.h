@@ -101,6 +101,7 @@ extern request_rec *mxslt_ap1_sub_request(mxslt_dir_config_t *, request_rec *r, 
 extern int mxslt_ap1_file_parse(mxslt_dir_config_t * config, request_rec *r, const char *filename, const char * defaultstyle, const char *forcestyle);
 extern table * mxslt_ap1_merge_tables(pool * p, table * table_new, table * table_old);
 
-extern void mxslt_ap1_debug(void * ctx, int level, int mask, const char * msg, ...);
+extern void mxslt_ap1_debug(
+    void * ctx, unsigned int level, unsigned int mask, const char * msg, ...);
 
 #endif /* MXSLT_AP1_H */

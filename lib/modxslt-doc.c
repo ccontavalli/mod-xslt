@@ -72,7 +72,7 @@ mxslt_state_t * mxslt_get_state(void) {
 #endif
 
 #ifdef HAVE_PTHREADS
-void inline mxslt_set_state(mxslt_state_t * next, mxslt_state_t ** prev) {
+inline void mxslt_set_state(mxslt_state_t * next, mxslt_state_t ** prev) {
   mxslt_state_t * handler;
 
   handler=(mxslt_state_t *)pthread_getspecific(mxslt_global_state);
@@ -86,7 +86,7 @@ void inline mxslt_set_state(mxslt_state_t * next, mxslt_state_t ** prev) {
   return;
 }
 #else
-void inline mxslt_set_state(mxslt_state_t * next, mxslt_state_t ** prev) {
+inline void mxslt_set_state(mxslt_state_t * next, mxslt_state_t ** prev) {
     /* If we have a prev pointer, save current state */
   if(prev)
     *prev=mxslt_global_state;
@@ -165,27 +165,26 @@ mxslt_table_status_e mxslt_doc_param_add(mxslt_doc_t * doc, char * key, char * v
 int mxslt_get_static_attr(const char * content, const mxslt_attr_search_t * attr, char ** store, int nelems) {
   char * cur, * start;
   register int min, max, i=0;
-  int diff=0, len;
+  int diff=0;
+  size_t len;
 
   for(cur=(char *)content, nelems-=1; *cur; cur++) {
-      /* Skip blanks we may have before start
-       * of attribute */
+      /* Skip blanks we may have before start of attribute */
     SKIP_BLANKS;
 
     if(!*cur) {
-      /* We got to the end of buffer in 
-       * the right place - no more attributes to scan
-       * or no attributes at all */
+      /* We got to the end of buffer in the right place - no more attributes to
+       * scan or no attributes at all */
       return MXSLT_OK;
     }
 
-      /* Go to end of attribute name (terminated either by a space or by
-       * the equal sign - or by the end of buffer, of course) */
+      /* Go to end of attribute name (terminated either by a space or by the
+       * equal sign - or by the end of buffer, of course) */
     for(start=cur; *cur && !MXSLT_IS_BLANK(*cur) && *cur != '='; cur++)
       ;
 
       /* Binary search the attribute in the array */
-    for(min=0, max=nelems, len=cur-start; max >= min;) {
+    for(min=0, max=nelems, len=(size_t)(cur-start); max >= min;) {
       i=(max+min)>>1;
 
         /* get the middle set record */
@@ -199,22 +198,18 @@ int mxslt_get_static_attr(const char * content, const mxslt_attr_search_t * attr
 	min=i+1;
     }
 
-      /* Skip blanks we may have after attribute name
-       * but before = sign */
+      /* Skip blanks we may have after attribute name but before = sign */
     SKIP_BLANKS;
 
     if(*cur++ != '=') {
-        /* Well, we were looking for the equal sign but 
-         * no equal... not good... */
+	/* Well, we were looking for the equal sign but no equal... not good. */
       return MXSLT_FAILURE;
     }
     
-      /* Skip blanks between = and start of attribute 
-       * value */
+      /* Skip blanks between = and start of attribute value */
     SKIP_BLANKS;
 
-      /* We couldn't find the correct
-       * terminator */
+      /* We couldn't find the correct terminator */
     if(*cur != '\'' && *cur != '\"')
       return MXSLT_FAILURE;
 
@@ -223,27 +218,26 @@ int mxslt_get_static_attr(const char * content, const mxslt_attr_search_t * attr
       ;
 
     if(!*cur) {
-      /* We got to the end of buffer while we
-       * were looking for the closing ' or " of an attribute
-       * value */
+      /* We got to the end of buffer while we were looking for the closing ' or
+       * " of an attribute value */
       return MXSLT_FAILURE;
     }
 
-      /* We have an attribute and it's value
-       * if we are interested in them, just store them */
+      /* We have an attribute and it's value if we are interested in them, just
+       * store them */
     if(!diff && attr[i].size == len) {
       if(store[i])
 	xfree(store[i]);
 
-      store[i]=xstrndup(start+1, cur-start-1);
+      store[i]=xstrndup(start+1, (size_t)(cur-start)-1);
     }
 
-    /* cur++ in the for statement makes cur point to the
-     * character after the closing ' or " */
+    /* cur++ in the for statement makes cur point to the character after the
+     * closing ' or " */
   }
 
-    /* If we got here, there were no trailing spaces
-     * after end of an attribute value */
+    /* If we got here, there were no trailing spaces after end of an attribute
+     * value */
   return MXSLT_OK;
 }
 
@@ -252,8 +246,9 @@ int mxslt_get_static_attr(const char * content, const mxslt_attr_search_t * attr
 int mxslt_set_static_attr(const char * content, const mxslt_attr_search_t * attr, char ** set, int nelems, char ** toret) {
   char * cur, * attrib, * value, * preb;
   register int min, max, i=0;
-  int diff=0, len, size, gain=0;
+  int diff=0;
   char * retval, * store;
+  size_t size, len, gain;
 
   *toret=NULL;
   gain=HINT_GROWTH;
@@ -261,31 +256,29 @@ int mxslt_set_static_attr(const char * content, const mxslt_attr_search_t * attr
   store=retval=(char *)xmalloc(size+1);
 
   for(cur=(char *)content, nelems-=1; *cur; cur++, store++) {
-      /* Skip blanks we may have before start
-       * of attribute */
+      /* Skip blanks we may have before start of attribute */
     for(preb=cur; MXSLT_IS_BLANK(*cur); cur++, store++)
       *store=*cur;
 
     if(!*cur) {
-      /* We got to the end of buffer in 
-       * the right place - no more attributes to scan
-       * or no attributes at all */
+      /* We got to the end of buffer in the right place - no more attributes to
+       * scan or no attributes at all */
       *store='\0';
       *toret=retval;
       return MXSLT_OK;
     }
 
-      /* Go to end of attribute name (terminated either by a space or by
-       * the equal sign - or by the end of buffer, of course) */
+      /* Go to end of attribute name (terminated either by a space or by the
+       * equal sign - or by the end of buffer, of course) */
     for(attrib=cur; *cur && !MXSLT_IS_BLANK(*cur) && *cur != '='; cur++, store++)
       *store=*cur;
 
       /* Binary search the attribute in the array */
-    for(min=0, max=nelems, len=cur-attrib; max >= min;) {
+    for(min=0, max=nelems, len=(size_t)(cur-attrib); max >= min;) {
       i=(max+min)>>1;
 
         /* get the middle set record */
-      diff=memcmp(attrib, attr[i].name, attr[i].size > len ? len : attr[i].size );
+      diff=memcmp(attrib, attr[i].name, attr[i].size > len ? len : attr[i].size);
       if(!diff && attr[i].size == len) 
 	break;
 
@@ -295,26 +288,22 @@ int mxslt_set_static_attr(const char * content, const mxslt_attr_search_t * attr
 	min=i+1;
     }
 
-      /* Skip blanks we may have after attribute name
-       * but before = sign */
+      /* Skip blanks we may have after attribute name but before = sign */
     for(; MXSLT_IS_BLANK(*cur); cur++, store++)
       *store=*cur;
 
     if(*cur != '=') {
-        /* Well, we were looking for the equal sign but 
-         * no equal... not good... */
+	/* Well, we were looking for the equal sign but no equal... not good. */
       xfree(retval);
       return MXSLT_FAILURE;
     }
     *store++=*cur++;
     
-      /* Skip blanks between = and start of attribute 
-       * value */
+      /* Skip blanks between = and start of attribute value */
     for(; MXSLT_IS_BLANK(*cur); cur++, store++)
       *store=*cur;
 
-      /* We couldn't find the correct
-       * terminator */
+      /* We couldn't find the correct terminator */
     if(*cur != '\'' && *cur != '\"') {
       xfree(retval);
       return MXSLT_FAILURE;
@@ -325,32 +314,30 @@ int mxslt_set_static_attr(const char * content, const mxslt_attr_search_t * attr
       *store=*cur;
 
     if(!*cur) {
-      /* We got to the end of buffer while we
-       * were looking for the closing ' or " of an attribute
-       * value */
+      /* We got to the end of buffer while we were looking for the closing ' or
+       * " of an attribute value */
       xfree(retval);
       return MXSLT_FAILURE;
     }
     *store=*cur;
 
-      /* We have an attribute and its value
-       * if we are interested in them, just replace them */
+      /* We have an attribute and its value if we are interested in them, just
+       * replace them */
     if(!diff && attr[i].size == len) {
       if(set[i]) {
 	  /* Allocate memory for new value */
 	len=strlen(set[i]);
-	if(len > (cur-value-1+gain)) {
-	  size+=len-(cur-value-1+gain);
+	if(len > (size_t)(cur-value-1)+gain) {
+	  size+=len-(size_t)(cur-value-1)+gain;
 	  store=(char *)((int)store-(int)retval);
 	  retval=xrealloc(retval, size+1);
 	  store=(char *)((int)retval+(int)store);
 	  gain=0;
         } else {
-	  if(len > cur-value-1)
-	    gain-=len-(cur-value-1);
+	  if(len > (size_t)(cur-value-1))
+	    gain-=len-(size_t)(cur-value-1);
 	}
-	  /* Move store back to where
-	   * we need to store the cursor */
+	  /* Move store back to where we need to store the cursor */
 	store=(store-(cur-value));
 	*store++='"';
 	memcpy(store, set[i], len);
@@ -358,17 +345,17 @@ int mxslt_set_static_attr(const char * content, const mxslt_attr_search_t * attr
 	*store='"';
       } else {
 	  /* Ok, no attribute value, get rid of it */
-	gain+=(cur-preb+1);
+	gain+=(size_t)(cur-preb+1);
 	store=(char *)((int)store-(cur-preb+1));
       }
     }
 
-    /* cur++ in the for statement makes cur point to the
-     * character after the closing ' or " */
+    /* cur++ in the for statement makes cur point to the character after the
+     * closing ' or " */
   }
 
-    /* If we got here, there were no trailing spaces
-     * after end of an attribute value */
+    /* If we got here, there were no trailing spaces after end of an attribute
+     * value */
   *store='\0';
   *toret=retval;
   return MXSLT_OK;
@@ -401,7 +388,7 @@ void mxslt_doc_null(void) {
 unsigned int mxslt_doc_debug_enable(
     mxslt_doc_t * document, unsigned int level, mxslt_debug_hdlr_f dbghdlr,
     void * dbgctx) {
-  int old;
+  unsigned int old;
 
   assert(document);
 
@@ -420,7 +407,7 @@ void mxslt_doc_init(
     mxslt_recursion_t * recursion, mxslt_error_hdlr_f mxslt_doc_error, 
     void * errctx, void * ctx) {
   char * value;
-  int len;
+  size_t len;
 
   /* mxslt_debug_mem(); */
 
@@ -631,15 +618,15 @@ char * mxslt_doc_findmedia(xsltStylesheetPtr style) {
 
 int mxslt_doc_parse(mxslt_doc_t * document, mxslt_header_set_f header_set, void * header_data) {
   char * type="text/xml", * rt, * encoding="UTF-8";
-  int type_size=mxslt_sizeof_str("text/xml"), enco_size=mxslt_sizeof_str("UTF-8");
+  size_t type_size=mxslt_sizeof_str("text/xml"), enco_size=mxslt_sizeof_str("UTF-8");
 
     /* Note: params is _not_ declared as a global static variable
-     *   since it needs to be modified, depending on the sapit specified,
-     *   and, as you know, modifying a global variable in a multithreaded
-     *   application is BAD (without locking) - also note that in this 
-     *   function it is not declared static, since it needs be modifyed
-     *   by the code - and static variables, when not const, are as
-     *   bad as globals if modifyed */ 
+     *   since it needs to be modified, depending on the sapit specified, and,
+     *   as you know, modifying a global variable in a multithreaded
+     *   application is BAD (without locking) - also note that in this function
+     *   it is not declared static, since it needs be modifyed by the code -
+     *   and static variables, when not const, are as bad as globals if
+     *   modifyed */ 
   const char * params[] = {
     "modxslt-sapi", NULL,
     "modxslt-interface", APOS("2"),

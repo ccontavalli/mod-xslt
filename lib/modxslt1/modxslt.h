@@ -144,7 +144,8 @@ struct mxslt_shoot_t {
 typedef struct mxslt_pi_t mxslt_pi_t;
 
 typedef void (*mxslt_error_hdlr_f)(void * ctx, const char * msg, ...);
-typedef void (*mxslt_debug_hdlr_f)(void * ctx, int level, int mask, const char * msg, ...);
+typedef void (*mxslt_debug_hdlr_f)(
+    void * ctx, unsigned int level, unsigned int mask, const char * msg, ...);
 typedef void (*mxslt_header_set_f)(char * name, char * value, void * data);
 
   /* Shortcut some boring casts */
@@ -197,7 +198,7 @@ struct mxslt_doc_t {
   mxslt_debug_hdlr_f dbghdlr;
   void * dbgctx;
 
-  int dbglevel;
+  unsigned int dbglevel;
 };
 
 # include "modxslt-memory.h"
@@ -228,7 +229,7 @@ struct mxslt_state_t {
   mxslt_debug_hdlr_f dbghdlr;
   void * dbgctx;
 
-  int dbglevel;
+  unsigned int dbglevel;
 };
 
   /* Keeps the function pointers used by sapi to override http handling */

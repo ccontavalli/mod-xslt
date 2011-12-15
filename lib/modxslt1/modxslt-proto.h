@@ -71,7 +71,7 @@ extern void mxslt_sax_processing_instruction(void *ctx, const xmlChar *target, c
 extern xmlParserInputPtr mxslt_sax_resolve_entity(void *ctx, const xmlChar *publicId, const xmlChar *systemId);
 extern xmlDocPtr mxslt_doc_xml_parse(mxslt_doc_t *document, xmlParserInputBufferPtr buf, char *localfile);
 extern xmlDocPtr mxslt_doc_xml_load_entity(mxslt_doc_t *document, char *localfile);
-extern char * mxslt_yy_str_parse(mxslt_doc_t * document, char * start, int size);
+extern char * mxslt_yy_str_parse(mxslt_doc_t * document, char * start, size_t size);
 extern xmlDocPtr mxslt_doc_xml_apply_stylesheet(mxslt_doc_t *, xsltStylesheetPtr, xmlDocPtr, const char **);
 
 # if !defined(HAVE_LIBXML_HACK) && defined(HAVE_LIBXML_THREADS) 

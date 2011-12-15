@@ -49,7 +49,7 @@ mxslt_table_size_t mxslt_table_calc_dragon(const char * tohash, mxslt_table_size
   static mxslt_table_size_t tmp;
   
   for(hash=0; *tohash;) {
-    hash=(hash << 4) + *tohash++;
+    hash=(hash << 4) + (unsigned char)(*tohash++);
     if((tmp=(hash & 0xf0000000)) != 0) {
       hash ^= (tmp >> 24);
       hash ^= tmp;

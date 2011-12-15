@@ -96,29 +96,29 @@ extern unsigned int mxslt_debug_enable(
     void * ctx);
 
   /** When initializing libmodxslt1 debugging, provides user desired debugging
-   * level.  This function reads from the user configurations (an environment
+   * level. This function reads from the user configurations (an environment
    * variable, but in the future it may become a configuration file) the user
    * desired debugging level for the mxslt_ library. This is most useful when
    * initializing the library, in those softwares that need to initialize the
    * library before parsing user configurations or configuration files. */
-extern int mxslt_debug_firstlevel(void);
+extern unsigned int mxslt_debug_firstlevel(void);
 
   /** Returns the bitmask associated with a given debug level.
-   * For example, by calling mxslt_debug_string("sapi"), the return
-   * value would be MXSLT_DBG_SAPI. This function is most useful
-   * when transforming user configuration lines into bitmasks. 
+   * For example, by calling mxslt_debug_string("sapi"), the return value would
+   * be MXSLT_DBG_SAPI. This function is most useful when transforming user
+   * configuration lines into bitmasks.
    * @param str A string representing a given debugging level.
    * @param len The lenght of the string (strlen(str)).
    * @return The bit corresponding to the specified string,
    *   or MXSLT_DBG_ERROR, if the string is not recognized
    *   or str is null or empty (""). */
-extern int mxslt_debug_flag(const char * str, int len);
+extern unsigned int mxslt_debug_flag(const char * str, unsigned int len);
 
   /** Returns the bitmask associated with a given debug string.
-   * This function expects a comma separated list of debug
-   * flags to be enabled. It returns the bitmask associated.
+   * This function expects a comma separated list of debug flags to be enabled.
+   * It returns the bitmask associated.
    * @param str The user supplied list of flags.
-   * @return The bitmask corresponding to the specified string,
-   *   or MXSLT_DBG_ERROR if any of the flags is invalid. */
-extern int mxslt_debug_parse(char * str);
+   * @return The bitmask corresponding to the specified string, or
+   *   MXSLT_DBG_ERROR if any of the flags is invalid. */
+extern unsigned int mxslt_debug_parse(char * str);
 #endif 

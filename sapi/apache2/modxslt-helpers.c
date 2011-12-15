@@ -160,7 +160,8 @@ static int mxslt_ap2_doc_param_header(mxslt_doc_t * document, apr_table_t * tabl
   return 0;
 }
 
-void mxslt_ap2_debug(void * ctx, int level, int mask, const char * msg, ...) {
+void mxslt_ap2_debug(
+    void * ctx, unsigned int level, unsigned int mask, const char * msg, ...) {
   server_rec * s = (server_rec *) ctx;
   mxslt_ap2_debug_buffer_t * data;
   void * data_v;

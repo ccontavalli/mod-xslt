@@ -31,15 +31,15 @@
 # define MXSLT_DBGLEVEL_DEFAULT 0
 #endif
 
-int mxslt_debug_firstlevel(void) {
+unsigned int mxslt_debug_firstlevel(void) {
+  unsigned int retval=MXSLT_DBGLEVEL_DEFAULT;
   char * var;
-  int retval=MXSLT_DBGLEVEL_DEFAULT;
 
   var=getenv(MXSLT_DBGLEVEL_ENV);
   if(!var || !*var)
     return retval;
 
-  retval=atoi(var);
+  retval=(unsigned int)atoi(var);
   return retval;
 }
 
@@ -48,8 +48,9 @@ int mxslt_debug_firstlevel(void) {
 
 struct mxslt_debug_string_t {
   char * name;
-  int nsize;
-  int bit;
+
+  unsigned int nsize;
+  unsigned int bit;
 } mxslt_debug_strings[] = { 
     /* IMPORTANT: This list needs to be alphabetically sorted */
   { "all", mxslt_sizeof_str("all"), MXSLT_DBG_ALL },
@@ -69,8 +70,8 @@ struct mxslt_debug_string_t {
 };
 
 
-int mxslt_debug_parse(char * str) {
-  int flags=0;
+unsigned int mxslt_debug_parse(char * str) {
+  unsigned int flags=0;
   char * cursor;
 
     /* return immediately if we have no string */
@@ -90,14 +91,14 @@ int mxslt_debug_parse(char * str) {
     if(!(cursor-str))
       break;
 
-    flags|=mxslt_debug_flag(str, cursor-str);
+    flags|=mxslt_debug_flag(str, (unsigned int)(cursor-str));
     str=cursor;
   }
 
   return flags;
 }
 
-int mxslt_debug_flag(const char * str, int len) {
+unsigned int mxslt_debug_flag(const char * str, unsigned int len) {
   register int min=0, max=mxslt_sizeof_array(mxslt_debug_strings)-1, i;
   int diff;
 
@@ -131,7 +132,7 @@ int mxslt_debug_flag(const char * str, int len) {
 unsigned int mxslt_debug_enable(
     mxslt_shoot_t * shoot, unsigned int level,
     mxslt_debug_hdlr_f dbghdlr, void * dbgctx) {
-  int old;
+  unsigned int old;
 
   assert(shoot);
 

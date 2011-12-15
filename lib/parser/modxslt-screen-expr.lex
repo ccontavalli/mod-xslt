@@ -44,11 +44,13 @@
   #  define IS_MAGIC(ch) ((ch) == '\'' || (ch) == '"' || (ch) == '$')
   # endif
 
-  void mxslt_yy_str_dereference(mxslt_doc_t * doc, char ** new_start, char ** new_cur, 
-   				 char ** orig_start, char ** orig_cur, int * gain, int * size) {
+  void mxslt_yy_str_dereference(
+      mxslt_doc_t * doc, char ** new_start, char ** new_cur, 
+      char ** orig_start, char ** orig_cur, int * gain, size_t * size) {
     char * var_start, * var_cur, * str;
     int bracketed=0, cntr=0;
-    int len, status;
+    size_t len;
+    int status;
 
 	     /* Initialize variables */
     var_start=*orig_cur;
@@ -176,7 +178,7 @@
     }
   }
 
-  char * mxslt_yy_str_parse(mxslt_doc_t * doc, char * orig_start, int size) {
+  char * mxslt_yy_str_parse(mxslt_doc_t * doc, char * orig_start, size_t size) {
     char * orig_cur=orig_start;
     char * new_start, * new_cur;
     int gain=0;
@@ -341,7 +343,8 @@
 
       /* Unescape variables and return string */
     (*yylval).string=mxslt_yy_str_parse(scan->document, yytext+1, yyleng-2);
-    mxslt_debug_print(scan->document, MXSLT_DBG_DEBUG | MXSLT_DBG_PARSER, "string=\"%s\"\n", (*yylval).string);
+    mxslt_doc_debug_print(
+      scan->document, MXSLT_DBG_DEBUG | MXSLT_DBG_PARSER, "string=\"%s\"\n", (*yylval).string);
 
     return TOKEN_LIT; 
   } 

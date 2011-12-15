@@ -29,7 +29,8 @@
 # define MXSLT_BUFFER_SIZE_MAX 16384
 #endif
 
-void mxslt_ap1_debug(void *ctx_v, int level, int mask, const char * msg, ...) {
+void mxslt_ap1_debug(
+    void *ctx_v, unsigned int level, unsigned int mask, const char * msg, ...) {
   server_rec * s = (server_rec *)ctx_v;
   static char * buffer = NULL;
   static int size = 0;
