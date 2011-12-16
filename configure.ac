@@ -26,7 +26,7 @@ AC_COPYRIGHT(
   [redistribute them and/or modify them under the terms of the GNU ]
   [General Public License. Read the provided documentation to know ]
   [more about this license and usage terms.])
-AC_INIT([mod-xslt],[1.4.0],[ccontavalli at inscatolati.net],[mod-xslt])
+AC_INIT([mod-xslt],[1.4.1],[ccontavalli at inscatolati.net],[mod-xslt])
 AC_LANG(C)
 
 # Libtool versioning
