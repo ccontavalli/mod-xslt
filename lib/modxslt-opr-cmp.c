@@ -261,8 +261,8 @@ static int mxslt_opr_cmp_regequal(mxslt_doc_t * doc, char * str1, char * str2) {
   }
 
   status=pcre_exec(regex, NULL,  str1, (int)str1len, 0, PCRE_NOTEMPTY, NULL, 0);
-  free(regex);
-
+  //free(regex);
+  (prce_free)(regex);
   if(status >= 0)
     return MXSLT_TRUE;
 
