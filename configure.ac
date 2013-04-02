@@ -26,7 +26,7 @@ AC_COPYRIGHT(
   [redistribute them and/or modify them under the terms of the GNU ]
   [General Public License. Read the provided documentation to know ]
   [more about this license and usage terms.])
-AC_INIT([mod-xslt],[1.4.1],[ccontavalli at inscatolati.net],[mod-xslt])
+AC_INIT([mod-xslt],[1.4.2],[ccontavalli at inscatolati.net],[mod-xslt])
 AC_LANG(C)
 
 # Libtool versioning
@@ -582,7 +582,8 @@ AC_SUBST(LIB_REVISION)
 AC_SUBST(LIB_AGE)
 
 
-AC_CONFIG_FILES([Makefile utils/Makefile lib/Makefile lib/parser/Makefile sapi/apache1/Makefile 
-		 sapi/apache2/Makefile sapi/none/Makefile utils/modxslt-config.pre doc/man/Makefile])
+AC_CONFIG_FILES([Makefile utils/Makefile lib/Makefile lib/parser/Makefile
+                 sapi/apache1/Makefile sapi/apache2/Makefile sapi/none/Makefile
+                 utils/modxslt-config.pre doc/man/Makefile])
 
 AC_OUTPUT
