@@ -1,0 +1,19 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 02_sapi_apache1_makefile.dpatch by  <giskard@localhost.localdomain>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: No description.
+
+@DPATCH@
+diff -urNad modxslt-2005072700~/sapi/apache1/Makefile.in modxslt-2005072700/sapi/apache1/Makefile.in
+--- modxslt-2005072700~/sapi/apache1/Makefile.in	2006-08-18 18:15:49.000000000 +0200
++++ modxslt-2005072700/sapi/apache1/Makefile.in	2006-08-18 18:17:42.000000000 +0200
+@@ -90,7 +90,7 @@
+ install-strip: install
+ 
+ install: mod_xslt.so Makefile
+-	test -w '$(DESTDIR)$(APXS_INSTALLDIR)' || \
++#	test -w '$(DESTDIR)$(APXS_INSTALLDIR)' || \
+ 	  { echo 'You are not allowed to write in $(DESTDIR)$(APXS_INSTALLDIR). Are you root??'; exit 1; }
+ 	$(INSTALL) $(IFLAGS) -m 0644 -d '$(DESTDIR)$(APXS_INSTALLDIR)'
+ 	$(INSTALL) $(IFLAGS) -m 0644 mod_xslt.so '$(DESTDIR)$(APXS_INSTALLDIR)/mod_xslt.so'

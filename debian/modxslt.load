@@ -1,0 +1,1 @@
+LoadModule mxslt_module /usr/lib/apache2/modules/mod_xslt.so

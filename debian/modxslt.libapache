@@ -1,0 +1,19 @@
+<IfModule modxslt.c>
+  XSLTTmpDir /tmp
+
+  # Here is a sample configuration... please
+  # read the documentation provided in modxslt-doc
+
+  # This is for a directory providing static .xml 
+  # documents
+  #<Directory /var/www/static>
+  #  AddHandler mod-xslt .xml
+  #</Directory>
+
+  # This is for a directory providing dynamic
+  # content using php
+  #<Directory /var/www/php>
+  #  XSLTEngine on
+  #  XSLTAddFilter application/x-httpd-php
+  #</Directory>
+</IfModule>
