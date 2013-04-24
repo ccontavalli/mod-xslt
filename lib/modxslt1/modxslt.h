@@ -150,7 +150,9 @@ typedef void (*mxslt_header_set_f)(char * name, char * value, void * data);
 
   /* Shortcut some boring casts. */
 typedef int (*mxslt_opr_bool_call_f)(mxslt_doc_t *, int, int);
-typedef int (*mxslt_opr_cmp_call_f)(mxslt_doc_t *, const char*, const char*);
+  /* Note that the function may modify the string it is passed, for example,
+   * to escape / unescape it properly. */
+typedef int (*mxslt_opr_cmp_call_f)(mxslt_doc_t *, char*, char*);
 
 
   /* Holds informations about a 

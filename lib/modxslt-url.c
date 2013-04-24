@@ -109,7 +109,7 @@ int mxslt_doc_param_urlparse(mxslt_doc_t * document, const char * query) {
        * sure we should decode key? Doesn't this lead to sometimes weird
        * results? */ 
     key=(char *)xmalloc(sizeof("GET[]")+(size_t)(ch-start));
-    sprintf(key, "GET[%.*s]", ch-start, start); 
+    sprintf(key, "GET[%.*s]", (int)(ch-start), start); 
     status=mxslt_doc_url_decode(key+4);
     if(status != MXSLT_OK) {
       xfree(key);
