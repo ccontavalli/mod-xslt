@@ -25,9 +25,9 @@
 extern int mxslt_doc_screen_check(mxslt_doc_t *, char **, int flags);
 
 /* ./modxslt-opr-cmp.c */
-extern const struct mxslt_opr_t *mxslt_opr_cmp_lookup(char *str);
+extern const struct mxslt_opr_cmp_t *mxslt_opr_cmp_lookup(char *str);
 /* ./modxslt-opr-bool.c */
-extern const struct mxslt_opr_t *mxslt_opr_bool_lookup(char *str);
+extern const struct mxslt_opr_bool_t *mxslt_opr_bool_lookup(char *str);
 
 # ifdef MXSLT_LIBXML_HTTP_STATUS
 extern void * mxslt_url_real_open(mxslt_doc_t *, char *);

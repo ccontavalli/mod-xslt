@@ -33,21 +33,24 @@
  * 			-Nmxslt_cmp_opr_lookup -t ./modxslt-cmp-opr.gperf  */
 /* Computed positions: -k'1-2' */
 
-static int mxslt_opr_cmp_equal(mxslt_doc_t * doc, char * str1, char * str2) {
+static int mxslt_opr_cmp_equal(
+    mxslt_doc_t * doc, const char * str1, const char * str2) {
   if(str1 && str2)
     return strcmp(str1, str2) ? MXSLT_FALSE : MXSLT_TRUE;
 
   return MXSLT_ERROR;
 }
 
-static int mxslt_opr_cmp_notequal(mxslt_doc_t * doc, char * str1, char * str2) {
+static int mxslt_opr_cmp_notequal(
+    mxslt_doc_t * doc, const char * str1, const char * str2) {
   if(str1 && str2)
     return strcmp(str1, str2) ? MXSLT_TRUE : MXSLT_FALSE;
  
   return MXSLT_ERROR;
 }
 
-static int mxslt_opr_cmp_greater(mxslt_doc_t * doc, char * str1, char * str2) {
+static int mxslt_opr_cmp_greater(
+    mxslt_doc_t * doc, const char * str1, const char * str2) {
   double n1, n2;
   char *t1, *t2;
 
@@ -67,7 +70,8 @@ static int mxslt_opr_cmp_greater(mxslt_doc_t * doc, char * str1, char * str2) {
   return (n1 > n2 ? MXSLT_TRUE : MXSLT_FALSE);
 }
 
-static int mxslt_opr_cmp_greaterequal(mxslt_doc_t * doc, char * str1, char * str2) {
+static int mxslt_opr_cmp_greaterequal(
+    mxslt_doc_t * doc, const char * str1, const char * str2) {
   double n1, n2;
   char *t1, *t2;
 
@@ -87,7 +91,8 @@ static int mxslt_opr_cmp_greaterequal(mxslt_doc_t * doc, char * str1, char * str
   return (n1 >= n2 ? MXSLT_TRUE : MXSLT_FALSE);
 }
 
-static int mxslt_opr_cmp_less(mxslt_doc_t * doc, char * str1, char * str2) {
+static int mxslt_opr_cmp_less(
+    mxslt_doc_t * doc, const char * str1, const char * str2) {
   double n1, n2;
   char *t1, *t2;
 
@@ -107,7 +112,8 @@ static int mxslt_opr_cmp_less(mxslt_doc_t * doc, char * str1, char * str2) {
   return (n1 < n2 ? MXSLT_TRUE : MXSLT_FALSE);
 }
 
-static int mxslt_opr_cmp_lessequal(mxslt_doc_t * doc, char * str1, char * str2) {
+static int mxslt_opr_cmp_lessequal(
+    mxslt_doc_t * doc, const char * str1, const char * str2) {
   double n1, n2;
   char *t1, *t2;
 
@@ -223,7 +229,8 @@ static int reg_options(char ** str, int * toret) {
   return MXSLT_OK;
 }
 
-static int mxslt_opr_cmp_regequal(mxslt_doc_t * doc, char * str1, char * str2) {
+static int mxslt_opr_cmp_regequal(
+    mxslt_doc_t * doc, const char * str1, const char * str2) {
   pcre * regex;		/* Compiled regular expression */
 
   char * pattern;	/* Portion of str1 */
@@ -292,31 +299,33 @@ static int mxslt_opr_cmp_regequal(mxslt_doc_t * doc, char * str1, char * str2) {
 } 
 
 #else /* HAS_PCRE */
-static int mxslt_opr_cmp_regequal(mxslt_doc_t * doc, char * str1, char * str2) {
+static int mxslt_opr_cmp_regequal(
+    mxslt_doc_t * doc, const char * str1, const char * str2) {
   return MXSLT_FALSE;
 }
 #endif
 
-static int mxslt_opr_cmp_notregequal(mxslt_doc_t * doc, char * str1, char * str2) {
+static int mxslt_opr_cmp_notregequal(
+    mxslt_doc_t * doc, const char * str1, const char * str2) {
   int status;
   status=mxslt_opr_cmp_regequal(doc, str1, str2);
 
   return status != MXSLT_ERROR ? status : MXSLT_ERROR;
 } 
 
-const struct mxslt_opr_t * mxslt_opr_cmp_lookup (char * str) {
-  static const struct mxslt_opr_t mxslt_cmp_opr[] = {
+const struct mxslt_opr_cmp_t * mxslt_opr_cmp_lookup (char * str) {
+  static const struct mxslt_opr_cmp_t mxslt_cmp_opr[] = {
     {NULL, NULL}, {NULL, NULL},
-    {"=", (mxslt_opr_call_f)mxslt_opr_cmp_equal},
-    {">", (mxslt_opr_call_f)mxslt_opr_cmp_greater},
-    {"==", (mxslt_opr_call_f)mxslt_opr_cmp_equal},
-    {">=", (mxslt_opr_call_f)mxslt_opr_cmp_greaterequal},
-    {"<", (mxslt_opr_call_f)mxslt_opr_cmp_less},
-    {"=~", (mxslt_opr_call_f)mxslt_opr_cmp_regequal},
-    {"<=", (mxslt_opr_call_f)mxslt_opr_cmp_lessequal},
-    {"!=", (mxslt_opr_call_f)mxslt_opr_cmp_notequal},
+    {"=", mxslt_opr_cmp_equal},
+    {">", mxslt_opr_cmp_greater},
+    {"==", mxslt_opr_cmp_equal},
+    {">=", mxslt_opr_cmp_greaterequal},
+    {"<", mxslt_opr_cmp_less},
+    {"=~", mxslt_opr_cmp_regequal},
+    {"<=", mxslt_opr_cmp_lessequal},
+    {"!=", mxslt_opr_cmp_notequal},
     {NULL, NULL}, {NULL, NULL},
-    {"!~", (mxslt_opr_call_f)mxslt_opr_cmp_notregequal}
+    {"!~", mxslt_opr_cmp_notregequal}
   };
 
   static const unsigned char asso_values[] = {

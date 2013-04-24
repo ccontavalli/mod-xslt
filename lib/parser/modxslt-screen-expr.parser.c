@@ -164,12 +164,13 @@ typedef union YYSTYPE
 
   int bval;
   char * string;
-  const mxslt_opr_t * operator;
+  const mxslt_opr_cmp_t * cmp_operator;
+  const mxslt_opr_bool_t * bool_operator;
 
 
 
 /* Line 293 of yacc.c  */
-#line 173 "../../../lib/parser/modxslt-screen-expr.parser.c"
+#line 174 "../../../lib/parser/modxslt-screen-expr.parser.c"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -194,7 +195,7 @@ typedef struct YYLTYPE
 
 
 /* Line 343 of yacc.c  */
-#line 198 "../../../lib/parser/modxslt-screen-expr.parser.c"
+#line 199 "../../../lib/parser/modxslt-screen-expr.parser.c"
 
 #ifdef short
 # undef short
@@ -487,8 +488,8 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    76,    76,    77,    81,    82,    83,    87,    95,   103,
-     110,   115,   116,   117,   134,   161,   171
+       0,    77,    77,    78,    82,    83,    84,    88,    96,   104,
+     111,   116,   117,   118,   134,   161,   171
 };
 #endif
 
@@ -1146,11 +1147,11 @@ yydestruct (yymsg, yytype, yyvaluep, yylocationp)
       case 8: /* "TOKEN_LIT" */
 
 /* Line 1391 of yacc.c  */
-#line 65 "../../../lib/parser/modxslt-screen-expr.y"
+#line 66 "../../../lib/parser/modxslt-screen-expr.y"
 	{ if((yyvaluep->string)) xfree((yyvaluep->string)); };
 
 /* Line 1391 of yacc.c  */
-#line 1154 "../../../lib/parser/modxslt-screen-expr.parser.c"
+#line 1155 "../../../lib/parser/modxslt-screen-expr.parser.c"
 	break;
 
       default:
@@ -1479,28 +1480,28 @@ yyreduce:
         case 2:
 
 /* Line 1806 of yacc.c  */
-#line 76 "../../../lib/parser/modxslt-screen-expr.y"
+#line 77 "../../../lib/parser/modxslt-screen-expr.y"
     { mxslt_yy_accept((yyvsp[(1) - (1)].bval)); YYACCEPT; }
     break;
 
   case 4:
 
 /* Line 1806 of yacc.c  */
-#line 81 "../../../lib/parser/modxslt-screen-expr.y"
+#line 82 "../../../lib/parser/modxslt-screen-expr.y"
     { mxslt_yy_accept(MXSLT_TRUE); YYACCEPT; }
     break;
 
   case 6:
 
 /* Line 1806 of yacc.c  */
-#line 83 "../../../lib/parser/modxslt-screen-expr.y"
+#line 84 "../../../lib/parser/modxslt-screen-expr.y"
     { (yyval.bval)=MXSLT_FALSE; }
     break;
 
   case 7:
 
 /* Line 1806 of yacc.c  */
-#line 87 "../../../lib/parser/modxslt-screen-expr.y"
+#line 88 "../../../lib/parser/modxslt-screen-expr.y"
     { 
 	    if((yyvsp[(3) - (3)].bval) == MXSLT_TRUE) { 
 	      mxslt_yy_accept((yyvsp[(3) - (3)].bval)); 
@@ -1514,7 +1515,7 @@ yyreduce:
   case 8:
 
 /* Line 1806 of yacc.c  */
-#line 95 "../../../lib/parser/modxslt-screen-expr.y"
+#line 96 "../../../lib/parser/modxslt-screen-expr.y"
     {
 	    if((yyvsp[(1) - (1)].bval) == MXSLT_TRUE) {
 	      mxslt_yy_accept((yyvsp[(1) - (1)].bval));
@@ -1528,7 +1529,7 @@ yyreduce:
   case 9:
 
 /* Line 1806 of yacc.c  */
-#line 103 "../../../lib/parser/modxslt-screen-expr.y"
+#line 104 "../../../lib/parser/modxslt-screen-expr.y"
     { 
 	    mxslt_yy_accept(MXSLT_TRUE); 
 	    YYACCEPT;
@@ -1538,31 +1539,30 @@ yyreduce:
   case 11:
 
 /* Line 1806 of yacc.c  */
-#line 115 "../../../lib/parser/modxslt-screen-expr.y"
+#line 116 "../../../lib/parser/modxslt-screen-expr.y"
     { (yyval.bval) = (yyvsp[(2) - (3)].bval); }
     break;
 
   case 12:
 
 /* Line 1806 of yacc.c  */
-#line 116 "../../../lib/parser/modxslt-screen-expr.y"
+#line 117 "../../../lib/parser/modxslt-screen-expr.y"
     { (yyval.bval) = ! (yyvsp[(2) - (2)].bval); }
     break;
 
   case 13:
 
 /* Line 1806 of yacc.c  */
-#line 117 "../../../lib/parser/modxslt-screen-expr.y"
+#line 118 "../../../lib/parser/modxslt-screen-expr.y"
     {
-              /* Check a valid operator
-	       * was found */
-	    if(!(yyvsp[(2) - (3)].operator)) {
+	      /* Check a valid operator was found */
+	    if(!(yyvsp[(2) - (3)].bool_operator)) {
 	      mxslt_yy_accept(MXSLT_ERROR);
 	      YYABORT;
 	    }
 
               /* Call operator handler */
-	    (yyval.bval)=mxslt_opr_bool_call((yyvsp[(2) - (3)].operator), mxslt_yy_document, (yyvsp[(1) - (3)].bval), (yyvsp[(3) - (3)].bval));
+	    (yyval.bval)=mxslt_opr_bool_call((yyvsp[(2) - (3)].bool_operator), mxslt_yy_document, (yyvsp[(1) - (3)].bval), (yyvsp[(3) - (3)].bval));
 
 	      /* Check status of operator handler */
 	    if((yyval.bval) < 0) {
@@ -1578,7 +1578,7 @@ yyreduce:
 #line 134 "../../../lib/parser/modxslt-screen-expr.y"
     { 
               /* Check if operator is valid */
-	    if(!(yyvsp[(2) - (3)].operator)) {
+	    if(!(yyvsp[(2) - (3)].cmp_operator)) {
 	      mxslt_yy_accept(MXSLT_ERROR);
 
               if((yyvsp[(1) - (3)].string))
@@ -1590,7 +1590,7 @@ yyreduce:
 	    }
 
 	      /* Can return MXSLT_TRUE, MXSLT_FALSE or an error value */
-	    (yyval.bval)=mxslt_opr_cmp_call((yyvsp[(2) - (3)].operator), mxslt_yy_document, (yyvsp[(1) - (3)].string), (yyvsp[(3) - (3)].string));
+	    (yyval.bval)=mxslt_opr_cmp_call((yyvsp[(2) - (3)].cmp_operator), mxslt_yy_document, (yyvsp[(1) - (3)].string), (yyvsp[(3) - (3)].string));
 
             if((yyvsp[(1) - (3)].string))
 	      xfree((yyvsp[(1) - (3)].string));

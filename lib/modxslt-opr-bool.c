@@ -29,10 +29,10 @@ static int mxslt_opr_bool_or(mxslt_doc_t * doc, int val1, int val2) {
   return val1 || val2;
 }
 
-const struct mxslt_opr_t * mxslt_opr_bool_lookup (char * str) {
-  static const struct mxslt_opr_t mxslt_bool_opr[] = {
-      { "and", (mxslt_opr_call_f)mxslt_opr_bool_and },
-      { "or", (mxslt_opr_call_f)mxslt_opr_bool_or }
+const struct mxslt_opr_bool_t * mxslt_opr_bool_lookup (char * str) {
+  static const struct mxslt_opr_bool_t mxslt_bool_opr[] = {
+      { "and", mxslt_opr_bool_and },
+      { "or", mxslt_opr_bool_or }
   };
 
     /* Check is weakened (we don't use a full string compare)

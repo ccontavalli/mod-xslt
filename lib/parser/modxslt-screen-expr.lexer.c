@@ -1374,8 +1374,8 @@ YY_RULE_SETUP
     doc=((mxslt_scan_t *)yyextra)->document;
 
       /* Lookup operator in operator table */
-    (*yylval).operator = mxslt_opr_bool_lookup(yytext); 
-    if(!(*yylval).operator)
+    (*yylval).bool_operator = mxslt_opr_bool_lookup(yytext); 
+    if(!(*yylval).bool_operator)
       mxslt_error(doc, "unknown operator: %s\n", yytext);
 
     return TOKEN_OPR_BOOL; 
@@ -1391,8 +1391,8 @@ YY_RULE_SETUP
     doc=((mxslt_scan_t *)yyextra)->document;
 
       /* Lookup operator in operator table */
-    (*yylval).operator = mxslt_opr_cmp_lookup(yytext); 
-    if(!(*yylval).operator)
+    (*yylval).cmp_operator = mxslt_opr_cmp_lookup(yytext); 
+    if(!(*yylval).cmp_operator)
       mxslt_error(doc, "unknown operator: '%s'\n", yytext);
     
     return TOKEN_OPR_CMP; 

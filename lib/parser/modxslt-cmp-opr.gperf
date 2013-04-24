@@ -8,10 +8,10 @@
  * modxslt-opr-cmp.c and add the new operator
  * to the lexer */
 
-struct mxslt_opr_t {
+struct mxslt_opr_cmp_t {
   char * opr;
-  int (*call)(void * arg1, void * arg2);
-} mxslt_opr_t;
+  int (*call)(const char* arg1, const char* arg2);
+} mxslt_opr_cmp_t;
 %%
 ==, mxslt_opr_cmp_equal
 =, mxslt_opr_cmp_equal

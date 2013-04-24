@@ -148,8 +148,9 @@ typedef void (*mxslt_debug_hdlr_f)(
     void * ctx, unsigned int level, unsigned int mask, const char * msg, ...);
 typedef void (*mxslt_header_set_f)(char * name, char * value, void * data);
 
-  /* Shortcut some boring casts */
-typedef int (*mxslt_opr_call_f)(mxslt_doc_t *, void *, void *);
+  /* Shortcut some boring casts. */
+typedef int (*mxslt_opr_bool_call_f)(mxslt_doc_t *, int, int);
+typedef int (*mxslt_opr_cmp_call_f)(mxslt_doc_t *, const char*, const char*);
 
 
   /* Holds informations about a 
@@ -248,15 +249,18 @@ typedef struct mxslt_scan_t {
   mxslt_doc_t * document;
 } mxslt_scan_t;
 
-  /* Holds informations abouta an
-   * operator */
-typedef struct mxslt_opr_t {
+  /* Holds informations abouta an operator */
+typedef struct mxslt_opr_bool_t {
   char * opr;
-  mxslt_opr_call_f call;
-} mxslt_opr_t;
+  mxslt_opr_bool_call_f call;
+} mxslt_opr_bool_t;
 
-  /* Holds a list of static attributes
-   * to be looked for in an array */
+typedef struct mxslt_opr_cmp_t {
+  char * opr;
+  mxslt_opr_cmp_call_f call;
+} mxslt_opr_cmp_t;
+
+  /* Holds a list of static attributes to be looked for in an array */
 typedef struct mxslt_attr_search_t {
   xmlChar * name;
   size_t size;
@@ -273,8 +277,8 @@ typedef struct mxslt_var_t {
 /* # include "../parser/modxslt-screen-expr.parser.h" */
 
   /* Used internally to call operator handlers */
-# define mxslt_opr_bool_call(op, doc, val1, val2) ((op)->call)(doc, (void *)val1, (void *)val2)
-# define mxslt_opr_cmp_call(op, doc, val1, val2) ((op)->call)(doc, (void *)val1, (void *)val2)
+# define mxslt_opr_bool_call(op, doc, val1, val2) ((op)->call)(doc, val1, val2)
+# define mxslt_opr_cmp_call(op, doc, val1, val2) ((op)->call)(doc, val1, val2)
 
   /* Used to call http handlers */
 # ifdef HAVE_PTHREADS

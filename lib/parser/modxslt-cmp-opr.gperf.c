@@ -117,12 +117,12 @@ mxslt_cmp_opr_hash (str, len)
 #ifdef __GNUC__
 __inline
 #endif
-const struct mxslt_opr_t *
+const struct mxslt_opr_cmp_t *
 mxslt_cmp_opr_lookup (str, len)
      register const char *str;
      register unsigned int len;
 {
-  static const struct mxslt_opr_t mxslt_cmp_opr[] =
+  static const struct mxslt_opr_cmp_t mxslt_cmp_opr[] =
     {
       {""}, {""},
 #line 17 "./modxslt-cmp-opr.gperf"

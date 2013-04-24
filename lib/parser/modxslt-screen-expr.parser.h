@@ -60,12 +60,13 @@ typedef union YYSTYPE
 
   int bval;
   char * string;
-  const mxslt_opr_t * operator;
+  const mxslt_opr_cmp_t * cmp_operator;
+  const mxslt_opr_bool_t * bool_operator;
 
 
 
 /* Line 2068 of yacc.c  */
-#line 69 "../../../lib/parser/modxslt-screen-expr.parser.h"
+#line 70 "../../../lib/parser/modxslt-screen-expr.parser.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

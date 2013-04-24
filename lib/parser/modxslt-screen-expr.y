@@ -39,7 +39,8 @@ extern mxslt_scan_t * mxslt_expr_yy_get_extra(void *);
 %union {
   int bval;
   char * string;
-  const mxslt_opr_t * operator;
+  const mxslt_opr_cmp_t * cmp_operator;
+  const mxslt_opr_bool_t * bool_operator;
 }
 
   /* Allow parser to be reentrant as needed
@@ -56,8 +57,8 @@ extern mxslt_scan_t * mxslt_expr_yy_get_extra(void *);
 %token TOKEN_AND
 
 %token <string> TOKEN_LIT
-%left <operator> TOKEN_OPR_BOOL
-%left <operator> TOKEN_OPR_CMP
+%left <bool_operator> TOKEN_OPR_BOOL
+%left <cmp_operator> TOKEN_OPR_CMP
 %left <bval> '!'
 %token '(' ')'
 %token EOS
@@ -115,8 +116,7 @@ cmp_expr:
         '(' cmp_expr ')' { $$ = $2; }
 	| '!' cmp_expr { $$ = ! $2; }
 	| cmp_expr TOKEN_OPR_BOOL cmp_expr {
-              /* Check a valid operator
-	       * was found */
+	      /* Check a valid operator was found */
 	    if(!$2) {
 	      mxslt_yy_accept(MXSLT_ERROR);
 	      YYABORT;
