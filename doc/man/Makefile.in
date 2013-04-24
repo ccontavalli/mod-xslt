@@ -70,13 +70,13 @@ default: all
 all: modxslt-config.1 modxslt-perror.1 modxslt-parse.1
 
 modxslt-config.1: modxslt-config.xml
-	$(XSLT) $(XSLTPARAM) modxslt-config.xml 
+	$(XSLT) $(XSLTPARAM) $<
 
 modxslt-perror.1: modxslt-perror.xml
-	$(XSLT) $(XSLTPARAM) modxslt-perror.xml 
+	$(XSLT) $(XSLTPARAM) $<
 
 modxslt-parse.1: modxslt-parse.xml
-	$(XSLT) $(XSLTPARAM) modxslt-parse.xml 
+	$(XSLT) $(XSLTPARAM) $<
 
 install: modxslt-config.1 modxslt-perror.1 modxslt-parse.1
 	$(INSTALL) -d $(DESTDIR)$(mandir)/man1
