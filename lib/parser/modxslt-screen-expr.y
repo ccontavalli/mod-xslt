@@ -73,14 +73,14 @@ extern mxslt_scan_t * mxslt_expr_yy_get_extra(void *);
 %%
 
 media_list_expr: 
- 	media_expr { mxslt_yy_accept($1); YYACCEPT }
+ 	media_expr { mxslt_yy_accept($1); YYACCEPT; }
 	| media_expr EOS media_list_expr
 ;
 
 media_expr:
-	TOKEN_ALL { mxslt_yy_accept(MXSLT_TRUE); YYACCEPT } 
+	TOKEN_ALL { mxslt_yy_accept(MXSLT_TRUE); YYACCEPT; } 
 	| screen_expr 
-	| TOKEN_ANY { $$=MXSLT_FALSE } 
+	| TOKEN_ANY { $$=MXSLT_FALSE; } 
 	/*| error { $$=MXSLT_FALSE }*/
 
 screen_expr:
@@ -112,7 +112,7 @@ bool_expr:
 ;
 
 cmp_expr: 
-        '(' cmp_expr ')' { $$ = $2 }
+        '(' cmp_expr ')' { $$ = $2; }
 	| '!' cmp_expr { $$ = ! $2; }
 	| cmp_expr TOKEN_OPR_BOOL cmp_expr {
               /* Check a valid operator
