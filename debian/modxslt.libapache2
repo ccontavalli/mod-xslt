@@ -1,0 +1,6 @@
+<IfModule modxslt.c>
+    # Decomment this line to make modxslt parse 
+    # all .xml files -- install modxslt-doc for 
+    # more info (and read the manual :)
+  #AddOutputFilterByType mod-xslt text/xml 
+</IfModule>

@@ -1,0 +1,11 @@
+libapache-modxslt for Debian and Apache 1.3.x
+---------------------------------------------
+
+  Please take a look at /etc/apache2/conf.d/modxslt for
+an example configuration for modxslt.
+  
+  For complete details about how to install and configure
+modxslt, please install modxslt-doc and take a look at
+the manual.
+
+ -- Carlo Contavalli <ccontavalli@debian.org>, Tue, 17 Aug 2004 15:13:21 +0200
