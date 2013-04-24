@@ -33,7 +33,9 @@
     <cmdsynopsis>
       <command>modxslt-parse</command>
 
-      <arg><replaceable>FILE</replaceable></arg>
+      <arg><replaceable>-D key=value</replaceable></arg>
+      <arg choice="plain">FILE</arg>
+      <arg><replaceable>OUTPUT</replaceable></arg>
     </cmdsynopsis>
   </refsynopsisdiv>
 
@@ -61,6 +63,18 @@
     <variablelist>
       <varlistentry>
         <term>
+          <replaceable>-D key=value</replaceable>
+        </term>
+
+        <listitem>
+          <para>Pass the variable down to the xsl processor. This variable
+            will be available as ${key}, with value "value".
+	    </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term>
           <replaceable>FILE</replaceable>
         </term>
 
@@ -70,6 +84,17 @@
 	    is sent to standard output</para>
         </listitem>
       </varlistentry>
+
+      <varlistentry>
+        <term>
+          <replaceable>OUTPUT</replaceable>
+        </term>
+
+        <listitem>
+          <para>If specified, the file where to save the output.</para>
+        </listitem>
+      </varlistentry>
+
     </variablelist>
   </refsect1>
   

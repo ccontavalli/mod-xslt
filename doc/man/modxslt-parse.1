@@ -1,20 +1,37 @@
+'\" t
 .\"     Title: modxslt-parse
 .\"    Author: Carlo Contavalli <ccontavalli at inscatolati.net>
-.\" Generator: DocBook XSL Stylesheets v1.73.2 <http://docbook.sf.net/>
+.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
 .\"      Date: September 6, 2004
-.\"    Manual: 
-.\"    Source: 
+.\"    Manual: [FIXME: manual]
+.\"    Source: [FIXME: source]
+.\"  Language: English
 .\"
-.TH "MODXSLT\-PARSE" "1" "September 6, 2004" "" ""
+.TH "MODXSLT\-PARSE" "1" "September 6, 2004" "[FIXME: source]" "[FIXME: manual]"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
 .\" disable hyphenation
 .nh
 .\" disable justification (adjust text to left margin only)
 .ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
 .SH "NAME"
-modxslt-parse \- program to convert .xml files using .xsl stylesheet and libmodxslt
+modxslt-parse \- program to convert \&.xml files using \&.xsl stylesheet and libmodxslt
 .SH "SYNOPSIS"
-.HP 14
-\fBmodxslt\-parse\fR [\fIFILE\fR]
+.HP \w'\fBmodxslt\-parse\fR\ 'u
+\fBmodxslt\-parse\fR [\fI\-D\ key=value\fR] FILE [\fIOUTPUT\fR]
 .SH "DESCRIPTION"
 .PP
 \fBmodxslt\-parse\fR
@@ -25,31 +42,46 @@ modxslt\-parse was not meant to be a general purpose replacement for xsltproc\&.
 libmodxslt was written to ease the task of integrating an xml/xslt parser into web servers or web applications\&.
 .SH "OPTIONS"
 .PP
+\fI\-D key=value\fR
+.RS 4
+Pass the variable down to the xsl processor\&. This variable will be available as ${key}, with value "value"\&.
+.RE
+.PP
 \fIFILE\fR
 .RS 4
 The name of the \&.xml file to parse\&. The stylesheet is loaded depending on the PIs contained in the \&.xml file, supporting modxslt extensions\&. Output is sent to standard output
 .RE
+.PP
+\fIOUTPUT\fR
+.RS 4
+If specified, the file where to save the output\&.
+.RE
 .SH "EXAMPLES"
 .sp
+.if n \{\
 .RS 4
+.\}
 .nf
 $ \fBmodxslt\-parse file\&.xml\fR
 <?xml version="1\&.0"\&.\&.\&.
 .fi
+.if n \{\
 .RE
+.\}
 .SH "SEE ALSO"
 .PP
 xsltproc(1), modxslt\-perror(1), modxslt\-config(1), modxslt manual, http://www\&.mod\-xslt2\&.com
 .SH "LICENSE"
 .PP
 This manual page was written by Carlo Contavalli
-<ccontavalli at inscatolati\&.net>\&. Permission is granted to copy, distribute and/or modify this document under the terms of the GNU General Public License, Version 2 any later version published by the Free Software Foundation\&.
+ccontavalli at inscatolati\&.net\&. Permission is granted to copy, distribute and/or modify this document under the terms of the GNU General Public License, Version 2 any later version published by the Free Software Foundation\&.
 .SH "AUTHOR"
 .PP
 \fBCarlo Contavalli\fR <\&ccontavalli at inscatolati\&.net\&>
-.sp -1n
-.IP "" 4
+.RS 4
 Author.
+.RE
 .SH "COPYRIGHT"
+.br
 Copyright \(co 2002-2008 Carlo Contavalli
 .br

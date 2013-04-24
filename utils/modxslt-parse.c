@@ -22,6 +22,8 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <errno.h>
+#include <unistd.h>
+
 #include <modxslt1/modxslt.h>
 
 void mxslt_shell_error(void * null, const char * msg, ...) {
@@ -59,39 +61,67 @@ mxslt_callback_t mxslt_shell_callback = {
   mxslt_shell_closer
 };
 
+void print_usage(char** argv) {
+  fprintf(stderr,
+          "Usage: %s [-D key=value] INPUT.xml [OUTPUT]\n", argv[0]);
+}
+
 int main(int argc, char ** argv) {
   mxslt_recursion_t recursion = MXSLT_RECURSION_INIT;
   xmlParserInputBufferPtr input;
   mxslt_doc_t document;
   FILE * foutput;
   char * ninput;
-  mxslt_shoot_t mxslt_state;
+  char * cursor;
+  mxslt_shoot_t mxslt_state = MXSLT_SHOOT_INIT;
   int status;
-
-  foutput=stdout;
-  switch(argc) {
-    case 3:
-      foutput=fopen(argv[2], "w"); 
-      if(foutput == NULL) {
-	perror("cannot open output file");
-	return 3;
-      }
-
-    case 2:
-      ninput=argv[1];
-      break;
-
-    default:
-      fprintf(stderr, "Usage: xslt input-file [output-file]\n");
-      return 1;
-  }
 
     /* Initialize library */
   mxslt_xml_load();
 
     /* Initialize parsing */
   mxslt_xml_init(&mxslt_state, NULL, NULL);
-  mxslt_doc_init(&document, APOS("shell"), &mxslt_state, &recursion, mxslt_shell_error, NULL, NULL);
+  mxslt_doc_init(&document, APOS("shell"), &mxslt_state, &recursion,
+                 mxslt_shell_error, NULL, NULL);
+
+  int opt;
+  while ((opt = getopt(argc, argv, "D:")) != -1) {
+    switch (opt) {
+      case 'D':
+        cursor = strchr(optarg, '=');
+        if (!cursor) {
+          mxslt_doc_param_add(&document, xstrdup(optarg), NULL);
+        } else {
+          char * var = xstrndup(optarg, cursor - optarg);
+          mxslt_doc_param_add(
+              &document, xstrndup(optarg, cursor - optarg),  
+              xstrdup(cursor + 1));
+        }
+        break;
+
+      default:
+        print_usage(argv);
+        return 4;
+    }
+  }
+
+  foutput=stdout;
+  switch(argc - optind) {
+    case 2:
+      foutput=fopen(argv[optind + 1], "w"); 
+      if(foutput == NULL) {
+	perror("cannot open output file");
+	return 3;
+      }
+
+    case 1:
+      ninput=argv[optind];
+      break;
+
+    default:
+      print_usage(argv);
+      return 1;
+  }
 
     /* Prepare input buffer */
   input=mxslt_create_input_file(&document, (char *)ninput);
