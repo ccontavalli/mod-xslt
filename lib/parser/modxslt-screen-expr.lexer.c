@@ -596,8 +596,8 @@ static yyconst flex_int16_t yy_chk[274] =
 
 static yyconst flex_int16_t yy_rule_linenum[21] =
     {   0,
-      234,  238,  244,  248,  252,  254,  260,  266,  270,  272,
-      276,  280,  284,  298,  312,  316,  322,  338,  352,  354
+      235,  239,  245,  249,  253,  255,  261,  267,  271,  273,
+      277,  281,  285,  299,  313,  317,  323,  339,  353,  355
     } ;
 
 /* The intent behind this definition is that it'll catch
@@ -634,6 +634,7 @@ static yyconst flex_int16_t yy_rule_linenum[21] =
 
   #include <stdio.h>
   #include <ctype.h>
+  #include <stddef.h>
   
   #define YY_EXTRA_TYPE mxslt_scan_t * 
   #define mxslt_expr_yy_scan_string mxslt_expr_yy__scan_string
@@ -727,9 +728,9 @@ static yyconst flex_int16_t yy_rule_linenum[21] =
 		     * absolute to relative and back
 		     * XXX: wouldn't it be better to use array and indexes? I'm just too lazy
 		     *      right now to change the whole function */
-                  (*new_cur)=(char *)((int)(*new_cur)-(int)(*new_start));
+                  (*new_cur)=(char *)(*new_cur - *new_start);
 	          mxslt_yy_str_dereference(doc, new_start, &var_cur, orig_start, orig_cur, gain, size);
-                  (*new_cur)=(char *)((int)(*new_cur)+(int)(*new_start));
+                  (*new_cur)=*new_start + (ptrdiff_t)(*new_cur);
 		}
   	        break;
             } 
@@ -752,9 +753,9 @@ static yyconst flex_int16_t yy_rule_linenum[21] =
               /* new_cur points inside new_start. However, yy_str_dereference may realloc
 	       * new_start making new_cur point outside the buffer - change pointer from
 	       * absolute to relative and back */
-            (*new_cur)=(char *)((int)(*new_cur)-(int)(*new_start));
+            (*new_cur)=(char *)(*new_cur - *new_start);
 	    mxslt_yy_str_dereference(doc, new_start, &var_cur, orig_start, orig_cur, gain, size);
-            (*new_cur)=(char *)((int)(*new_cur)+(int)(*new_start));
+            (*new_cur)=*new_start + (ptrdiff_t)(*new_cur);
 	  }
           break;
       }
@@ -774,9 +775,9 @@ static yyconst flex_int16_t yy_rule_linenum[21] =
 
           /* Realloc memory - change pointers from absolute to 
            * relative and back */
-        (*new_cur)=(char *)((int)(*new_cur)-(int)(*new_start));
+        (*new_cur)=(char *)(*new_cur - *new_start);
         (*new_start)=(char *)(xrealloc(*new_start, (*size)+1));
-        (*new_cur)=(char *)((int)(*new_cur)+(int)(*new_start));
+        (*new_cur)=*new_start + (ptrdiff_t)(*new_cur);
       } else {
           /* Either decrease the gain by the amount
          * used or increment it by the value we are not using */
@@ -827,7 +828,7 @@ static yyconst flex_int16_t yy_rule_linenum[21] =
   }
 
 
-#line 831 "../../../lib/parser/modxslt-screen-expr.lexer.c"
+#line 832 "../../../lib/parser/modxslt-screen-expr.lexer.c"
 
 #define INITIAL 0
 #define SCREEN 1
@@ -940,6 +941,10 @@ char *mxslt_expr_yy_get_text (yyscan_t yyscanner );
 int mxslt_expr_yy_get_lineno (yyscan_t yyscanner );
 
 void mxslt_expr_yy_set_lineno (int line_number ,yyscan_t yyscanner );
+
+int mxslt_expr_yy_get_column  (yyscan_t yyscanner );
+
+void mxslt_expr_yy_set_column (int column_no ,yyscan_t yyscanner );
 
 /* %if-bison-bridge */
 
@@ -1140,13 +1145,13 @@ YY_DECL
     struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
 
 /* %% [7.0] user's declarations go here */
-#line 227 "../../../lib/parser/modxslt-screen-expr.lex"
+#line 228 "../../../lib/parser/modxslt-screen-expr.lex"
 
   if(((mxslt_scan_t *)yyextra)->flags & MSF_WITHOUT_MEDIA) {
     BEGIN(EXPR);
   }
 
-#line 1150 "../../../lib/parser/modxslt-screen-expr.lexer.c"
+#line 1155 "../../../lib/parser/modxslt-screen-expr.lexer.c"
 
     yylval = yylval_param;
 
@@ -1269,7 +1274,7 @@ case 1:
 yyg->yy_c_buf_p = yy_cp = yy_bp + 3;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 234 "../../../lib/parser/modxslt-screen-expr.lex"
+#line 235 "../../../lib/parser/modxslt-screen-expr.lex"
 {
     return TOKEN_ALL;
   }
@@ -1280,7 +1285,7 @@ case 2:
 yyg->yy_c_buf_p = yy_cp = yy_bp + 6;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 238 "../../../lib/parser/modxslt-screen-expr.lex"
+#line 239 "../../../lib/parser/modxslt-screen-expr.lex"
 {
     BEGIN(SCREEN);
 
@@ -1290,26 +1295,26 @@ YY_RULE_SETUP
 case 3:
 /* rule 3 can match eol */
 YY_RULE_SETUP
-#line 244 "../../../lib/parser/modxslt-screen-expr.lex"
+#line 245 "../../../lib/parser/modxslt-screen-expr.lex"
 {
     return TOKEN_ANY;
   }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 248 "../../../lib/parser/modxslt-screen-expr.lex"
+#line 249 "../../../lib/parser/modxslt-screen-expr.lex"
 {
     return EOS;
   } 
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 252 "../../../lib/parser/modxslt-screen-expr.lex"
+#line 253 "../../../lib/parser/modxslt-screen-expr.lex"
 {}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 254 "../../../lib/parser/modxslt-screen-expr.lex"
+#line 255 "../../../lib/parser/modxslt-screen-expr.lex"
 {
     BEGIN(EXPR);
 
@@ -1318,7 +1323,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 260 "../../../lib/parser/modxslt-screen-expr.lex"
+#line 261 "../../../lib/parser/modxslt-screen-expr.lex"
 {
     BEGIN(INITIAL);
     
@@ -1328,40 +1333,40 @@ YY_RULE_SETUP
 case 8:
 /* rule 8 can match eol */
 YY_RULE_SETUP
-#line 266 "../../../lib/parser/modxslt-screen-expr.lex"
+#line 267 "../../../lib/parser/modxslt-screen-expr.lex"
 {
     return TOKEN_ANY;
   }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 270 "../../../lib/parser/modxslt-screen-expr.lex"
+#line 271 "../../../lib/parser/modxslt-screen-expr.lex"
 {}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 272 "../../../lib/parser/modxslt-screen-expr.lex"
+#line 273 "../../../lib/parser/modxslt-screen-expr.lex"
 { 
     return '!'; 
   }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 276 "../../../lib/parser/modxslt-screen-expr.lex"
+#line 277 "../../../lib/parser/modxslt-screen-expr.lex"
 { 
     return '('; 
   }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 280 "../../../lib/parser/modxslt-screen-expr.lex"
+#line 281 "../../../lib/parser/modxslt-screen-expr.lex"
 { 
     return ')'; 
   }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 284 "../../../lib/parser/modxslt-screen-expr.lex"
+#line 285 "../../../lib/parser/modxslt-screen-expr.lex"
 { 
     mxslt_doc_t * doc;
 
@@ -1378,7 +1383,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 298 "../../../lib/parser/modxslt-screen-expr.lex"
+#line 299 "../../../lib/parser/modxslt-screen-expr.lex"
 { 
     mxslt_doc_t * doc;
 
@@ -1395,7 +1400,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 312 "../../../lib/parser/modxslt-screen-expr.lex"
+#line 313 "../../../lib/parser/modxslt-screen-expr.lex"
 { 
     return EOS; 
   }
@@ -1403,7 +1408,7 @@ YY_RULE_SETUP
 case 16:
 /* rule 16 can match eol */
 YY_RULE_SETUP
-#line 316 "../../../lib/parser/modxslt-screen-expr.lex"
+#line 317 "../../../lib/parser/modxslt-screen-expr.lex"
 { 
     (*yylval).string = xstrndup(yytext, yyleng); 
 
@@ -1413,7 +1418,7 @@ YY_RULE_SETUP
 case 17:
 /* rule 17 can match eol */
 YY_RULE_SETUP
-#line 322 "../../../lib/parser/modxslt-screen-expr.lex"
+#line 323 "../../../lib/parser/modxslt-screen-expr.lex"
 {
     mxslt_scan_t * scan;
 						
@@ -1432,7 +1437,7 @@ YY_RULE_SETUP
 case 18:
 /* rule 18 can match eol */
 YY_RULE_SETUP
-#line 338 "../../../lib/parser/modxslt-screen-expr.lex"
+#line 339 "../../../lib/parser/modxslt-screen-expr.lex"
 {     
     mxslt_scan_t * scan;
 						
@@ -1449,13 +1454,13 @@ YY_RULE_SETUP
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 352 "../../../lib/parser/modxslt-screen-expr.lex"
+#line 353 "../../../lib/parser/modxslt-screen-expr.lex"
 {}
 	YY_BREAK
 case 20:
 /* rule 20 can match eol */
 YY_RULE_SETUP
-#line 354 "../../../lib/parser/modxslt-screen-expr.lex"
+#line 355 "../../../lib/parser/modxslt-screen-expr.lex"
 {
     mxslt_doc_t * doc;
 
@@ -1469,10 +1474,10 @@ YY_RULE_SETUP
 
 case 21:
 YY_RULE_SETUP
-#line 365 "../../../lib/parser/modxslt-screen-expr.lex"
+#line 366 "../../../lib/parser/modxslt-screen-expr.lex"
 ECHO;
 	YY_BREAK
-#line 1476 "../../../lib/parser/modxslt-screen-expr.lexer.c"
+#line 1481 "../../../lib/parser/modxslt-screen-expr.lexer.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(SCREEN):
 case YY_STATE_EOF(EXPR):
@@ -2794,7 +2799,7 @@ void mxslt_expr_yy_free (void * ptr , yyscan_t yyscanner)
 
 /* %ok-for-header */
 
-#line 365 "../../../lib/parser/modxslt-screen-expr.lex"
+#line 366 "../../../lib/parser/modxslt-screen-expr.lex"
 
 
   /* Returns:

@@ -24,6 +24,7 @@
 
   #include <stdio.h>
   #include <ctype.h>
+  #include <stddef.h>
   
   #define YY_EXTRA_TYPE mxslt_scan_t * 
   #define mxslt_expr_yy_scan_string mxslt_expr_yy__scan_string
@@ -117,9 +118,9 @@
 		     * absolute to relative and back
 		     * XXX: wouldn't it be better to use array and indexes? I'm just too lazy
 		     *      right now to change the whole function */
-                  (*new_cur)=(char *)((int)(*new_cur)-(int)(*new_start));
+                  (*new_cur)=(char *)(*new_cur - *new_start);
 	          mxslt_yy_str_dereference(doc, new_start, &var_cur, orig_start, orig_cur, gain, size);
-                  (*new_cur)=(char *)((int)(*new_cur)+(int)(*new_start));
+                  (*new_cur)=*new_start + (ptrdiff_t)(*new_cur);
 		}
   	        break;
             } 
@@ -142,9 +143,9 @@
               /* new_cur points inside new_start. However, yy_str_dereference may realloc
 	       * new_start making new_cur point outside the buffer - change pointer from
 	       * absolute to relative and back */
-            (*new_cur)=(char *)((int)(*new_cur)-(int)(*new_start));
+            (*new_cur)=(char *)(*new_cur - *new_start);
 	    mxslt_yy_str_dereference(doc, new_start, &var_cur, orig_start, orig_cur, gain, size);
-            (*new_cur)=(char *)((int)(*new_cur)+(int)(*new_start));
+            (*new_cur)=*new_start + (ptrdiff_t)(*new_cur);
 	  }
           break;
       }
@@ -164,9 +165,9 @@
 
           /* Realloc memory - change pointers from absolute to 
            * relative and back */
-        (*new_cur)=(char *)((int)(*new_cur)-(int)(*new_start));
+        (*new_cur)=(char *)(*new_cur - *new_start);
         (*new_start)=(char *)(xrealloc(*new_start, (*size)+1));
-        (*new_cur)=(char *)((int)(*new_cur)+(int)(*new_start));
+        (*new_cur)=*new_start + (ptrdiff_t)(*new_cur);
       } else {
           /* Either decrease the gain by the amount
          * used or increment it by the value we are not using */
