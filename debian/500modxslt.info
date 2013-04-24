@@ -1,0 +1,14 @@
+LoadModule: mxslt_module /usr/lib/apache/1.3/mod_xslt.so
+Directives:
+ XSLTEngine
+ XSLTTmpDir
+ XSLTAddFilter
+ XSLTDelFilter
+ XSLTAddForce
+ XSLTDelForce
+ XSLTSetStylesheet
+ XSLTUnSetStylesheet
+ XSLTUnlink
+ XSLTParam
+Description: dynamic xml parsing module using xsl stylesheets
+

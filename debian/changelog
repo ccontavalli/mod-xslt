@@ -1,0 +1,127 @@
+modxslt (2005072700-3) unstable; urgency=low
+
+  * QA upload.
+    + Set maintainer to Debian QA Group <packages@qa.debian.org>.
+  * Acknowledge NMUs.
+  * Drop apache1 binary. (Closes: #429137).
+    + Remove apache-dev build-dep.
+  * Remove "active development" in package description. (Closes: #399062).
+  * Change Apache 2.0.x to 2.x in package descriptions. (Closes: #400974).
+    + Remove references to Apache 1.3.
+  * Don't put advertisement on all documents. (Closes: #486886).
+    + Thanks to Steve Pomeroy for the fix.
+  * Replace deprecated ${Source-Version} with ${binary:Version}.
+  * Copy in config.{sub,guess} on configure instead of clean.
+    + Add build-dep on autotools-dev.
+    + Remove them on clean.
+  * Remove paths from commands in maintainer scripts.
+  * Make clean not ignore errors.
+  * Move modxslt-doc to Section: doc.
+  * Add Homepage.
+  * Bump Standards Version to 3.8.0.
+
+ -- Barry deFreese <bdefreese@debian.org>  Thu, 29 Jan 2009 14:18:53 -0500
+
+modxslt (2005072700-2.2) unstable; urgency=high
+
+  * Non-maintainer upload.
+  * Move modxslt-config.1 back to libmodxslt0-dev.
+
+ -- Andreas Barth <aba@not.so.argh.org>  Sun, 31 Dec 2006 10:16:51 +0000
+
+modxslt (2005072700-2.1) unstable; urgency=high
+
+  * Non-maintainer upload.
+  * Remove debian/modxslt-config.1, debian/modxslt-parse.1 and
+    debian/modxslt-perror.1 and use the originals in doc/man instead.
+  * Use $packagename.manpages to ship the manpages.
+  * Ship modxslt-config.1 in libmodxslt0, modxslt-parse.1 and
+    modxslt-perror.1 only in modxslt-tools. Closes: #391404
+
+ -- Andreas Barth <aba@not.so.argh.org>  Sat, 30 Dec 2006 10:43:48 +0000
+
+modxslt (2005072700-2) unstable; urgency=low
+
+  * Dropped 01_autotools.dpatch
+  * Added 01_fix_autotools.dpatch, 03_fix_apache2_modxslt_c.dpatch
+  * High-urgency upload for RC bugfix.
+  * Update build-dependency to libapr1-dev for the apache 2.2
+    transition, and add missing dependency on apache2.2-common.
+    Closes: #391634, #393603.
+  
+ -- Riccardo Setti <giskard@debian.org>  Fri, 17 Nov 2006 19:47:19 +0100
+
+modxslt (2005072700-1) unstable; urgency=low
+
+  * New upstream release.
+  * Bumped standard version to  3.7.2, no changes needed
+  * Bumped debhelper compatibility to 5.
+    - modified debian/compat to reflect this change
+
+ -- Riccardo Setti <giskard@debian.org>  Fri, 18 Aug 2006 15:40:15 +0200
+
+modxslt (2004112100-4) unstable; urgency=medium
+
+  *  Thank you Matej for your NMU.
+  *  added a dep on libgcrypt11-dev (closes: #379714)
+
+ -- Riccardo Setti <giskard@debian.org>  Wed, 26 Jul 2006 21:55:40 +0200
+
+modxslt (2004112100-3.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Remove unnecessary build dependency on libdb4.2-dev.
+    Closes: #354693.
+  * debian/rules: Set SHELL to bash for brace expansion and `echo -e'.
+    Closes: #326241.
+
+ -- Matej Vela <vela@debian.org>  Thu, 16 Mar 2006 16:13:28 +0100
+
+modxslt (2004112100-3) unstable; urgency=low
+ 
+  * new revision for dak.ganeeff.org .
+  * now i use dh_installman and dh_install .
+
+ -- Riccardo Setti <giskard@autistici.org>  Tue, 18 Aug 2005 15:04:12 +0200
+
+modxslt (2004112100-2) unstable; urgency=low
+
+  * new revision for dak.ganeeff.org.
+ 
+ -- Riccardo Setti <giskard@autistici.org>  Tue, 10 Jul 2005 15:04:12 +0200
+
+modxslt (2004112100-1) unstable; urgency=low
+
+  * builded with --enable-exslt switch (closes: #303063)
+  * modxlt now conflicts with libapache-mod-xslt (closes: #303325)
+ 
+ -- Riccardo Setti <giskard@autistici.org>  Tue, 10 Apr 2005 12:36:12 +0200
+
+modxslt (2004101700-2) unstable; urgency=low
+
+  * patched modxslt-helpers.c.
+
+ -- Riccardo Setti <giskard@autistici.org>  Tue, 9 Nov 2004 22:42:12 +0200
+
+modxslt (2004101700-1) unstable; urgency=low
+
+  * New upstream version
+  * compiled with -fpic
+  * delete some bug in debian/control file
+  
+ -- Riccardo Setti <giskard@autistici.org>  Mon,  28 Oct 2004 20:51:12 +0200
+
+modxslt (2004083000-2) unstable; urgency=low
+
+  * libmodxslt-dev can now be install i added $REVISION in
+  dh_gencontrol (Closes: #274916)
+  * libapache2 description is now correct (Closes: #273677)
+
+ -- Riccardo Setti <giskard@autistici.org>  Mon,  4 Oct 2004 21:22:12 +0200
+
+modxslt (2004083000-1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Riccardo Setti <giskard@autistici.org>  Tue, 24 Aug 2004 11:59:06 +0200
+
