@@ -42,6 +42,7 @@
 #endif
 
 #include <assert.h>
+#include <stddef.h>
 
 
   /* This table is filled at preinit time and contains all 
@@ -329,9 +330,9 @@ int mxslt_set_static_attr(const char * content, const mxslt_attr_search_t * attr
 	len=strlen(set[i]);
 	if(len > (size_t)(cur-value-1)+gain) {
 	  size+=len-(size_t)(cur-value-1)+gain;
-	  store=(char *)((int)store-(int)retval);
+	  store=(char *)(store-retval);
 	  retval=xrealloc(retval, size+1);
-	  store=(char *)((int)retval+(int)store);
+	  store=(char *)(retval+(ptrdiff_t)store);
 	  gain=0;
         } else {
 	  if(len > (size_t)(cur-value-1))
@@ -346,7 +347,7 @@ int mxslt_set_static_attr(const char * content, const mxslt_attr_search_t * attr
       } else {
 	  /* Ok, no attribute value, get rid of it */
 	gain+=(size_t)(cur-preb+1);
-	store=(char *)((int)store-(cur-preb+1));
+	store=(store-(cur-preb+1));
       }
     }
 
