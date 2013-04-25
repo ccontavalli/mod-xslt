@@ -92,7 +92,6 @@ int main(int argc, char ** argv) {
         if (!cursor) {
           mxslt_doc_param_add(&document, xstrdup(optarg), NULL);
         } else {
-          char * var = xstrndup(optarg, cursor - optarg);
           mxslt_doc_param_add(
               &document, xstrndup(optarg, cursor - optarg),  
               xstrdup(cursor + 1));
