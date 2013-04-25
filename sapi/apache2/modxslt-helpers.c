@@ -249,20 +249,18 @@ void mxslt_ap2_debug(
 void mxslt_ap2_error(void *ctx, const char * msg, ...) {
   ap_filter_t * f = NULL;
   char * str;
-  va_list args;	
+  va_list args;
   int status;
   void * get;
 
-    /* Doesn't make sense to check for 
-     * errors here */
+    /* Doesn't make sense to check for errors here. */
   status=mxslt_ap2_ectxt_get(&get);
 
-    /* But, if we didn't get the state,
-     * we are not able to parse data */
+    /* But, if we didn't get the state, we are not able to parse data. */
   if(!(f=get) || status != APR_SUCCESS)
     return;
 
-    /* Prepare string */
+    /* Prepare string. */
   va_start(args, msg);
   str=apr_pvsprintf(f->r->pool, msg, args);
   va_end(args);
