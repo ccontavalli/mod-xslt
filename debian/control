@@ -30,7 +30,7 @@ Description: XSLT processing module for Apache 2.x based on libxml2
    o  provides a complete set of documentation and command line
       tools
 
-Package: libmodxslt0
+Package: libmodxslt1
 Section: libs
 Architecture: any
 Depends: ${shlibs:Depends}
@@ -40,17 +40,17 @@ Description: modxslt libraries to parse XML using XSLT stylesheets
  by the various modules to provide a consistent and reliable
  parsing of xml documents under any web server.
 
-Package: libmodxslt0-dev
+Package: libmodxslt1-dev
 Section: libdevel
 Architecture: any
 Suggests: modxslt-doc
-Depends: libmodxslt0 (= ${binary:Version})
+Depends: libmodxslt1 (= ${binary:Version})
 Description: Development header for libmodxslt
  This package provides the development headers for the mod-xslt
  library, libmodxslt.
  . 
  You only need this package if you are planning on compiling software
- that depends upon the libmodxslt0.
+ that depends upon the libmodxslt1.
 
 Package: modxslt-doc
 Section: doc
