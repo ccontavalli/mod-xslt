@@ -8,8 +8,6 @@ export SHELL=bash
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
-include /usr/share/dpatch/dpatch.make
-
 # These are used for cross-compiling and for saving the configure script
 # from having to guess our platform (since we know it already)
 DEB_HOST_GNU_TYPE   ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
@@ -26,7 +24,15 @@ ifeq (,$(findstring nostrip,$(DEB_BUILD_OPTIONS)))
 	INSTALL_PROGRAM += -s
 endif
 
-config.status: patch-stamp configure 
+config.status: configure 
+	dh_testdir
+
+
+build-indep:
+	dh_testdir
+	cd $(CURDIR)/doc && $(MAKE)
+
+build-arch: configure
 	dh_testdir
 
 ifneq "$(wildcard /usr/share/misc/config.sub)" ""
@@ -37,27 +43,24 @@ ifneq "$(wildcard /usr/share/misc/config.guess)" ""
 endif
 		   
 	CFLAGS="$(CFLAGS)" ./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) \
-	--prefix=/usr --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info \
-	--with-sapi=none --cache-file=cache.none --enable-exslt
+	  --prefix=/usr --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info \
+	  --with-sapi=none --cache-file=cache.none-1 --enable-exslt
+
+	cd $(CURDIR)/lib && $(MAKE)
+	cd $(CURDIR)/utils && $(MAKE)
+
+	CFLAGS="$(CFLAGS)" ./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNUU_TYPE) \
+	  --prefix=/usr --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info \
+	  --with-sapi=apache2 --cache-file=cache.none-2 --enable-exslt
+	cd $(CURDIR) && $(MAKE)
 	
-build: build-stamp
+build: build-indep build-arch
 
-build-stamp:  config.status 
-	dh_testdir
-
-	# Add here commands to compile the package.
-	 
-	 cd $(CURDIR)/lib && $(MAKE)
-	 cd $(CURDIR)/utils && $(MAKE)
-	
-	#/usr/bin/docbook-to-man debian/modxslt2.sgml > modxslt2.1
-
-	touch build-stamp
+install: install-arch install-indep
 
 clean: unpatch
 	dh_testdir
 	dh_testroot
-	rm -f build-stamp 
 	rm -rf $(CURDIR)/debian/apache1
 	rm -rf $(CURDIR)/debian/apache2
 	rm -rf $(CURDIR)/debian/apache-none
@@ -76,7 +79,7 @@ clean: unpatch
 
 	dh_clean 
 
-install: build
+install-arch: build-arch
 	dh_testdir
 	dh_testroot
 	dh_clean -k 
@@ -87,31 +90,31 @@ install: build
 	
 	@echo -e "Install for lib and bin\n"
 	cd $(CURDIR)/lib && $(MAKE) install-library DESTDIR=$(CURDIR)/debian/tmp
-	#cp debian/modxslt-perror.1 debian/modxslt-parse.1 $(CURDIR)/debian/modxslt-tools/usr/share/man/man1
 	cd $(CURDIR)/utils && $(MAKE) install DESTDIR=$(CURDIR)/debian/tmp
 	cd $(CURDIR)/lib/ && $(MAKE) install-headers DESTDIR=$(CURDIR)/debian/tmp
-	#cp debian/modxslt-config.1 $(CURDIR)/debian/libmodxslt0-dev/usr/share/man/man1
 	
 	@echo -e  "Now I will compile for apache2\n"
-	./configure --prefix=/usr --with-sapi=apache2 --enable-exslt
-	$(MAKE) SAPI_CC=gcc
-	$(MAKE) install DESTDIR=$(CURDIR)/debian/libapache2-modxslt
-	# remove the just installed manpages again - we do that different within debian
-	rm -rf $(CURDIR)/debian/libapache2-modxslt/usr/share/man/
+	cd $(CURDIR)/sapi/apache2/ && $(MAKE) install DESTDIR=$(CURDIR)/debian/libapache2-modxslt
 	cp debian/modxslt.load $(CURDIR)/debian/libapache2-modxslt/etc/apache2/mods-available/
 	cp $(CURDIR)/debian/modxslt.libapache2 $(CURDIR)/debian/libapache2-modxslt/etc/apache2/conf.d/modxslt
-	rm -rf $(CURDIR)/debian/libapache2-modxslt/usr/{bin,include,man} $(CURDIR)/debian/libapache2-modxslt/usr/lib/lib*
 	
 	dh_install --sourcedir=debian/tmp
 
-# Build architecture-independent files here.
-binary-indep: build install
-	dh_testdir 
-	dh_testroot -i
-	
+install-indep: build-indep
+	dh_testdir
+	dh_testroot
+	dh_clean -k 
+	dh_installdirs
+
 	mkdir -p $(CURDIR)/debian/modxslt-doc/usr/share/doc/modxslt-doc
 	cp -r  $(CURDIR)/doc/{manual,faq,misc}  $(CURDIR)/debian/modxslt-doc/usr/share/doc/modxslt-doc
 	dh_installdocs -i
+
+# Build architecture-independent files here.
+binary-indep: install-indep
+	dh_testdir 
+	dh_testroot -i
+	
 	dh_installchangelogs -i debian/changelog
 	dh_compress -i
 	dh_fixperms -i
@@ -122,7 +125,7 @@ binary-indep: build install
 # We have nothing to do by default.
 
 # Build architecture-dependent files here.
-binary-arch: build install
+binary-arch: install-arch
 	dh_testdir -a
 	dh_testroot -a
 	dh_installchangelogs  -a
