@@ -49,7 +49,7 @@ release: release-library release-sapi release-utils release-doc
 tidy: tidy-library tidy-sapi tidy-utils 
 
 distclean: distclean-library distclean-sapi distclean-utils
-	find . -name Makefile | xargs rm -f
+	find . -name Makefile |grep -v doc | xargs rm -f
 	rm -f ./config.log ./config.status libtool
 
 library:
