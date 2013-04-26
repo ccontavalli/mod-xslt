@@ -8,12 +8,15 @@ export SHELL=bash
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
+DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/buildflags.mk
+
 # These are used for cross-compiling and for saving the configure script
 # from having to guess our platform (since we know it already)
 DEB_HOST_GNU_TYPE   ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
 DEB_BUILD_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
 
-CFLAGS = -Wall -g -DMXSLT_DISABLE_SIGNATURE
+CFLAGS += -Wall -g -DMXSLT_DISABLE_SIGNATURE
 
 ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
 	CFLAGS += -O0
@@ -58,13 +61,13 @@ build: build-indep build-arch
 
 install: install-arch install-indep
 
-clean: unpatch
+clean:
 	dh_testdir
 	dh_testroot
 	rm -rf $(CURDIR)/debian/apache1
 	rm -rf $(CURDIR)/debian/apache2
 	rm -rf $(CURDIR)/debian/apache-none
-	rm -rf `find . -name cache.none`
+	rm -rf `find . -name 'cache.none*'`
 	rm -rf  $(CURDIR)/debian/libmodxslt0
 	
 	# Add here commands to clean up after the build process.
@@ -144,4 +147,4 @@ binary-arch: install-arch
 	dh_builddeb -a
 
 binary: binary-indep binary-arch
-.PHONY: build clean binary-indep binary-arch binary install patch unpatch
+.PHONY: build clean binary-indep binary-arch binary install patch
