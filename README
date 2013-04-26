@@ -50,18 +50,6 @@ applications, please take a look to the `doc' directory.
 	  list of other mod-xslt modules for apache
 	  and outlines their strenghts and features.
 
-     dev - mainly junk written while developing 
-          mod-xslt2 (thoughts about loop handling
-	  and on how to implement cacheing).
-
-     site - which contains most of the pages you can
-          find on the web site in a docbook compatible
-	  xml (hopefully :).
-
-     xslt - which contains the .xslt stylesheets used
-      	  for the internet site (thanks to Marco Merlin,
-	  <mmerlin at masobit.net>)
-
 
 License
 =======
