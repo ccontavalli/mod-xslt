@@ -111,9 +111,6 @@ binary-indep: build install
 	
 	mkdir -p $(CURDIR)/debian/modxslt-doc/usr/share/doc/modxslt-doc
 	cp -r  $(CURDIR)/doc/{manual,faq,misc}  $(CURDIR)/debian/modxslt-doc/usr/share/doc/modxslt-doc
-	mkdir -p $(CURDIR)/debian/modxslt-doc/usr/share/doc/modxslt-doc/examples
-	cp -r $(CURDIR)/doc/{site,xslt}  $(CURDIR)/debian/modxslt-doc/usr/share/doc/modxslt-doc/examples
-	rm -rf $(CURDIR)/debian/modxslt-doc/usr/share/doc/modxslt-doc/examples/xslt/LICENSE
 	dh_installdocs -i
 	dh_installchangelogs -i debian/changelog
 	dh_compress -i
