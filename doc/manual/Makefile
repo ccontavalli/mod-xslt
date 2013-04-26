@@ -69,7 +69,9 @@ $(source).tex: $(source).xml Makefile
 
 clean:
 	@echo "Cleaning up"
-	@rm -f $(source).{tex,ps,ps.gz,pdf,txt,rtf,log,dvi,html.tar.gz}
+	@for extension in tex ps ps.gz pdf txt rtf log dvi html.tar.gz; do \
+	   rm -f $(source).$$extension; \
+	 done
 	@rm -rf ./info/
 	@rm -rf $(source)/*
 
