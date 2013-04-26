@@ -1,6 +1,5 @@
 usr/lib/libmodxslt1.so
 usr/lib/libmodxslt1.a
-usr/lib/libmodxslt1.la
 usr/include/modxslt1/modxslt.h
 usr/include/modxslt1/modxslt-system.h
 usr/include/modxslt1/modxslt-table.h

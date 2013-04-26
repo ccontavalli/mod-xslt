@@ -2,13 +2,13 @@ Source: modxslt
 Section: web
 Priority: extra
 Maintainer: Debian QA Group <packages@qa.debian.org>
-Build-Depends: debhelper (>= 5), autotools-dev, libpcre3-dev (>= 4.5), libxslt1-dev, libxml2 (>= 1.5), libxml2-dev, apache2-threaded-dev (>= 2.0.40) | apache2-prefork-dev (>= 2.0.40), libapr1-dev, libgcrypt11-dev, dpatch
+Build-Depends: debhelper (>= 5), autotools-dev, libpcre3-dev (>= 4.5), libxslt1-dev, libxml2 (>= 1.5), libxml2-dev, apache2-threaded-dev (>= 2.0.40) | apache2-prefork-dev (>= 2.0.40), libapr1-dev, libgcrypt11-dev
 Standards-Version: 3.8.0
 Homepage: http://www.mod-xslt2.com/
 
 Package: libapache2-modxslt
 Architecture: any
-Depends: ${shlibs:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}
 Suggests: modxslt-tools, modxslt-doc
 Description: XSLT processing module for Apache 2.x based on libxml2
  This package provides an Apache 2 module able to parse XML
@@ -33,7 +33,7 @@ Description: XSLT processing module for Apache 2.x based on libxml2
 Package: libmodxslt1
 Section: libs
 Architecture: any
-Depends: ${shlibs:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: modxslt libraries to parse XML using XSLT stylesheets
  modxslt is a web server module able to parse XML data on the
  fly. This library contains web server independent parts used
@@ -44,7 +44,7 @@ Package: libmodxslt1-dev
 Section: libdevel
 Architecture: any
 Suggests: modxslt-doc
-Depends: libmodxslt1 (= ${binary:Version})
+Depends: libmodxslt1 (= ${binary:Version}), ${misc:Depends}
 Description: Development header for libmodxslt
  This package provides the development headers for the mod-xslt
  library, libmodxslt.
@@ -54,6 +54,7 @@ Description: Development header for libmodxslt
 
 Package: modxslt-doc
 Section: doc
+Depends: ${misc:Depends}
 Architecture: all
 Description: Documentation for modxslt
  This package contains all the documentation needed to use
@@ -62,7 +63,7 @@ Description: Documentation for modxslt
 
 Package: modxslt-tools
 Architecture: any
-Depends: ${shlibs:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}
 Suggests: modxslt-doc
 Description: modxslt command line tools
  This package contains commands for modxslt tools, based
