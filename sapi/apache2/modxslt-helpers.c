@@ -378,7 +378,7 @@ int mxslt_ap2_file_parse(ap_filter_t * f, apr_bucket_brigade * brigade,
 
     /* Load document and adjust paths */
   status=mxslt_doc_load(
-      &document, input, f->r->filename, f->r->parsed_uri.hostname, 
+      &document, input, f->r->filename, f->r->hostname, 
       f->r->parsed_uri.port, f->r->parsed_uri.path);
   if(status != MXSLT_OK) {
     mxslt_error(&document, "fatal - failed loading file: %s\n", f->r->filename);
