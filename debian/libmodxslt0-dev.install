@@ -1,0 +1,9 @@
+usr/lib/libmodxslt0.so
+usr/lib/libmodxslt0.a
+usr/lib/libmodxslt0.la
+usr/include/modxslt0/modxslt.h
+usr/include/modxslt0/modxslt-system.h
+usr/include/modxslt0/modxslt-table.h
+usr/include/modxslt0/modxslt-version.h
+usr/bin/modxslt-config
+
