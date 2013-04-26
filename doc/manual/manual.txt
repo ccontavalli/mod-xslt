@@ -2,157 +2,109 @@ mod-xslt2 Users and Administrators Manual
 
 Carlo Contavalli
 
-   Date: 2004/02/17 02:59:38 - Revision: 1.3
+   Date: 2013/04/25 23:57:16
 
    mod-xslt2 is a web server module able to transform xml
-   documents in any format using xslt stylesheets, doing what
-   might be called server side parsing of xml files.
+   documents in any format using xslt stylesheets. It implements
+   server side transformation of xslt stylesheet.
      __________________________________________________________
 
    Table of Contents
-   1. License, copyright and...
-   2. Introduction
-   3. History
-   4. Installation
+   1. Introduction
+   2. Installation
 
-        4.1. Prerequisites
+        2.1. Prerequisites
 
-              4.1.1. Apache 1.3.x
-              4.1.2. Apache 2.{1,2}.x
+              2.1.1. Apache 1.3.x
+              2.1.2. Apache 2.{1,2}.x
 
-        4.2. Quick start
-        4.3. Configure parameters
+        2.2. Quick start
+        2.3. Configure parameters
 
-              4.3.1. Installation related parameters
-              4.3.2. Compilation related parameters
-              4.3.3. SAPI Specific configure parameters
+              2.3.1. Installation related parameters
+              2.3.2. Compilation related parameters
+              2.3.3. SAPI Specific configure parameters
 
-   5. mod-xslt2 Setup and Usage
+   3. mod-xslt2 Setup and Usage
 
-        5.1. Apache 1.3.x
+        3.1. Apache 1.3.x
 
-              5.1.1. Request life
-              5.1.2. Using the ``AddHandler'' directive
-              5.1.3. Using the XSLT directives
-              5.1.4. Mixing the two
-              5.1.5. Loading the module
-              5.1.6. mod-xslt Configuration parameters
-              5.1.7. Parameters usage examples
-              5.1.8. Logging
-              5.1.9. Increasing performance
-              5.1.10. Subrequest Issues
+              3.1.1. Request life
+              3.1.2. Using the ``AddHandler'' directive
+              3.1.3. Using the XSLT directives
+              3.1.4. Mixing the two
+              3.1.5. Loading the module
+              3.1.6. mod-xslt Configuration parameters
+              3.1.7. Parameters usage examples
+              3.1.8. Logging
+              3.1.9. Increasing performance
+              3.1.10. Subrequest Issues
 
-        5.2. Apache 2.x.x
+        3.2. Apache 2.x.x
 
-              5.2.1. Configuring Apache 2.x for mod-xslt
-              5.2.2. mod-xslt Configuration parameters
-              5.2.3. Apache 2.x.x, mod-xslt and PHP4
+              3.2.1. Configuring Apache 2.x for mod-xslt
+              3.2.2. mod-xslt Configuration parameters
+              3.2.3. Apache 2.x.x, mod-xslt and PHP4
 
-   6. Writing XML for mod-xslt2
+   4. Writing XML for mod-xslt2
 
-        6.1. XSLT Parameters
-        6.2. mod-xslt2 Extensions
+        4.1. XSLT Parameters
+        4.2. mod-xslt2 Extensions
 
-              6.2.1. header-set
-              6.2.2. value-of - modxslt expressions
-              6.2.3. Verifying availability of mod-xslt2
+              4.2.1. header-set
+              4.2.2. value-of - modxslt expressions
+              4.2.3. Verifying availability of mod-xslt2
                       extensions
 
-        6.3. Setting the Content-Type (MIME type) of the parsed
+        4.3. Setting the Content-Type (MIME type) of the parsed
                 document
 
-        6.4. Choosing the stylesheet to use
+        4.4. Choosing the stylesheet to use
 
-              6.4.1. xml-stylesheet and modxslt-stylesheet
+              4.4.1. xml-stylesheet and modxslt-stylesheet
 
-        6.5. Using external DTDs
-        6.6. Testing xml files and stylesheets from the command
+        4.5. Using external DTDs
+        4.6. Testing xml files and stylesheets from the command
                 line
 
-              6.6.1. xsltproc
-              6.6.2. modxslt-parse
-              6.6.3. rxp
+              4.6.1. xsltproc
+              4.6.2. modxslt-parse
+              4.6.3. rxp
 
-        6.7. Other tools provided
+        4.7. Other tools provided
 
-              6.7.1. modxslt-perror
-              6.7.2. modxslt-config
+              4.7.1. modxslt-perror
+              4.7.2. modxslt-config
 
-   7. Security considerations
+   5. Security considerations
 
-        7.1. Variables substitution
-        7.2. Avoiding deadlocks under heavy loads
-        7.3. Avoiding remote URLs in substitutions
+        5.1. Variables substitution
+        5.2. Avoiding deadlocks under heavy loads
+        5.3. Avoiding remote URLs in substitutions
 
-   8. Reporting BUGS / Helping out the project
+   6. Reporting BUGS / Helping out the project
+   7. License, copyright and...
 
-1. License, copyright and...
-
-   This document was written by Carlo Contavalli <ccontavalli at
-   inscatolati.net> and is thus Copyright (C) Carlo Contavalli
-   2002-2008.
-
-   Permission is granted to copy, distribute and/or modify this
-   document under the terms of the GNU Free Documentation License,
-   Version 1.1 or any later version published by the Free Software
-   Foundation; with no Invariant Sections, no Front-Cover Texts
-   and no Back-Cover Texts.
-
-   Any example of program code available in this document should
-   be considered protected by the terms of the GNU General Public
-   License.
-
-   mod-xslt2, the software described in this document, is free
-   software; you can redistribute it and/or modify it under the
-   terms of the GNU General Public License as published by the
-   Free Software Foundation; either version 2 of the License, or
-   (at your option) any later version.
-
-   mod-xslt2 is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public
-   License along with this program; if not, write to the Free
-   Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139,
-   USA.
-
-   Trademarks are owned by their respective owners.
-     __________________________________________________________
-
-2. Introduction
-
-   Nowdays, most of the browsers on the market do not support
-   parsing xml files and are not able to correctly apply xslt
-   stylesheets.
-
-   Even worse, some browsers are not standard complaiant and do
-   not follow the specifications closely, leading to a world where
-   xml can hardly be used in web applications.
+1. Introduction
 
    mod-xslt2 is a server side module able to transform ``xml''
-   documents in ``html'' (or to any other format) before they even
-   get back to the browser.
-
-   At time of writing, this module can be used with apache 1.3.x
-   (stable) and apache 2.{1,2}.x (stable), but other web servers
-   may get supported in the future.
+   documents in ``html'' (or any other format). mod-xsl2 can bew
+   used with most apache version, including the now obsolete 1.3
+   and most 2.X branches.
 
    mod-xslt2 main features include:
 
-     * the ability to parse generated xml (ability to parse the
-       output of php or perl scripts).
-     * the ability to use the ``xslt'' indicated by the
+     * ability to transform dynamically generated xml (ability to
+       parse the output of php or perl scripts).
+     * ability to use ``xslt'' stylesheets indicated via the
        <?xml-stylesheet processing instruction.
-     * the ability to send back the xml file unparsed to the
-       browser.
-     * the ability to fetch xslt or DTDs from scripts rather than
-       from static files.
-     * the ability to fetch a different xslt depending on the
-       content of the request headers, of the get parameters or
-       the web server environment.
-     * the ability to allow xslt stylesheets to make use of these
+     * ability to send back the xml file unparsed to the browser.
+     * ability to fetch xslt or DTDs from scripts rather than from
+       static files.
+     * ability to fetch a different xslt depending on the content
+       of the request headers, of the get parameters or the web
+       server environment.
+     * ability to allow xslt stylesheets to make use of these
        variables to generate output.
 
    This module is almost a complete rewrite of the original
@@ -161,54 +113,13 @@ Carlo Contavalli
    flexible features and the correction of some bugs that were
    found in the original sources.
 
-   As an effect of a more generic API, this version of mod-xslt2
-   supports both apache 1 and apache 2, while work is under way to
-   provide a cgi and proxy wrapper to allow mod-xslt2 to be used
-   on any other server.
-
-   The more generic API should also be usable to provide support
-   for servers like IIS or others, even if I'm personally not
-   going to write code for closed source products.
-
    The build system has also been completely rewritten and a whole
    set of new documentation included in the original package.
-
-   Keep also in mind that I'm not native english, and as though
-   I'm trying to do my best, please report any error or
-   ``strange'' sentence you may find in this (or any other)
-   document provided with mod-xslt2.
      __________________________________________________________
 
-3. History
+2. Installation
 
-   It all started a rainy day when I decided to try writing some
-   xml pages to put on my web server. I started looking on google
-   to find some way to let apache parse the pages, and a whole
-   bounce of projects came up. I started downloading .tar.gz,
-   compiling, and testing them out... however, I couldn't find
-   anything that suit all my needs: one didn't process pi
-   instructions at all, the other one was not able to read xml to
-   be parsed from php or cgi scripts, another one was not able to
-   load dtds nor to fetch xslt from http urls.
-
-   The situation was sad: there were tens of mod xslt available
-   but none of them had even a subset of ``standard'' features,
-   many add constraints like ``you cannot use php xml handling
-   functions, since they use the same xml library as php'', and
-   many others were just buggy and almost completely unmaintained.
-   So, I took the most promising one, mod-xslt, written by Philipp
-   Dunkel, and started adding all the features I needed. However,
-   at the time mod-xslt run only on apache2, which was still quite
-   buggy to my eyes.
-
-   So, I ended up almost completely rewriting mod-xslt (just a few
-   lines are still there..) and adding a whole bounce of new
-   features.
-     __________________________________________________________
-
-4. Installation
-
-4.1. Prerequisites
+2.1. Prerequisites
 
    To install this module, you must:
 
@@ -232,7 +143,7 @@ Carlo Contavalli
    the available patches, please read the file ``README.Patches''.
      __________________________________________________________
 
-4.1.1. Apache 1.3.x
+2.1.1. Apache 1.3.x
 
    To install mod-xslt2 on apache 1.3.x, you need to have the
    apache headers installed (apache-dev) and the command ``apxs''
@@ -243,7 +154,7 @@ Carlo Contavalli
    ``find / -name apxs''.
      __________________________________________________________
 
-4.1.2. Apache 2.{1,2}.x
+2.1.2. Apache 2.{1,2}.x
 
    To install mod-xslt2 on an apache 2.1.x or 2.2.x server, you
    need to have:
@@ -262,35 +173,30 @@ Carlo Contavalli
        implies the availability of the library)
      __________________________________________________________
 
-4.2. Quick start
+2.2. Quick start
 
    From your shell, run as a normal user:
   $ gzip -cd mod-xslt2*|tar x
   $ cd mod-xslt2*
   $ mkdir build
   $ cd build
-  $ ../configure --with-sapi=apache1
+  $ ../configure --with-sapi=apache2
 
-   Where ``apache1'' is the name of the web server you want
-   mod-xslt2 to be compiled for. In place of apache1, at time of
-   writing, you can specify apache2 or none. If you specify
-   ``none'' you will get the library and the utilities that
-   constitute most of mod-xslt2 compiled and installed.
+   ``apache2'', the ``sapi'', or Server API, is the name of the
+   web server you want mod-xslt2 to be compiled for. If you
+   specify ``none'' you will get the library and the utilities
+   that constitute most of mod-xslt2 compiled and installed.
 
-   If you do not specify any ``--with-sapi'' option, configure
-   will try to figure out which web server is installed on your
-   system. However, if you have more than one web server supported
-   by mod-xslt2 installed, configure will compile mod-xslt2 for
-   the first detected one.
+   If you do not specify anything ``--with-sapi'' configure will
+   try to detect the web server by itself.
 
    Configure will also try to autodetect most of the needed
-   parameters and will warn you about small incompatibilities it
-   will find in the libraries on your system. Sometimes it will
-   also suggest you to apply a particular patch to your libxml2 or
-   libxslt. Read ``README.Patches'' to have more information about
-   those patches.
+   parameters and will warn you about incompatibilities it will
+   find. Sometimes it will also suggest you to apply a particular
+   patch to your libxml2 or libxslt. Read ``README.Patches'' to
+   have more information about those patches.
 
-   Anyway, after successful configure completion, you should run:
+   After successful configure completion, you should run:
   $ make
   $ su root
   # make install
@@ -299,56 +205,45 @@ Carlo Contavalli
   # make uninstall
      __________________________________________________________
 
-4.3. Configure parameters
+2.3. Configure parameters
 
-   As any ``configure'' script, mod-xslt2 configure accepts many
-   parameters. Some of those parameters are always available while
-   a few of them depend on the ``web server'' mod-xslt2 is being
-   compiled for and on the libraries available on your system.
-
-   The following sections will discuss all the parameters accepted
-   by configure. However, the ``configure --help'' screen is
-   authoritative, as this document may get outdated.
+   Read ``./configure --help'' for an authoritative list of
+   parameters. In these sections we will cover only the most
+   important ones.
      __________________________________________________________
 
-4.3.1. Installation related parameters
+2.3.1. Installation related parameters
 
-   The following parameters can be used to choose where mod-xslt2
-   will be installed:
+     * --bindir=BINDIR BINDIR is the directory where mod-xslt
+       binaries (modxslt-parse, modxslt-perror, modxslt-config)
+       should be copied after compiling them, generally /usr/bin.
+     * --libdir=LIBDIR LIBDIR is the directory where mod-xslt
+       library (libmodxslt0) should be installed, generally
+       /usr/lib.
+     * --includedir=INCLUDEDIR INCLUDEDIR is the directory where
+       libmodxslt headers should be installed, generally
+       /usr/include.
+     * --mandir=MANDIR MANDIR is the directory where manual pages
+       should be installed, generally /usr/man.
 
-     * --bindir=BINDIR where BINDIR is the directory where you
-       want the binaries (modxslt-parse, modxslt-perror,
-       modxslt-config) to be put during installtion
-     * --libdir=LIBDIR where LIBDIR is the directory where you
-       want the library (libmodxslt0) to be put during
-       installation
-     * --includedir=INCLUDEDIR where INCLUDEDIR is the directory
-       where you want libmodxslt headers to be put during
-       installation
-     * --mandir=MANDIR where MANDIR is the directory where you
-       want the manual pages for the above listed commands to be
-       put during installation
+   The installation directory for the web server module itself is
+   normally detected automatically. Following options are
+   generally handy:
 
-   Usually, the place where to put sapi specific binaries
-   generated by the compilation process is automatically detected.
-   In any case, the following options may influence how the above
-   paths are calculated:
+     * --prefix=PREFIX, if no ``--mandir'' is specified, MANDIR
+       defaults ``PREFIX/man'', while if no ``--includedir'' is
+       specified, INCLUDEDIR defaults to ``PREFIX/include''.
+     * --exec-prefix=EPREFIX, if no ``--bindir'' is specified,
+       BINDIR defaults to ``EPREFIX/bindir'', while if no
+       ``--libdir'' is specified, LIBDIR defaults to
+       ``PREFIX/libdir''.
 
-     * --prefix=PREFIX where, if no ``--mandir'' is specified,
-       MANDIR is calculated to be ``PREFIX/man'', while if no
-       ``--includedir'' is specified, INCLUDEDIR is calculated to
-       be ``PREFIX/include''.
-     * --exec-prefix=EPREFIX where, if no ``--bindir'' is
-       specified, BINDIR is calculated to be ``EPREFIX/bindir'',
-       while if no ``--libdir'' is specified, LIBDIR is calculated
-       to be ``PREFIX/libdir''.
-
-   Note that if you are, for example, packaging mod-xslt2 and want
-   all the files to be installed under a particular directory, you
-   can use the DESTDIR environment variable as usual.
+   Packagers for mod-xslt should consider using the DESTDIR
+   environment variable to have all of mod-xslt files installed
+   under a specific directory.
      __________________________________________________________
 
-4.3.2. Compilation related parameters
+2.3.2. Compilation related parameters
 
    The following parameters can be used to enable/disable
    mod-xslt2 features or to choose compilation parameters:
@@ -432,9 +327,9 @@ Carlo Contavalli
        will be disabled.
      __________________________________________________________
 
-4.3.3. SAPI Specific configure parameters
+2.3.3. SAPI Specific configure parameters
 
-4.3.3.1. Apache 1
+2.3.3.1. Apache 1
 
      * --with-apxs allows you to specify the ``apxs'' that should
        be used. By default, the first ``apxs'' found in the
@@ -449,7 +344,7 @@ Carlo Contavalli
    variabe as usual.
      __________________________________________________________
 
-4.3.3.2. Apache 2.x.x
+2.3.3.2. Apache 2.x.x
 
      * --with-apxs allows you to specify the ``apxs'' that should
        be used. By default, the first ``apxs'' found in the
@@ -470,9 +365,9 @@ Carlo Contavalli
    ``--prefix'' to configure.
      __________________________________________________________
 
-5. mod-xslt2 Setup and Usage
+3. mod-xslt2 Setup and Usage
 
-5.1. Apache 1.3.x
+3.1. Apache 1.3.x
 
    mod-xslt2 can be configured in several ways to be used on
    apache 1.3. To choose which one suits best your needs, you need
@@ -481,7 +376,7 @@ Carlo Contavalli
    mod-xslt2.
      __________________________________________________________
 
-5.1.1. Request life
+3.1.1. Request life
 
    When requesting a document to an Apache 1.3 server through your
    browser, apache
@@ -515,7 +410,7 @@ Carlo Contavalli
    module directly write the answer back to the browser.
      __________________________________________________________
 
-5.1.2. Using the ``AddHandler'' directive
+3.1.2. Using the ``AddHandler'' directive
 
    One good way to let mod-xslt2 handle a request is to use the
    ``AddHandler'' or ``SetHandler'' directive.
@@ -549,7 +444,7 @@ Carlo Contavalli
    the document back to the browser.
      __________________________________________________________
 
-5.1.3. Using the XSLT directives
+3.1.3. Using the XSLT directives
 
    In case you need to apply stylesheets to dynamically generated
    documents, you thus need to use the mechanism provided by
@@ -597,7 +492,7 @@ Carlo Contavalli
    parse dynamic pages.
      __________________________________________________________
 
-5.1.4. Mixing the two
+3.1.4. Mixing the two
 
    As a rule of thumb, you can use ``AddHandler'' for any ``static
    document'' and ``XSLTEngine'' with ``XSLTAddFilter'' with any
@@ -639,7 +534,7 @@ AddHandler mod-xslt .xml
    with the same syntax of XSLTAddFilter.
      __________________________________________________________
 
-5.1.5. Loading the module
+3.1.5. Loading the module
 
    Regardless of which method you may decide to use to parse your
    xml data, keep in mind you always need to tell apache to load
@@ -656,7 +551,7 @@ AddModule modxslt.c
    other LoadModule directives in your configuration files.
      __________________________________________________________
 
-5.1.6. mod-xslt Configuration parameters
+3.1.6. mod-xslt Configuration parameters
 
      * XSLTEngine <on|off> per directory, per file, per virtual
        host or in global configuration file, allows you to enable
@@ -781,9 +676,9 @@ AddModule modxslt.c
        anything, only for backward compatibility.
      __________________________________________________________
 
-5.1.7. Parameters usage examples
+3.1.7. Parameters usage examples
 
-5.1.7.1. XSLTSetStylesheet
+3.1.7.1. XSLTSetStylesheet
 
    XSLTSetStylesheet is most useful when you have .xml documents
    that do not specify any xslt stylesheet to be used for the
@@ -806,7 +701,7 @@ AddModule modxslt.c
    XSLTUnSetStylesheet.
      __________________________________________________________
 
-5.1.7.2. XSLTAddFilter and XSLTAddForce
+3.1.7.2. XSLTAddFilter and XSLTAddForce
 
    XSLTAddFilter and XSLTAddForce can be used to tell mod-xslt
    which files to parse.
@@ -831,7 +726,7 @@ AddModule modxslt.c
    dynamic scripts which output the wrong mime type.
      __________________________________________________________
 
-5.1.7.3. XSLTAddRule
+3.1.7.3. XSLTAddRule
 
    XSLTAddRule has been added since mod-xslt 1.3.6, snapshot >=
    2004100100. This parameter allows you to specify a stylesheet
@@ -864,7 +759,7 @@ AddModule modxslt.c
    on using the stylesheets specified by the document.
      __________________________________________________________
 
-5.1.8. Logging
+3.1.8. Logging
 
    In order to process requests, mod-xslt2 needs to create
    temporary files. Temporary files are used to process dynamic
@@ -882,7 +777,7 @@ LogFormat "%v %h %l %u %t \"%r\" %>s %b
 CustomLog logs/mod-xslt2.log mxslt_format
      __________________________________________________________
 
-5.1.9. Increasing performance
+3.1.9. Increasing performance
 
    The only way in apache 1.3.x to intercept the output of other
    modules is to provide a suitable file descriptor where to store
@@ -930,7 +825,7 @@ CustomLog logs/mod-xslt2.log mxslt_format
    local connections (will be explained later on).
      __________________________________________________________
 
-5.1.10. Subrequest Issues
+3.1.10. Subrequest Issues
 
    To avoid security and some concurrency issues (see the section
    about security concerns), mod-xslt2 for apache 1 tryes to avoid
@@ -996,7 +891,7 @@ Listen 127.0.0.1:80 192.168.0.1:80
    platform.
      __________________________________________________________
 
-5.2. Apache 2.x.x
+3.2. Apache 2.x.x
 
    Apache 2.x support is now considered stable (2.0, 2.2, ...),
    thanks to all the people who provided feedbacks on mod-xslt
@@ -1021,7 +916,7 @@ Listen 127.0.0.1:80 192.168.0.1:80
    anyone has suggestions, please contact me.
      __________________________________________________________
 
-5.2.1. Configuring Apache 2.x for mod-xslt
+3.2.1. Configuring Apache 2.x for mod-xslt
 
    To use mod-xslt with apache 2.x.x, you just need to tell apache
    you want to use mod-xslt, by inserting a line like the
@@ -1097,7 +992,7 @@ Listen 127.0.0.1:80 192.168.0.1:80
    ``no-xslt'' environment variable is set.
      __________________________________________________________
 
-5.2.2. mod-xslt Configuration parameters
+3.2.2. mod-xslt Configuration parameters
 
      * XSLTSetStylesheet <MimeType> <Stylesheet> per directory,
        per file, per virtual host or in global configuration file,
@@ -1183,7 +1078,7 @@ Listen 127.0.0.1:80 192.168.0.1:80
        anything, for backward compatibility only.
      __________________________________________________________
 
-5.2.3. Apache 2.x.x, mod-xslt and PHP4
+3.2.3. Apache 2.x.x, mod-xslt and PHP4
 
    In order to use php4 with apache2, you can compile it using two
    different SAPI:
@@ -1208,14 +1103,14 @@ Listen 127.0.0.1:80 192.168.0.1:80
    sapi.
      __________________________________________________________
 
-6. Writing XML for mod-xslt2
+4. Writing XML for mod-xslt2
 
    Although mod-xslt2 uses standard libraries to parse xml data
    and transform it, there are few things to keep in mind while
    writing xml/xslt to be parsed by mod-xslt2.
      __________________________________________________________
 
-6.1. XSLT Parameters
+4.1. XSLT Parameters
 
    Before anything else, you can access many mod-xslt2 parameters
    using the standard ``value-of'' xslt tag or standard XPath
@@ -1280,7 +1175,7 @@ Listen 127.0.0.1:80 192.168.0.1:80
    have value ``false'' when it is not.
      __________________________________________________________
 
-6.2. mod-xslt2 Extensions
+4.2. mod-xslt2 Extensions
 
    mod-xslt2 allows you to access many other variables by
    providing custom extension tags.
@@ -1332,7 +1227,7 @@ Listen 127.0.0.1:80 192.168.0.1:80
 </xsl:stylesheet>
      __________________________________________________________
 
-6.2.1. header-set
+4.2.1. header-set
 
    header-set allows you to set a value in the http headers that
    will be returned back to the client. Any name is accepted, as
@@ -1374,7 +1269,7 @@ Listen 127.0.0.1:80 192.168.0.1:80
 </xsl:stylesheet>
      __________________________________________________________
 
-6.2.2. value-of - modxslt expressions
+4.2.2. value-of - modxslt expressions
 
    value-of allows you to fetch any mod-xslt2 specific variable or
    expression.
@@ -1397,7 +1292,7 @@ Listen 127.0.0.1:80 192.168.0.1:80
    language to parse expressions.
      __________________________________________________________
 
-6.2.2.1. Simple expressions
+4.2.2.1. Simple expressions
 
    An expression is a list of characters which contains one or
    more variables. Each variable starts with a ``$'' symbol and is
@@ -1427,7 +1322,7 @@ Listen 127.0.0.1:80 192.168.0.1:80
    double back slash (``\\'').
      __________________________________________________________
 
-6.2.2.2. Indirect references and built up variable names
+4.2.2.2. Indirect references and built up variable names
 
    The usage of ``${'' and ``}'' allows you to use indirect
    references: let's say that ``$foo=bar'' and that
@@ -1451,7 +1346,7 @@ ${fuf$bar} -> ${fuffa} -> hello
    and recurse as much as you want (and your stack holds).
      __________________________________________________________
 
-6.2.2.3. Predefined variables (array like variables)
+4.2.2.3. Predefined variables (array like variables)
 
    The ability of parsing variables is not such a good thing if we
    don't have variables to parse. However, mod-xslt2 provides a
@@ -1501,7 +1396,7 @@ ${$source[User-Agent]}
    and the variable won't be substituted.
      __________________________________________________________
 
-6.2.2.4. Setting variables
+4.2.2.4. Setting variables
 
    It is also possible to create custom variables from .xml files
    to be passed over to the xslt. To do so, you need to use the
@@ -1532,7 +1427,7 @@ ${$source[User-Agent]}
    SAPI specific section of this manual.
      __________________________________________________________
 
-6.2.3. Verifying availability of mod-xslt2 extensions
+4.2.3. Verifying availability of mod-xslt2 extensions
 
    Before using any of the mod-xslt2 xslt extensions described in
    the previous sections, you should make sure they are available
@@ -1606,7 +1501,7 @@ boolean function-available(string)
    ``README.Patches'' to know more about those issues.
      __________________________________________________________
 
-6.3. Setting the Content-Type (MIME type) of the parsed document
+4.3. Setting the Content-Type (MIME type) of the parsed document
 
    As indicated in the previous sections, you are not allowed to
    use ``header-set'' to try to change the ``Content-Type'' of the
@@ -1626,7 +1521,7 @@ boolean function-available(string)
    Keep in mind that you can specify any ``media-type'' you want.
      __________________________________________________________
 
-6.4. Choosing the stylesheet to use
+4.4. Choosing the stylesheet to use
 
    mod-xslt2 decides which stylesheet to use thanks to a 3 steps
    procedure:
@@ -1651,7 +1546,7 @@ boolean function-available(string)
    instructions: xml-stylesheet and modxslt-stylesheet.
      __________________________________________________________
 
-6.4.1. xml-stylesheet and modxslt-stylesheet
+4.4.1. xml-stylesheet and modxslt-stylesheet
 
    xml-stylesheet is a standard xml directive, and its description
    and usage can be found on http://www.w3.org/TR/xml-stylesheet.
@@ -1724,7 +1619,7 @@ boolean function-available(string)
    A couple examples will be given in the following sections.
      __________________________________________________________
 
-6.4.1.1. Media expressions
+4.4.1.1. Media expressions
 
    As you probably know, the ``media'' attribute in a
    xml-stylesheet (or modxslt-stylesheet) processing instructions
@@ -1782,7 +1677,7 @@ cmp_expr: '(' cmp_expr ')'
    in the next sections.
      __________________________________________________________
 
-6.4.1.1.1. Strings
+4.4.1.1.1. Strings
 
    A string can be specified by using the name of a variable, a
    sequence of characters that match the regular expression:
@@ -1816,7 +1711,7 @@ cmp_expr: '(' cmp_expr ')'
    specified variables.
      __________________________________________________________
 
-6.4.1.1.2. String Evaluation
+4.4.1.1.2. String Evaluation
 
    As shown in the BNF grammar, a String can be used both in a
    ``boolean'' or ``cmp'' context (either, checked with a
@@ -1826,7 +1721,7 @@ cmp_expr: '(' cmp_expr ')'
    associated with it, regardless of what the value is).
      __________________________________________________________
 
-6.4.1.1.3. Boolean Operators
+4.4.1.1.3. Boolean Operators
 
    mod-xslt2 recognizes the following left associative boolean
    operators:
@@ -1839,7 +1734,7 @@ cmp_expr: '(' cmp_expr ')'
    number (lower the number, higher the precedence).
      __________________________________________________________
 
-6.4.1.1.4. String Operators
+4.4.1.1.4. String Operators
 
    mod-xslt2 recognizes the following string operators:
 
@@ -1871,7 +1766,7 @@ cmp_expr: '(' cmp_expr ')'
        a ``real''.
      __________________________________________________________
 
-6.4.1.1.5. Perl Compatible Regular Expressions
+4.4.1.1.5. Perl Compatible Regular Expressions
 
    The operators ``=~'' and ``!~'' allow you to match a String
    with a perl compatible regular expressions, also known as PCRE.
@@ -1934,7 +1829,7 @@ cmp_expr: '(' cmp_expr ')'
    causing problems to the parser.
      __________________________________________________________
 
-6.4.1.1.6. Examples of complete media expressions
+4.4.1.1.6. Examples of complete media expressions
 
 <modxslt-stylesheet ... media="fuffa" ... >
 
@@ -1992,14 +1887,14 @@ cmp_expr: '(' cmp_expr ')'
    given back without disclosing of any additional information.
      __________________________________________________________
 
-6.4.1.2. href URLs
+4.4.1.2. href URLs
 
    Well, up to now we have seen how our .xml files can specify
    which xslt to be used. However, we haven't seen where the .xsl
    files can be stored and how we can specify their path.
      __________________________________________________________
 
-6.4.1.2.1. Supported URL schemes
+4.4.1.2.1. Supported URL schemes
 
    At time of writing, mod-xslt2 (thanks to libxml2), can fetch
    xsl, dtd or other .xml files using one of the following
@@ -2074,7 +1969,7 @@ cmp_expr: '(' cmp_expr ')'
             cause a denial of service)
      __________________________________________________________
 
-6.4.1.3. HTTP glinces
+4.4.1.3. HTTP glinces
 
    If you use http urls, either for external DTDs or for xsl
    stylesheets, watch out for a small problem it may arise:
@@ -2123,7 +2018,7 @@ cmp_expr: '(' cmp_expr ')'
    should not break anything.
      __________________________________________________________
 
-6.4.1.3.1. URL, media and type substitutions
+4.4.1.3.1. URL, media and type substitutions
 
    Additionally, any URL specified in a ``href'' attribute or the
    value of the ``type'' and ``media'' attribute in a
@@ -2151,7 +2046,7 @@ cmp_expr: '(' cmp_expr ')'
    corresponding ``%'' value.
      __________________________________________________________
 
-6.4.1.3.2. Returning raw xml back to the browser
+4.4.1.3.2. Returning raw xml back to the browser
 
    Using the processing instruction ``xml-stylesheet'' to select a
    stylesheet to be used, you must specify the ``href'' of the
@@ -2223,7 +2118,7 @@ cmp_expr: '(' cmp_expr ')'
    itself.
      __________________________________________________________
 
-6.5. Using external DTDs
+4.5. Using external DTDs
 
    Some believe DTDs are useless to parse xml documents or to
    generate http output. However, as you probably know, DTDs may
@@ -2249,7 +2144,7 @@ cmp_expr: '(' cmp_expr ')'
    protocol, look to the section ``HTTP Glinces'').
      __________________________________________________________
 
-6.6. Testing xml files and stylesheets from the command line
+4.6. Testing xml files and stylesheets from the command line
 
    Before putting a xml page or newly created php script on your
    web server you may want to test the generated output statically
@@ -2260,7 +2155,7 @@ cmp_expr: '(' cmp_expr ')'
    utilities you may found useful.
      __________________________________________________________
 
-6.6.1. xsltproc
+4.6.1. xsltproc
 
    xsltproc is a tool provided in the libxslt package which can be
    used to process xml files from the command line. As being
@@ -2281,7 +2176,7 @@ cmp_expr: '(' cmp_expr ')'
    file_to_parse.xml''.
      __________________________________________________________
 
-6.6.2. modxslt-parse
+4.6.2. modxslt-parse
 
    modxslt-parse looks quite similare to xsltproc. The main
    difference is that modxslt-parse supports all mod-xslt2
@@ -2297,7 +2192,7 @@ modxslt-parse file.xml
    uses exactly the same engine as mod-xslt2.
      __________________________________________________________
 
-6.6.3. rxp
+4.6.3. rxp
 
    ``rxp'' is a tool provided in the rxp package on
    http://www.cogsci.ed.ac.uk/~richard/rxp.html.
@@ -2308,9 +2203,9 @@ modxslt-parse file.xml
    on line.
      __________________________________________________________
 
-6.7. Other tools provided
+4.7. Other tools provided
 
-6.7.1. modxslt-perror
+4.7.1. modxslt-perror
 
    Since strerror is not thread safe on many systems, it cannot be
    used to translate ``errno'' error codes in to more readeable
@@ -2327,7 +2222,7 @@ modxslt-perror x
    means).
      __________________________________________________________
 
-6.7.2. modxslt-config
+4.7.2. modxslt-config
 
    modxslt-config can be used to query mod-xslt2 configure and
    installation parameters. It is usually useful only if you are
@@ -2340,14 +2235,14 @@ modxslt-perror x
    system.
      __________________________________________________________
 
-7. Security considerations
+5. Security considerations
 
    As any code that runs with the same privileges as your web
    server, there are some dangers you should be aware of and some
    considerations that should be made.
      __________________________________________________________
 
-7.1. Variables substitution
+5.1. Variables substitution
 
    In the previous sections, you have seen you can use mod-xslt2
    variables to build up hrefs to be used as the url of the xslt
@@ -2383,7 +2278,7 @@ modxslt-perror x
    ``xsl:...'' constructs and act accordingly.
      __________________________________________________________
 
-7.2. Avoiding deadlocks under heavy loads
+5.2. Avoiding deadlocks under heavy loads
 
    Ok, let's say you have a .xml file that needs a .xsl file to be
    fetched from a remote url in order to be correctly parsed.
@@ -2438,7 +2333,7 @@ modxslt-perror x
    know more about it, please contact one of the authors.
      __________________________________________________________
 
-7.3. Avoiding remote URLs in substitutions
+5.3. Avoiding remote URLs in substitutions
 
    If I were you, I'd also try to avoid as much as possible using
    variables when indicating path for:
@@ -2470,7 +2365,7 @@ modxslt-perror x
    This is just another issue about using untrusted variables.
      __________________________________________________________
 
-8. Reporting BUGS / Helping out the project
+6. Reporting BUGS / Helping out the project
 
    To report a bug, just drop a mail to one of the mod-xslt
    mailing lists. This version of mod-xslt is quite new, and has
@@ -2498,3 +2393,38 @@ modxslt-perror x
    If you want to help mod-xslt development, just drop us a mail
    in one of the mailing lists. We are always happy to get new
    hands at work.
+     __________________________________________________________
+
+7. License, copyright and...
+
+   This document was written by Carlo Contavalli <ccontavalli at
+   inscatolati.net> and is thus Copyright (C) Carlo Contavalli
+   2002-2008.
+
+   Permission is granted to copy, distribute and/or modify this
+   document under the terms of the GNU Free Documentation License,
+   Version 1.1 or any later version published by the Free Software
+   Foundation; with no Invariant Sections, no Front-Cover Texts
+   and no Back-Cover Texts.
+
+   Any example of program code available in this document should
+   be considered protected by the terms of the GNU General Public
+   License.
+
+   mod-xslt2, the software described in this document, is free
+   software; you can redistribute it and/or modify it under the
+   terms of the GNU General Public License as published by the
+   Free Software Foundation; either version 2 of the License, or
+   (at your option) any later version.
+
+   mod-xslt2 is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public
+   License along with this program; if not, write to the Free
+   Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139,
+   USA.
+
+   Trademarks are owned by their respective owners.

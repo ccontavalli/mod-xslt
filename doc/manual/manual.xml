@@ -8,86 +8,24 @@
   <FirstName>Carlo Contavalli</FirstName>
 </AUTHOR>
 
-<PubDate>Date: 2004/02/17 02:59:38 - Revision: 1.3</PubDate>
+<PubDate>Date: 2013/04/25 23:57:16</PubDate>
 
 <Abstract>
 <Para>
 mod-xslt2 is a web server module able to transform xml documents
-in any format using xslt stylesheets, doing what might be called
-server side parsing of xml files.
+in any format using xslt stylesheets. It implements server side
+transformation of xslt stylesheet.
 </Para>
 </Abstract>
 </ArtHeader>
 
 <Sect1>
-<Title>License, copyright and...</Title>
-
-<Para>
-This document was written by Carlo Contavalli &lt;ccontavalli at inscatolati.net&gt; 
-and is thus Copyright (C) Carlo Contavalli 2002-2008.
-</Para>
-
-<Para>
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.1 or
-any later version published by the Free Software Foundation; with no
-Invariant Sections, no Front-Cover Texts and no Back-Cover Texts.
-</Para>
-
-<Para>
-Any example of program code available in this document should be
-considered protected by the terms of the GNU General Public License.
-</Para>
-
-<Para>
-mod-xslt2, the software described in this document, is free software; you
-can redistribute it and/or modify it under the terms of the GNU 
-General Public License as published by the Free Software Foundation; either
-version 2 of the License, or (at your option) any later version.
-</Para>
-
-<Para>
-mod-xslt2 is distributed in the
-hope that it will be useful, but WITHOUT ANY WARRANTY; without even
-the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
-PURPOSE. See the GNU General Public License for more details.
-</Para>
-
-<Para>
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-</Para>
-
-<Para>
-Trademarks are owned by their respective owners.
-</Para>
-
-</Sect1>
-
-<Sect1>
 <Title>Introduction</Title>
 
 <Para>
-Nowdays, most of the browsers on the market <Emphasis remap="bf">do not</Emphasis> support parsing xml
-files and are not able to correctly apply xslt stylesheets.
-</Para>
-
-<Para>
-Even worse, some browsers are not standard complaiant and do not follow the 
-specifications closely, leading to a world where xml can
-hardly be used in web applications.
-</Para>
-
-<Para>
-mod-xslt2 is a server side module able to transform
-``xml'' documents in ``html'' (or to any other format) before they even 
-get back to the browser.
-</Para>
-
-<Para>
-At time of writing, this module can be used with apache 1.3.x (stable) and 
-apache 2.{1,2}.x (stable), but other web servers may get supported in the future.
+mod-xslt2 is a server side module able to transform ``xml'' documents in
+``html'' (or any other format). mod-xsl2 can bew used with most apache
+version, including the now obsolete 1.3 and most 2.X branches.
 </Para>
 
 <Para>
@@ -95,43 +33,41 @@ mod-xslt2 main features include:
 
 <ItemizedList>
 <ListItem>
-
 <Para>
-the ability to parse generated xml (ability to parse the output of php or perl scripts).
+ability to transform dynamically generated xml (ability to parse the output of php or perl scripts).
 </Para>
 </ListItem>
 <ListItem>
 
 <Para>
-the ability to use the ``xslt'' indicated by the &lt;?xml-stylesheet processing
-instruction.
+ability to use ``xslt'' stylesheets indicated via the &lt;?xml-stylesheet
+processing instruction.
 </Para>
 </ListItem>
 <ListItem>
 
 <Para>
-the ability to send back the xml file unparsed to the browser.
+ability to send back the xml file unparsed to the browser.
 </Para>
 </ListItem>
 <ListItem>
 
 <Para>
-the ability to fetch xslt or DTDs from scripts rather than from static
-files.
+ability to fetch xslt or DTDs from scripts rather than from static files.
 </Para>
 </ListItem>
 <ListItem>
 
 <Para>
-the ability to fetch a different xslt depending on the content of the
-request headers, of the get parameters or the web server environment.
+ability to fetch a different xslt depending on the content of the request
+headers, of the get parameters or the web server environment.
 </Para>
 </ListItem>
 <ListItem>
 
 <Para>
-the ability to allow xslt stylesheets to make use of these variables to
-generate output.
+ability to allow xslt stylesheets to make use of these variables to generate
+output.
 </Para>
 </ListItem>
 
@@ -144,64 +80,9 @@ bugs that were found in the original sources.
 </Para>
 
 <Para>
- 
-As an effect of a more generic API, this version of mod-xslt2 supports 
-both apache 1 and apache 2, while work is under way to provide a cgi and 
-proxy wrapper to allow mod-xslt2 to be used on any other server.
-</Para>
-
-<Para>
-The more generic API should also be usable to provide support for servers
-like IIS or others, even if I'm personally not going to write code for 
-closed source products.
-</Para>
-
-<Para>
 The build system has also been completely rewritten and a whole set of new 
 documentation included in the original package.
 </Para>
-
-<Para>
-Keep also in mind that I'm not native english, and as though I'm trying to 
-do my best, <Emphasis remap="bf">please</Emphasis> report any error or ``strange'' sentence you
-may find in this (or any other) document provided with mod-xslt2.
-</Para>
-
-</Sect1>
-
-<Sect1>
-<Title>History</Title>
-
-<Para>
-It all started a rainy day when I decided to try writing some
-xml pages to put on my web server. I started looking on google
-to find some way to let apache parse the pages, and a whole
-bounce of projects came up. I started downloading
-.tar.gz, compiling, and testing them out... however, I couldn't
-find anything that suit all my needs: one didn't process pi
-instructions at all, the other one was not able to read 
-xml to be parsed from php or cgi scripts, another one was
-not able to load dtds nor to fetch xslt from http urls.
-</Para>
-
-<Para>
-The situation was sad: there were tens of mod xslt available
-but none of them had even a subset of ``standard'' features,
-many add constraints like ``you cannot use php xml handling
-functions, since they use the same xml library as php'',
-and many others were just buggy and almost completely 
-unmaintained. So, I took the most promising one, mod-xslt, 
-written by Philipp Dunkel, and started adding
-all the features I needed. However, at the time mod-xslt
-run only on apache2, which was still quite buggy to my eyes.
-</Para>
-
-<Para>
-So, I ended up almost completely rewriting mod-xslt (just
-a few lines are still there..) and adding a whole bounce of
-new features.
-</Para>
-
 </Sect1>
 
 <Sect1>
@@ -212,7 +93,6 @@ new features.
 
 <Para>
 To install this module, you must:
-
 <OrderedList>
 <ListItem>
 
@@ -326,50 +206,37 @@ From your shell, run as a normal user:
   $ cd mod-xslt2*
   $ mkdir build
   $ cd build
-  $ ../configure --with-sapi=apache1
+  $ ../configure --with-sapi=apache2
 </Screen>
 
-Where ``apache1'' is the name of the web server
-you want mod-xslt2 to be compiled for. In place
-of apache1, at time of writing, you can specify
-apache2 or none. If you specify ``none'' you
-will get the library and the utilities that 
-constitute most of mod-xslt2 compiled and 
+``apache2'', the ``sapi'', or Server API, is the name of the web server you
+want mod-xslt2 to be compiled for. If you specify ``none'' you will get the
+library and the utilities that constitute most of mod-xslt2 compiled and
 installed.
 </Para>
 
 <Para>
-If you do not specify any ``--with-sapi'' 
-option, configure will try to figure out which
-web server is installed on your system.
-However, if you have more than one web server
-supported by mod-xslt2 installed, configure
-will compile mod-xslt2 for the first 
-detected one.
+If you do not specify anything ``--with-sapi'' configure will try to
+detect the web server by itself.
 </Para>
 
 <Para>
-Configure will also try to autodetect most of the
-needed parameters and will warn you about small
-incompatibilities it <Emphasis remap="bf">will</Emphasis> find in the libraries
-on your system. Sometimes it will also suggest
-you to apply a particular patch to your libxml2
-or libxslt. Read ``README.Patches'' to have more
-information about those patches.
+Configure will also try to autodetect most of the needed parameters and will
+warn you about incompatibilities it <Emphasis remap="bf">will</Emphasis>
+find. Sometimes it will also suggest you to apply a particular patch to your
+libxml2 or libxslt. Read ``README.Patches'' to have more information about
+those patches.
 </Para>
 
 <Para>
-Anyway, after successful configure completion, you 
-should run:
-
+After successful configure completion, you should run:
 <Screen>
   $ make
   $ su root
   # make install
 </Screen>
 
-If you ever want to remove mod-xslt2, you could also
-run:
+If you ever want to remove mod-xslt2, you could also run:
 
 <Screen>
   # make uninstall
@@ -383,78 +250,65 @@ run:
 <Title>Configure parameters</Title>
 
 <Para>
-As any ``configure'' script, mod-xslt2 configure accepts many parameters.
-Some of those parameters are always available while a few of them depend
-on the ``web server'' mod-xslt2 is being compiled for and on the libraries
-available on your system.
-</Para>
-
-<Para>
-The following sections will discuss all the parameters accepted by configure.
-However, the ``configure --help'' screen is authoritative, as this document
-may get outdated.
+Read ``./configure --help'' for an authoritative list of parameters. In these
+sections we will cover only the most important ones.
 </Para>
 
 <Sect3>
 <Title>Installation related parameters</Title>
 
 <Para>
-The following parameters can be used to choose where mod-xslt2 will 
-be installed:
 
 <ItemizedList>
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">--bindir=BINDIR</Emphasis> where BINDIR is the directory where you want 
-the binaries (modxslt-parse, modxslt-perror, modxslt-config) to be put
-during installtion
+<Emphasis remap="bf">--bindir=BINDIR</Emphasis> BINDIR is the directory where mod-xslt
+binaries (modxslt-parse, modxslt-perror, modxslt-config) should be copied after compiling them,
+generally /usr/bin.
 </Para>
 </ListItem>
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">--libdir=LIBDIR</Emphasis> where LIBDIR is the directory where you want the library
-(libmodxslt0) to be put during installation
+<Emphasis remap="bf">--libdir=LIBDIR</Emphasis> LIBDIR is the directory where mod-xslt
+library (libmodxslt0) should be installed, generally /usr/lib.
 </Para>
 </ListItem>
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">--includedir=INCLUDEDIR</Emphasis> where INCLUDEDIR is the directory where you want libmodxslt
-headers to be put during installation
+<Emphasis remap="bf">--includedir=INCLUDEDIR</Emphasis> INCLUDEDIR is the directory where libmodxslt
+headers should be installed, generally /usr/include.
 </Para>
 </ListItem>
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">--mandir=MANDIR</Emphasis> where MANDIR is the directory where you want the manual pages
-for the above listed commands to be put during installation
+<Emphasis remap="bf">--mandir=MANDIR</Emphasis> MANDIR is the directory where manual pages
+should be installed, generally /usr/man.
 </Para>
 </ListItem>
 
 </ItemizedList>
 
-Usually, the place where to put sapi specific binaries generated 
-by the compilation process is automatically detected. 
-In any case, the following options may influence how the 
-above paths are calculated:
+The installation directory for the web server module itself is normally detected automatically.
+Following options are generally handy:
 
 <ItemizedList>
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">--prefix=PREFIX</Emphasis> where, if no ``--mandir'' is specified, MANDIR
-is calculated to be ``PREFIX/man'', while if no ``--includedir'' is specified,
-INCLUDEDIR is calculated to be ``PREFIX/include''.
+<Emphasis remap="bf">--prefix=PREFIX</Emphasis>, if no ``--mandir'' is specified, MANDIR
+defaults ``PREFIX/man'', while if no ``--includedir'' is specified, INCLUDEDIR defaults to ``PREFIX/include''.
 </Para>
 </ListItem>
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">--exec-prefix=EPREFIX</Emphasis> where, if no ``--bindir'' is specified, BINDIR
-is calculated to be ``EPREFIX/bindir'', while if no ``--libdir'' is specified,
-LIBDIR is calculated to be ``PREFIX/libdir''.
+<Emphasis remap="bf">--exec-prefix=EPREFIX</Emphasis>, if no ``--bindir'' is specified, BINDIR
+defaults to ``EPREFIX/bindir'', while if no ``--libdir'' is specified,
+LIBDIR defaults to ``PREFIX/libdir''.
 </Para>
 </ListItem>
 
@@ -462,9 +316,8 @@ LIBDIR is calculated to be ``PREFIX/libdir''.
 </Para>
 
 <Para>
-Note that if you are, for example, packaging mod-xslt2 and want all the
-files to be installed under a particular directory, you can use the 
-DESTDIR environment variable as usual.
+Packagers for mod-xslt should consider using the DESTDIR environment
+variable to have all of mod-xslt files installed under a specific directory.
 </Para>
 
 </Sect3>
@@ -3809,5 +3662,53 @@ This is just another issue about using untrusted variables.
   the mailing lists. We are always happy to get new hands at work. 
 </Para>
 </Sect1>
+
+<Sect1>
+<Title>License, copyright and...</Title>
+
+<Para>
+This document was written by Carlo Contavalli &lt;ccontavalli at inscatolati.net&gt; 
+and is thus Copyright (C) Carlo Contavalli 2002-2008.
+</Para>
+
+<Para>
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, no Front-Cover Texts and no Back-Cover Texts.
+</Para>
+
+<Para>
+Any example of program code available in this document should be
+considered protected by the terms of the GNU General Public License.
+</Para>
+
+<Para>
+mod-xslt2, the software described in this document, is free software; you
+can redistribute it and/or modify it under the terms of the GNU 
+General Public License as published by the Free Software Foundation; either
+version 2 of the License, or (at your option) any later version.
+</Para>
+
+<Para>
+mod-xslt2 is distributed in the
+hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
+PURPOSE. See the GNU General Public License for more details.
+</Para>
+
+<Para>
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+</Para>
+
+<Para>
+Trademarks are owned by their respective owners.
+</Para>
+
+</Sect1>
+
+
 
 </Article>

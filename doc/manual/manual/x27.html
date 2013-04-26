@@ -1,0 +1,703 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Installation</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="mod-xslt2 Users and Administrators Manual"
+HREF="index.html"><LINK
+REL="PREVIOUS"
+TITLE="mod-xslt2 Users and Administrators Manual"
+HREF="index.html"><LINK
+REL="NEXT"
+TITLE="mod-xslt2 Setup and Usage"
+HREF="x164.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>mod-xslt2 Users and Administrators Manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="index.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="x164.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN27"
+>2. Installation</A
+></H1
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN29"
+>2.1. Prerequisites</A
+></H2
+><P
+>To install this module, you must:
+<P
+></P
+><OL
+TYPE="1"
+><LI
+><P
+>Make sure ``libxml2'' and ``libxslt'' and their headers (libxml2-dev and libxslt-dev)
+are correctly installed on your system, and that the commands
+``xslt-config'' and ``xml2-config'' can be found in your path.</P
+></LI
+><LI
+><P
+>Make sure you have a version of ``libxslt'' above 1.0.30.</P
+></LI
+><LI
+><P
+>Make sure ``libpcre'' (at least version 4.5) and its headers 
+(libpcre-dev) are correctly installed on your system and that 
+the command ``pcre-config'' can be found in your path.</P
+></LI
+><LI
+><P
+>Make sure to have a version of Make from the GNU project, often
+known as ``gmake'' on many systems. If your system does provide
+a ``gmake'' command, use that instead of ``make'' in all the 
+provided examples.</P
+></LI
+></OL
+>
+
+You may also consider recompiling libxml2 or libxslt after applying some of the
+patches provided in the ``patches/'' directory in mod-xslt2 sources. For further
+information about the available patches, please read the file ``README.Patches''.</P
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN41"
+>2.1.1. Apache 1.3.x</A
+></H3
+><P
+>To install mod-xslt2 on apache 1.3.x, you need to have the apache
+headers installed (apache-dev) and the command ``apxs'' available.</P
+><P
+>You also need to know the path of ``apxs'', which can be found by
+running something like ``locate apxs'', ``whereis apxs'' or 
+``find / -name apxs''.</P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN45"
+>2.1.2. Apache 2.{1,2}.x</A
+></H3
+><P
+>To install mod-xslt2 on an apache 2.1.x or 2.2.x server, you need to have:
+
+<P
+></P
+><UL
+><LI
+><P
+>the apache headers file installed (apache2-dev)</P
+></LI
+><LI
+><P
+>the command ``apxs'' or ``apxs2'' available somewhere on your system
+(you can find it by running ``locate apxs'', ``whereis apxs'' or 
+``find / -name apxs'')</P
+></LI
+><LI
+><P
+>``libapr'' and its headers installed somewhere on your system (libapr0,
+libapr0-dev) and the command ``apr-config'' (the presence of this command
+usually implies the availability of the library)</P
+></LI
+><LI
+><P
+>libaprutil and its headers installed somewhere on your system (libaprutil,
+libaprutil-dev) and the command ``apu-config'' (the presence of this command
+usually implies the availability of the library)</P
+></LI
+></UL
+>&#13;</P
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN57"
+>2.2. Quick start</A
+></H2
+><P
+>From your shell, run as a normal user:
+
+<PRE
+CLASS="SCREEN"
+>  $ gzip -cd mod-xslt2*|tar x
+  $ cd mod-xslt2*
+  $ mkdir build
+  $ cd build
+  $ ../configure --with-sapi=apache2</PRE
+>
+
+``apache2'', the ``sapi'', or Server API, is the name of the web server you
+want mod-xslt2 to be compiled for. If you specify ``none'' you will get the
+library and the utilities that constitute most of mod-xslt2 compiled and
+installed.</P
+><P
+>If you do not specify anything ``--with-sapi'' configure will try to
+detect the web server by itself.</P
+><P
+>Configure will also try to autodetect most of the needed parameters and will
+warn you about incompatibilities it <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>will</I
+></SPAN
+>
+find. Sometimes it will also suggest you to apply a particular patch to your
+libxml2 or libxslt. Read ``README.Patches'' to have more information about
+those patches.</P
+><P
+>After successful configure completion, you should run:
+<PRE
+CLASS="SCREEN"
+>  $ make
+  $ su root
+  # make install</PRE
+>
+
+If you ever want to remove mod-xslt2, you could also run:
+
+<PRE
+CLASS="SCREEN"
+>  # make uninstall</PRE
+>&#13;</P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN67"
+>2.3. Configure parameters</A
+></H2
+><P
+>Read ``./configure --help'' for an authoritative list of parameters. In these
+sections we will cover only the most important ones.</P
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN70"
+>2.3.1. Installation related parameters</A
+></H3
+><P
+>&#13;<P
+></P
+><UL
+><LI
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>--bindir=BINDIR</I
+></SPAN
+> BINDIR is the directory where mod-xslt
+binaries (modxslt-parse, modxslt-perror, modxslt-config) should be copied after compiling them,
+generally /usr/bin.</P
+></LI
+><LI
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>--libdir=LIBDIR</I
+></SPAN
+> LIBDIR is the directory where mod-xslt
+library (libmodxslt0) should be installed, generally /usr/lib.</P
+></LI
+><LI
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>--includedir=INCLUDEDIR</I
+></SPAN
+> INCLUDEDIR is the directory where libmodxslt
+headers should be installed, generally /usr/include.</P
+></LI
+><LI
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>--mandir=MANDIR</I
+></SPAN
+> MANDIR is the directory where manual pages
+should be installed, generally /usr/man.</P
+></LI
+></UL
+>
+
+The installation directory for the web server module itself is normally detected automatically.
+Following options are generally handy:
+
+<P
+></P
+><UL
+><LI
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>--prefix=PREFIX</I
+></SPAN
+>, if no ``--mandir'' is specified, MANDIR
+defaults ``PREFIX/man'', while if no ``--includedir'' is specified, INCLUDEDIR defaults to ``PREFIX/include''.</P
+></LI
+><LI
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>--exec-prefix=EPREFIX</I
+></SPAN
+>, if no ``--bindir'' is specified, BINDIR
+defaults to ``EPREFIX/bindir'', while if no ``--libdir'' is specified,
+LIBDIR defaults to ``PREFIX/libdir''.</P
+></LI
+></UL
+></P
+><P
+>Packagers for mod-xslt should consider using the DESTDIR environment
+variable to have all of mod-xslt files installed under a specific directory.</P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN94"
+>2.3.2. Compilation related parameters</A
+></H3
+><P
+>The following parameters can be used to enable/disable mod-xslt2 features
+or to choose compilation parameters:
+
+<P
+></P
+><UL
+><LI
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>--enable-debug</I
+></SPAN
+> starting from version 1.3.9, this option
+just indicates that mod-xslt should be compiled with the options -ggdb and -O0, which
+means: with support for running mod-xslt under gdb, and without optimizations.
+Before version 1.3.9 this parameter used to be useful to flood your web server error.log
+with information regarding mod-xslt operations and inner working (it was useful for
+spotting out problems). This compile time option has been superseeded by a more flexible
+mechanism which allows users to choose at run time which output they want in their
+own error.log.</P
+></LI
+><LI
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>--enable-memory</I
+></SPAN
+> available from version 1.3.9, this option
+enables strict checking of memory allocations and frees. It is used when running regression
+tests, and should not be used otherwise.</P
+></LI
+><LI
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>--enable-xslt-debug</I
+></SPAN
+> enables libxslt debugging functions. This is
+useful to verify correct behavior of libxslt. Take a look to libxslt documentation for more
+details.</P
+></LI
+><LI
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>--disable-thread</I
+></SPAN
+> due to lack or bad multithreading/multimodules support
+in some of the libraries used by mod-xslt2, some global variables allocated in TSD have been used (do 
+not complain to me). This parameter disables libmodxslt multithreading support (the usage
+of a TSD to keep global variables).</P
+></LI
+><LI
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>--disable-extensions</I
+></SPAN
+> mod-xslt2 makes available some xslt extensions,
+useful for web programmers. Compiling mod-xslt2 with this parameter disables those extensions.</P
+></LI
+><LI
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>--enable-libxslt-hack</I
+></SPAN
+> libmodxslt sometimes calls error handlers with
+the wrong descriptors. Enabling this option, will provide one more layer
+of protection against this kind of error in libxslt (that, at time of
+writing, has not been corrected by the authors). Another solution is
+to patch the library to avoid the problem. Please read ``README.Patches''.</P
+></LI
+><LI
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>--enable-fallback-wraparound</I
+></SPAN
+> once you get the errors working correctly,
+if you use the ``fallback'' tag, you may see strange messages flooding your
+logs. This option tells mod-xslt2 to remove fallback nodes at least when used
+inside mod-xslt2 extension elements, to reduce the number of those messages.
+Another solution is to patch the library to avoid the problem. Please
+read ``README.Patches''.</P
+></LI
+><LI
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>--enable-exslt</I
+></SPAN
+> (obsolete, available only for mod-xslt &lt; 1.3.9)
+enable exslt extensions for libxslt. Default is disabled.
+If you need or want to use the advanced string operators, remember to enable this option.</P
+></LI
+><LI
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>--disable-exslt</I
+></SPAN
+> (available starting with mod-xslt 1.3.9) disable 
+exslt extensions for libxslt. Default is enabled.</P
+></LI
+><LI
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>--disable-xinclude</I
+></SPAN
+> disable modxslt usage of xinclude. Default is enabled.
+If you want to disable xinclude or maintain backward compatibility, you are free to disable xinclude.</P
+></LI
+><LI
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>--with-sapi=apache1|apache2|none</I
+></SPAN
+> allows you to specify for which web server (sapi) 
+to compile mod-xslt2. Currently, you can specify ``apache1'' for apache version 1.3.x,
+``apache2'' for apache version &gt; 2.x.44, ``apache'' to enable apache
+version autodetection or ``none'' to compile only mod-xslt2 utilities and libraries. 
+More sapi modules are currently being developed.</P
+></LI
+><LI
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>--with-xml2-config=path</I
+></SPAN
+> allows you to specify where the libxml2 
+``xml2-config'' script is located. If not specifyed, the first one found in the search path will be
+used. As an example, you could specify something like:
+``--with-xml2-config=/usr/local/libxml2-2.5.57/bin/xml2-config''</P
+><P
+>If you don't have xml2-config on your system, you probably haven't installed
+libxml2 correctly or you haven't installed the ``-dev'' version of the
+packages (rpm &amp; deb). If you don't know where it is, you can run ``locate xml2-config'' or
+``find / -name xml2-config'' to locate it.</P
+></LI
+><LI
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>--with-xslt-config=path</I
+></SPAN
+> allows you to specify where the ``xslt-config'' script
+is located. If not specifyed, the first one found in the search path will be
+used.</P
+></LI
+><LI
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>--with-pcre-config=path</I
+></SPAN
+> allows you to specify where the ``pcre-config'' script
+is located. If not specifyed, the first one found in the search path will be
+used. If not found, support for ``Perl Compatible Regular Expressions'' will
+be <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>disabled</I
+></SPAN
+>.</P
+></LI
+></UL
+>&#13;</P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN142"
+>2.3.3. SAPI Specific configure parameters</A
+></H3
+><DIV
+CLASS="SECT4"
+><H4
+CLASS="SECT4"
+><A
+NAME="AEN144"
+>2.3.3.1. Apache 1</A
+></H4
+><P
+>&#13;<P
+></P
+><UL
+><LI
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>--with-apxs</I
+></SPAN
+> allows you to specify the ``apxs'' that should be used.
+By default, the first ``apxs'' found in the ``PATH'' or in ``/usr/bin'',
+``/usr/local/bin'', ``/usr/local/apache/bin'' is used. If you have
+no apxs on your system, you probably don't have apache headers (or the
+package apache-dev) installed correctly.</P
+></LI
+></UL
+>
+Note that running ``make install'' will install mod-xslt2 in the path returned
+by the ``apxs'' found (``apxs -q LIBEXECDIR''), eventually prefixed by the 
+DESTDIR environment variabe as usual.</P
+></DIV
+><DIV
+CLASS="SECT4"
+><H4
+CLASS="SECT4"
+><A
+NAME="AEN151"
+>2.3.3.2. Apache 2.x.x</A
+></H4
+><P
+>&#13;<P
+></P
+><UL
+><LI
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>--with-apxs</I
+></SPAN
+> allows you to specify the ``apxs'' that should be used.
+By default, the first ``apxs'' found in the ``PATH'' or in ``/usr/bin'',
+``/usr/local/bin'', ``/usr/local/apache/bin'' is used. If you have
+no apxs on your system, you probably don't have apache headers (or the
+package apache-dev) installed correctly.</P
+></LI
+><LI
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>--with-apr-config</I
+></SPAN
+> allows you to specify the ``apr-config'' script that
+should be used. By default, the first ``apr-config'' found is used.</P
+></LI
+><LI
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>--with-apu-config</I
+></SPAN
+> allows you to specify the ``apu-config'' script that
+should be used. By default, the first ``apu-config'' found is used.</P
+></LI
+></UL
+>
+
+Note that running ``make install'' will install mod-xslt2 in the path returned
+by the ``apxs'' found (``apxs -q LIBEXECDIR''), eventually prefixed by the 
+prefix specified with ``--prefix'' to configure. </P
+></DIV
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="x164.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>mod-xslt2 Users and Administrators Manual</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>mod-xslt2 Setup and Usage</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>
