@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html xmlns="http://www.w3.org/TR/rec-html40" xmlns:faq="http://www.masobit.net/ns/faq/1.0"><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title> FAQ - </title><link href="./css/faq.css" rel="stylesheet" type="text/css"></link></head><body class="faq"><span class="faq"><a name="index"></a><h1 class="faq-title">mod-xslt FAQ</h1><b class="faq-version">version 0.1.12 </b><b class="faq-released">released 2003/06/13</b><p class="faq-body"><p class="faq-copyright"><b>Copyright:</b> © 2002-2008 Carlo Contavalli;
+<title> FAQ - </title><link href="./css/faq.css" rel="stylesheet" type="text/css"></link></head><body class="faq"><span class="faq"><a name="index"></a><h1 class="faq-title">mod-xslt FAQ</h1><b class="faq-version">version 0.1.12 </b><b class="faq-released">released 2003/06/13</b><p class="faq-body"><p class="faq-copyright"><b>Copyright:</b>  2002-2008 Carlo Contavalli;
   <br></br><p>
 Permission is granted to copy, distribute and/or modify this document under the
 terms of the GNU Free Documentation License, Version 1.1 or any later version
@@ -221,12 +221,11 @@ mxslt_debug_firstlevel
     I can't compile mod-xslt with the xxx compiler. The compiler complains about: .... What
     can I do?
     </a></td></tr></table><table class="faq-text-answer1"><tr><td width="2"> </td><td><p class="faq-answer">
-    mod-xslt uses some ISO C99 constructs that are supported by very few compilers. You 
-    should:
-    <ul><li>use gcc, which has supported them for quite a while now</li><li>from your source tree, run ``./helpers/c99.sh'', a small script able to strip 
-      	    away all c99 constructs used by mod-xslt. After running ``c99.sh'', it should
-	    compile with any ANSI compiler.</li></ul>
-    If your compiler is not ANSI, go and get one. This is your problem.
+    mod-xslt uses some ISO C99 constructs. Is the error because of C99?
+    If yes, you should really update your compiler. It has been 14 years since the standard was approved,
+    and most version of gcc since 2004 have supported enough of it to compile modxslt.
+    If no, maybe you are missing some dependencies? Check out the wiki or the mailing list,
+    or file a bug. Visit www.modxslt.org for more details.
     </p></td><td width="2"> </td></tr></table></td></tr></table><table class="faq-text-entry1"><tr><td><table class="faq-text-question1"><tr class="faq-text-question1"><td class="faq-text-question1"><a href="#index" class="faq-text-question1" name="1.5">1.5</a></td><td class="faq-text-question1"><a href="#index" class="faq-text-question1">
     Configure complains about libxml2 not providing ``setGlobalState'', by printing a message
     like ``Your libxml2 does not provide a setGlobalState'', what's wrong?

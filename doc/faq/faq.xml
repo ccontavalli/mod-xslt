@@ -93,15 +93,11 @@ mxslt_debug_firstlevel
 
     <answer>
     <p>
-    mod-xslt uses some ISO C99 constructs that are supported by very few compilers. You 
-    should:
-    <itemize>
-      <item>use gcc, which has supported them for quite a while now</item>
-      <item>from your source tree, run ``./helpers/c99.sh'', a small script able to strip 
-      	    away all c99 constructs used by mod-xslt. After running ``c99.sh'', it should
-	    compile with any ANSI compiler.</item>
-    </itemize>
-    If your compiler is not ANSI, go and get one. This is your problem.
+    mod-xslt uses some ISO C99 constructs. Is the error because of C99?
+    If yes, you should really update your compiler. It has been 14 years since the standard was approved,
+    and most version of gcc since 2004 have supported enough of it to compile modxslt.
+    If no, maybe you are missing some dependencies? Check out the wiki or the mailing list,
+    or file a bug. Visit www.modxslt.org for more details.
     </p>
     </answer>
   </entry>

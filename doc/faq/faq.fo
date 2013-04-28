@@ -72,7 +72,7 @@
 				</fo:block>
       <fo:block font-size="8pt" text-align="center">
                                   version:  0.1.12, relased on 2003/06/13
-				  Copyright © 2002-2008 Carlo Contavalli</fo:block>
+				  Copyright  2002-2008 Carlo Contavalli</fo:block>
       <fo:block font-size="8pt" text-align="center" space-after="20pt">
                                   written by Carlo Contavalli, &lt;ccontavalli at inscatolati.net&gt;
 				</fo:block>
@@ -808,12 +808,11 @@ mxslt_debug_firstlevel
     </fo:block>
             <fo:block margin-left="10pt" space-after="0.5em" margin-right="10pt">
     <fo:block>
-    mod-xslt uses some ISO C99 constructs that are supported by very few compilers. You 
-    should:
-    <fo:block><fo:list-block margin-left="10pt" provisional-distance-between-starts="7mm" provisional-label-separation="2mm" start-indent="2mm" space-before.optimum="4pt" space-after.optimum="4pt"><fo:list-item><fo:list-item-label end-indent="label-end()"><fo:block font-family="Courier" font-size="15pt" line-height="14pt" padding-before="2pt">•</fo:block></fo:list-item-label><fo:list-item-body start-indent="body-start()"><fo:block>use gcc, which has supported them for quite a while now</fo:block></fo:list-item-body></fo:list-item><fo:list-item><fo:list-item-label end-indent="label-end()"><fo:block font-family="Courier" font-size="15pt" line-height="14pt" padding-before="2pt">•</fo:block></fo:list-item-label><fo:list-item-body start-indent="body-start()"><fo:block>from your source tree, run ``./helpers/c99.sh'', a small script able to strip 
-      	    away all c99 constructs used by mod-xslt. After running ``c99.sh'', it should
-	    compile with any ANSI compiler.</fo:block></fo:list-item-body></fo:list-item></fo:list-block></fo:block>
-    If your compiler is not ANSI, go and get one. This is your problem.
+    mod-xslt uses some ISO C99 constructs. Is the error because of C99?
+    If yes, you should really update your compiler. It has been 14 years since the standard was approved,
+    and most version of gcc since 2004 have supported enough of it to compile modxslt.
+    If no, maybe you are missing some dependencies? Check out the wiki or the mailing list,
+    or file a bug. Visit www.modxslt.org for more details.
     </fo:block>
     </fo:block>
           </fo:block>
