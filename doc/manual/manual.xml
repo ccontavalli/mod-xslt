@@ -1730,12 +1730,12 @@ specifying something like:
 <Screen>
 &lt;xsl:stylesheet version="1.0" 
     extension-element-prefixes="yaslt"
-    xmlns:yaslt="http://www.mod-xslt2.com/ns/1.0"
+    xmlns:yaslt="http://www.modxslt.org/ns/1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"&gt;
 </Screen>
 
 Note the ``extension-element-prefixes'' and 
-``xmlns:yaslt="http://www.mod-xslt2.com/ns/1.0" that specify that the
+``xmlns:yaslt="http://www.modxslt.org/ns/1.0" that specify that the
 extensions will live in the ``yaslt:'' namespace.
 </Para>
 
@@ -1776,7 +1776,7 @@ A more complete example may be the following one:
 <Screen>
 &lt;xsl:stylesheet version="1.0"
     extension-element-prefixes="yaslt"
-    xmlns:yaslt="http://www.mod-xslt2.com/ns/1.0"
+    xmlns:yaslt="http://www.modxslt.org/ns/1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"&gt;
 
   &lt;xsl:template match="faq"&gt;
@@ -1827,7 +1827,7 @@ of ``header-set'':
 <Screen>
 &lt;xsl:stylesheet version="1.0" 
     extension-element-prefixes="yaslt"
-    xmlns:yaslt="http://www.mod-xslt2.com/ns/1.0"
+    xmlns:yaslt="http://www.modxslt.org/ns/1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"&gt;
 
   [...]

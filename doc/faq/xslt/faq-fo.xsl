@@ -62,7 +62,7 @@
                                 </fo:table-row>
                                 <fo:table-row>
                                     <fo:table-cell font-size="inherited-property-value(&apos;font-size&apos;) - 2pt" padding-bottom="0pt" padding-left="0pt" padding-right="0pt" padding-top="0pt" border-style="solid" border-width="1pt" border-color="white" text-align="left" padding-start="3pt" padding-end="3pt" padding-before="3pt" padding-after="3pt" display-align="center">
-                                        <fo:block font-size="8pt">mod-xslt project -- http://www.mod-xslt2.com/ -- Generated using faq-fo.xsl, Copyright (C) 2003,2004 Marco Merlin</fo:block>
+                                        <fo:block font-size="8pt">mod-xslt project -- http://www.modxslt.org/ -- Generated using faq-fo.xsl, Copyright (C) 2003,2004 Marco Merlin</fo:block>
                                     </fo:table-cell>
                                     <fo:table-cell font-size="inherited-property-value(&apos;font-size&apos;) - 2pt" padding-bottom="0pt" padding-left="0pt" padding-right="0pt" padding-top="0pt" border-style="solid" border-width="1pt" border-color="white" text-align="right" width="150pt" padding-start="3pt" padding-end="3pt" padding-before="3pt" padding-after="3pt" display-align="center">
                                         <fo:block>

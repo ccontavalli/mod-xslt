@@ -13,9 +13,9 @@ server=${server-togliatti}
 }
 
 rsync -avz -e ssh --exclude archive/ --exclude people/ --delete ../http/http/ \
-	scp@$server:/home/http/mod-xslt2.com/http
+	scp@$server:/home/http/modxslt.org/http
 
 rsync -avz -e ssh --exclude archive/ --exclude people/ --delete ../http/lib/ \
-	scp@$server:/home/http/mod-xslt2.com/lib
+	scp@$server:/home/http/modxslt.org/lib
 
-rsync -avz -e ssh ../http/http/software/ scp@$server:/home/http/mod-xslt2.com/http/software/
+rsync -avz -e ssh ../http/http/software/ scp@$server:/home/http/modxslt.org/http/software/

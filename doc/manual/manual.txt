@@ -1185,12 +1185,12 @@ Listen 127.0.0.1:80 192.168.0.1:80
    them in your xsl by specifying something like:
 <xsl:stylesheet version="1.0"
     extension-element-prefixes="yaslt"
-    xmlns:yaslt="http://www.mod-xslt2.com/ns/1.0"
+    xmlns:yaslt="http://www.modxslt.org/ns/1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
    Note the ``extension-element-prefixes'' and
-   ``xmlns:yaslt="http://www.mod-xslt2.com/ns/1.0" that specify
-   that the extensions will live in the ``yaslt:'' namespace.
+   ``xmlns:yaslt="http://www.modxslt.org/ns/1.0" that specify that
+   the extensions will live in the ``yaslt:'' namespace.
 
    However, enabling the extensions will allow you to use two more
    additional tags:
@@ -1212,7 +1212,7 @@ Listen 127.0.0.1:80 192.168.0.1:80
    A more complete example may be the following one:
 <xsl:stylesheet version="1.0"
     extension-element-prefixes="yaslt"
-    xmlns:yaslt="http://www.mod-xslt2.com/ns/1.0"
+    xmlns:yaslt="http://www.modxslt.org/ns/1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
   <xsl:template match="faq">
@@ -1250,7 +1250,7 @@ Listen 127.0.0.1:80 192.168.0.1:80
    The following are all valid usage examples of ``header-set'':
 <xsl:stylesheet version="1.0"
     extension-element-prefixes="yaslt"
-    xmlns:yaslt="http://www.mod-xslt2.com/ns/1.0"
+    xmlns:yaslt="http://www.modxslt.org/ns/1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
   [...]

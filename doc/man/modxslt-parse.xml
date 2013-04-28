@@ -109,7 +109,7 @@
   <refsect1>
     <title>SEE ALSO</title>
 
-    <para>xsltproc(1), modxslt-perror(1), modxslt-config(1), modxslt manual, http://www.mod-xslt2.com</para>
+    <para>xsltproc(1), modxslt-perror(1), modxslt-config(1), modxslt manual, http://www.modxslt.org</para>
   </refsect1>
 
   <refsect1>

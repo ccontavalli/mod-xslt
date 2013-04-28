@@ -24,7 +24,7 @@
   /* Define some constants */
 # define MXSLT_NAME "mod-xslt"
 # define MXSLT_STD_HANDLER "mod-xslt"
-# define MXSLT_NS_URI "http://www.mod-xslt2.com/ns/1.0"
-# define MXSLT_SITE "http://www.mod-xslt2.com/"
+# define MXSLT_NS_URI "http://www.modxslt.org/ns/1.0"
+# define MXSLT_SITE "http://www.modxslt.org/"
 
 #endif 

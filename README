@@ -10,13 +10,13 @@ web servers, and work is under way to provide a cgi-bin
 wrapper and a proxy module.
   The main site for the mod-xslt2 project is
 
-	http://www.mod-xslt2.com/
+	http://www.modxslt.org/
 
   where you can find documentation, this file and all
 related material. To get help or to know more about
 mod-xslt2, you can also subscribe to the mailing 
 lists. You can find a web interface to subscribe to
-the mailing lists at http://ml.mod-xslt2.com/ml/.
+the mailing lists at http://ml.modxslt.org/ml/.
 
 
 Installation and Usage
