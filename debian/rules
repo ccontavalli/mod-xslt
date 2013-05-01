@@ -28,14 +28,7 @@ ifeq (,$(findstring nostrip,$(DEB_BUILD_OPTIONS)))
 endif
 
 config.status: configure 
-	dh_testdir
-
-
-build-indep:
-	dh_testdir
-	cd $(CURDIR)/doc && $(MAKE)
-
-build-arch: configure
+	echo "TARGET: configure"
 	dh_testdir
 
 ifneq "$(wildcard /usr/share/misc/config.sub)" ""
@@ -44,22 +37,32 @@ endif
 ifneq "$(wildcard /usr/share/misc/config.guess)" ""
 	cp -f /usr/share/misc/config.guess ./helpers/config.guess
 endif
-		   
-	CFLAGS="$(CFLAGS)" ./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) \
-	  --prefix=/usr --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info \
-	  --with-sapi=none --cache-file=cache.none-1 --enable-exslt
-
-	cd $(CURDIR)/lib && $(MAKE)
-	cd $(CURDIR)/utils && $(MAKE)
-
 	CFLAGS="$(CFLAGS)" ./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNUU_TYPE) \
 	  --prefix=/usr --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info \
-	  --with-sapi=apache2 --cache-file=cache.none-2 --enable-exslt
+	  --with-sapi=apache2 --cache-file=cache.none --enable-exslt
+
+build-indep: build-indep-stamp
+
+build-indep-stamp:
+	echo "TARGET: build-indep-stamp"
+	dh_testdir
+	cd $(CURDIR)/doc && $(MAKE)
+	touch build-indep-stamp
+
+build-arch: build-arch-stamp
+
+build-arch-stamp: config.status
+	echo "TARGET: build-arch-stamp"
+	dh_testdir
+	   
 	cd $(CURDIR) && $(MAKE)
+	touch build-arch-stamp
 	
 build: build-indep build-arch
+	echo "TARGET: build"
 
 install: install-arch install-indep
+	echo "TARGET: install"
 
 clean:
 	dh_testdir
@@ -69,8 +72,6 @@ clean:
 	rm -rf $(CURDIR)/debian/apache-none
 	rm -rf `find . -name 'cache.none*'`
 	rm -rf  $(CURDIR)/debian/libmodxslt0
-	
-	# Add here commands to clean up after the build process.
 	[ ! -f Makefile ] || $(MAKE) distclean
 	
 	rm -rf sapi/apache1/modxslt-helpers.o
@@ -79,31 +80,39 @@ clean:
 
 	rm -f helpers/config.sub
 	rm -f helpers/config.guess
+	rm -f *-stamp
 
 	dh_clean 
 
-install-arch: build-arch
+install-arch: install-arch-stamp
+
+install-arch-stamp: build-arch
+	echo "TARGET: install-arch-stamp"
 	dh_testdir
 	dh_testroot
 	dh_clean -k 
 	dh_installdirs
 
-	# Add here commands to install the package into debian/modxslt2.
 	mkdir $(CURDIR)/debian/tmp
 	
 	@echo -e "Install for lib and bin\n"
 	cd $(CURDIR)/lib && $(MAKE) install-library DESTDIR=$(CURDIR)/debian/tmp
 	cd $(CURDIR)/utils && $(MAKE) install DESTDIR=$(CURDIR)/debian/tmp
-	cd $(CURDIR)/lib/ && $(MAKE) install-headers DESTDIR=$(CURDIR)/debian/tmp
+	cd $(CURDIR)/lib && $(MAKE) install-headers DESTDIR=$(CURDIR)/debian/tmp
 	
-	@echo -e  "Now I will compile for apache2\n"
-	cd $(CURDIR)/sapi/apache2/ && $(MAKE) install DESTDIR=$(CURDIR)/debian/libapache2-modxslt
-	cp debian/modxslt.load $(CURDIR)/debian/libapache2-modxslt/etc/apache2/mods-available/
-	cp $(CURDIR)/debian/modxslt.libapache2 $(CURDIR)/debian/libapache2-modxslt/etc/apache2/conf.d/modxslt
+	@echo -e  "Make install for apache2 module"
+	cd $(CURDIR)/sapi/apache2/ && $(MAKE) install DESTDIR=$(CURDIR)/debian/tmp
+	mkdir -p $(CURDIR)/debian/tmp/etc/apache2/{conf.d,mods-available}/
+	cp debian/modxslt.load $(CURDIR)/debian/tmp/etc/apache2/mods-available/
+	cp $(CURDIR)/debian/modxslt.libapache2 $(CURDIR)/debian/tmp/etc/apache2/conf.d/modxslt
 	
 	dh_install --sourcedir=debian/tmp
+	touch install-arch-stamp
 
-install-indep: build-indep
+install-indep: install-indep-stamp
+
+install-indep-stamp: build-indep
+	echo "TARGET: install-indep-stamp"
 	dh_testdir
 	dh_testroot
 	dh_clean -k 
@@ -112,9 +121,13 @@ install-indep: build-indep
 	mkdir -p $(CURDIR)/debian/modxslt-doc/usr/share/doc/modxslt-doc
 	cp -r  $(CURDIR)/doc/{manual,faq,misc}  $(CURDIR)/debian/modxslt-doc/usr/share/doc/modxslt-doc
 	dh_installdocs -i
+	touch install-indep-stamp
 
 # Build architecture-independent files here.
-binary-indep: install-indep
+binary-indep: binary-indep-stamp
+
+binary-indep-stamp: install-indep
+	echo "TARGET: binary-indep-stamp"
 	dh_testdir 
 	dh_testroot -i
 	
@@ -124,11 +137,16 @@ binary-indep: install-indep
 	dh_gencontrol -i
 	dh_md5sums -i
 	dh_builddeb -i
+	touch binary-indep-stamp
 	
 # We have nothing to do by default.
 
 # Build architecture-dependent files here.
-binary-arch: install-arch
+binary-arch: binary-arch-stamp
+
+binary-arch-stamp: install-arch
+	echo "TARGET: binary-arch-stamp"
+
 	dh_testdir -a
 	dh_testroot -a
 	dh_installchangelogs  -a
@@ -146,5 +164,9 @@ binary-arch: install-arch
 	dh_md5sums -a
 	dh_builddeb -a
 
+	touch binary-arch-stamp
+
 binary: binary-indep binary-arch
+	echo "TARGET: binary"
+
 .PHONY: build clean binary-indep binary-arch binary install patch

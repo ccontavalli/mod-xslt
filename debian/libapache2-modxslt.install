@@ -1,0 +1,3 @@
+etc/apache2/mods-available/modxslt.load
+etc/apache2/conf.d/modxslt
+usr/lib/apache2/modules/mod_xslt.so
