@@ -1,8 +1,5 @@
 usr/lib/libmodxslt1.so
 usr/lib/libmodxslt1.a
-usr/include/modxslt1/modxslt.h
-usr/include/modxslt1/modxslt-system.h
-usr/include/modxslt1/modxslt-table.h
-usr/include/modxslt1/modxslt-version.h
+usr/include/modxslt1/*.h
 usr/bin/modxslt-config
 
