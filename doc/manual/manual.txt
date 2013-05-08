@@ -381,7 +381,7 @@ Carlo Contavalli
    When requesting a document to an Apache 1.3 server through your
    browser, apache
 
-    1. takes the requested URL and remaps it to a ``file
+    1. takes the requested URL and Remaps it to a ``file
        location'', to a path on the local file system (as an
        example, ``http://www.masobit.net/foo/bar.xml'' may become
        ``/opt/array-00/customers/masobit.net/http/bar.xml'')
@@ -394,7 +394,7 @@ Carlo Contavalli
 
    As an example, when you request a .php file with something like
    ``www.masobit.net/info.php'', on our server the first step
-   remaps ``www.masobit.net/info.php'' in something like
+   Remaps ``www.masobit.net/info.php'' in something like
    ``/opt/array-00/customers/masobit.net/http/info.php''. Apache
    then looks in the mime.magic or mime.types (or the AddType
    directives) for the mime type of the file. Provided the content

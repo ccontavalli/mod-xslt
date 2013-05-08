@@ -4,9 +4,9 @@
 <ArtHeader>
 
 <Title>mod-xslt2 Users and Administrators Manual</Title>
-<AUTHOR>
+<Author>
   <FirstName>Carlo Contavalli</FirstName>
-</AUTHOR>
+</Author>
 
 <PubDate>Date: 2013/04/25 23:57:16</PubDate>
 
@@ -222,7 +222,7 @@ detect the web server by itself.
 
 <Para>
 Configure will also try to autodetect most of the needed parameters and will
-warn you about incompatibilities it <Emphasis remap="bf">will</Emphasis>
+warn you about incompatibilities it <Emphasis Remap="bf">will</Emphasis>
 find. Sometimes it will also suggest you to apply a particular patch to your
 libxml2 or libxslt. Read ``README.Patches'' to have more information about
 those patches.
@@ -263,7 +263,7 @@ sections we will cover only the most important ones.
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">--bindir=BINDIR</Emphasis> BINDIR is the directory where mod-xslt
+<Emphasis Remap="bf">--bindir=BINDIR</Emphasis> BINDIR is the directory where mod-xslt
 binaries (modxslt-parse, modxslt-perror, modxslt-config) should be copied after compiling them,
 generally /usr/bin.
 </Para>
@@ -271,21 +271,21 @@ generally /usr/bin.
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">--libdir=LIBDIR</Emphasis> LIBDIR is the directory where mod-xslt
+<Emphasis Remap="bf">--libdir=LIBDIR</Emphasis> LIBDIR is the directory where mod-xslt
 library (libmodxslt0) should be installed, generally /usr/lib.
 </Para>
 </ListItem>
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">--includedir=INCLUDEDIR</Emphasis> INCLUDEDIR is the directory where libmodxslt
+<Emphasis Remap="bf">--includedir=INCLUDEDIR</Emphasis> INCLUDEDIR is the directory where libmodxslt
 headers should be installed, generally /usr/include.
 </Para>
 </ListItem>
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">--mandir=MANDIR</Emphasis> MANDIR is the directory where manual pages
+<Emphasis Remap="bf">--mandir=MANDIR</Emphasis> MANDIR is the directory where manual pages
 should be installed, generally /usr/man.
 </Para>
 </ListItem>
@@ -299,14 +299,14 @@ Following options are generally handy:
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">--prefix=PREFIX</Emphasis>, if no ``--mandir'' is specified, MANDIR
+<Emphasis Remap="bf">--prefix=PREFIX</Emphasis>, if no ``--mandir'' is specified, MANDIR
 defaults ``PREFIX/man'', while if no ``--includedir'' is specified, INCLUDEDIR defaults to ``PREFIX/include''.
 </Para>
 </ListItem>
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">--exec-prefix=EPREFIX</Emphasis>, if no ``--bindir'' is specified, BINDIR
+<Emphasis Remap="bf">--exec-prefix=EPREFIX</Emphasis>, if no ``--bindir'' is specified, BINDIR
 defaults to ``EPREFIX/bindir'', while if no ``--libdir'' is specified,
 LIBDIR defaults to ``PREFIX/libdir''.
 </Para>
@@ -333,7 +333,7 @@ or to choose compilation parameters:
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">--enable-debug</Emphasis> starting from version 1.3.9, this option
+<Emphasis Remap="bf">--enable-debug</Emphasis> starting from version 1.3.9, this option
 just indicates that mod-xslt should be compiled with the options -ggdb and -O0, which
 means: with support for running mod-xslt under gdb, and without optimizations.
 Before version 1.3.9 this parameter used to be useful to flood your web server error.log
@@ -346,7 +346,7 @@ own error.log.
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">--enable-memory</Emphasis> available from version 1.3.9, this option
+<Emphasis Remap="bf">--enable-memory</Emphasis> available from version 1.3.9, this option
 enables strict checking of memory allocations and frees. It is used when running regression
 tests, and should not be used otherwise.
 </Para>
@@ -355,7 +355,7 @@ tests, and should not be used otherwise.
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">--enable-xslt-debug</Emphasis> enables libxslt debugging functions. This is
+<Emphasis Remap="bf">--enable-xslt-debug</Emphasis> enables libxslt debugging functions. This is
 useful to verify correct behavior of libxslt. Take a look to libxslt documentation for more
 details.
 </Para>
@@ -363,7 +363,7 @@ details.
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">--disable-thread</Emphasis> due to lack or bad multithreading/multimodules support
+<Emphasis Remap="bf">--disable-thread</Emphasis> due to lack or bad multithreading/multimodules support
 in some of the libraries used by mod-xslt2, some global variables allocated in TSD have been used (do 
 not complain to me). This parameter disables libmodxslt multithreading support (the usage
 of a TSD to keep global variables).
@@ -372,14 +372,14 @@ of a TSD to keep global variables).
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">--disable-extensions</Emphasis> mod-xslt2 makes available some xslt extensions,
+<Emphasis Remap="bf">--disable-extensions</Emphasis> mod-xslt2 makes available some xslt extensions,
 useful for web programmers. Compiling mod-xslt2 with this parameter disables those extensions.
 </Para>
 </ListItem>
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">--enable-libxslt-hack</Emphasis> libmodxslt sometimes calls error handlers with
+<Emphasis Remap="bf">--enable-libxslt-hack</Emphasis> libmodxslt sometimes calls error handlers with
 the wrong descriptors. Enabling this option, will provide one more layer
 of protection against this kind of error in libxslt (that, at time of
 writing, has not been corrected by the authors). Another solution is
@@ -389,7 +389,7 @@ to patch the library to avoid the problem. Please read ``README.Patches''.
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">--enable-fallback-wraparound</Emphasis> once you get the errors working correctly,
+<Emphasis Remap="bf">--enable-fallback-wraparound</Emphasis> once you get the errors working correctly,
 if you use the ``fallback'' tag, you may see strange messages flooding your
 logs. This option tells mod-xslt2 to remove fallback nodes at least when used
 inside mod-xslt2 extension elements, to reduce the number of those messages.
@@ -400,7 +400,7 @@ read ``README.Patches''.
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">--enable-exslt</Emphasis> (obsolete, available only for mod-xslt &lt; 1.3.9)
+<Emphasis Remap="bf">--enable-exslt</Emphasis> (obsolete, available only for mod-xslt &lt; 1.3.9)
 enable exslt extensions for libxslt. Default is disabled.
 If you need or want to use the advanced string operators, remember to enable this option.
 </Para>
@@ -409,7 +409,7 @@ If you need or want to use the advanced string operators, remember to enable thi
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">--disable-exslt</Emphasis> (available starting with mod-xslt 1.3.9) disable 
+<Emphasis Remap="bf">--disable-exslt</Emphasis> (available starting with mod-xslt 1.3.9) disable 
 exslt extensions for libxslt. Default is enabled.
 </Para>
 </ListItem>
@@ -418,7 +418,7 @@ exslt extensions for libxslt. Default is enabled.
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">--disable-xinclude</Emphasis> disable modxslt usage of xinclude. Default is enabled.
+<Emphasis Remap="bf">--disable-xinclude</Emphasis> disable modxslt usage of xinclude. Default is enabled.
 If you want to disable xinclude or maintain backward compatibility, you are free to disable xinclude.
 </Para>
 </ListItem>
@@ -426,7 +426,7 @@ If you want to disable xinclude or maintain backward compatibility, you are free
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">--with-sapi=apache1|apache2|none</Emphasis> allows you to specify for which web server (sapi) 
+<Emphasis Remap="bf">--with-sapi=apache1|apache2|none</Emphasis> allows you to specify for which web server (sapi) 
 to compile mod-xslt2. Currently, you can specify ``apache1'' for apache version 1.3.x,
 ``apache2'' for apache version &gt; 2.x.44, ``apache'' to enable apache
 version autodetection or ``none'' to compile only mod-xslt2 utilities and libraries. 
@@ -435,7 +435,7 @@ More sapi modules are currently being developed.
 </ListItem>
 <ListItem>
 <Para>
-<Emphasis remap="bf">--with-xml2-config=path</Emphasis> allows you to specify where the libxml2 
+<Emphasis Remap="bf">--with-xml2-config=path</Emphasis> allows you to specify where the libxml2 
 ``xml2-config'' script is located. If not specifyed, the first one found in the search path will be
 used. As an example, you could specify something like:
 ``--with-xml2-config=/usr/local/libxml2-2.5.57/bin/xml2-config''
@@ -450,7 +450,7 @@ packages (rpm &amp; deb). If you don't know where it is, you can run ``locate xm
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">--with-xslt-config=path</Emphasis> allows you to specify where the ``xslt-config'' script
+<Emphasis Remap="bf">--with-xslt-config=path</Emphasis> allows you to specify where the ``xslt-config'' script
 is located. If not specifyed, the first one found in the search path will be
 used.
 </Para>
@@ -458,10 +458,10 @@ used.
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">--with-pcre-config=path</Emphasis> allows you to specify where the ``pcre-config'' script
+<Emphasis Remap="bf">--with-pcre-config=path</Emphasis> allows you to specify where the ``pcre-config'' script
 is located. If not specifyed, the first one found in the search path will be
 used. If not found, support for ``Perl Compatible Regular Expressions'' will
-be <Emphasis remap="bf">disabled</Emphasis>.
+be <Emphasis Remap="bf">disabled</Emphasis>.
 </Para>
 </ListItem>
 
@@ -483,7 +483,7 @@ be <Emphasis remap="bf">disabled</Emphasis>.
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">--with-apxs</Emphasis> allows you to specify the ``apxs'' that should be used.
+<Emphasis Remap="bf">--with-apxs</Emphasis> allows you to specify the ``apxs'' that should be used.
 By default, the first ``apxs'' found in the ``PATH'' or in ``/usr/bin'',
 ``/usr/local/bin'', ``/usr/local/apache/bin'' is used. If you have
 no apxs on your system, you probably don't have apache headers (or the
@@ -508,7 +508,7 @@ DESTDIR environment variabe as usual.
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">--with-apxs</Emphasis> allows you to specify the ``apxs'' that should be used.
+<Emphasis Remap="bf">--with-apxs</Emphasis> allows you to specify the ``apxs'' that should be used.
 By default, the first ``apxs'' found in the ``PATH'' or in ``/usr/bin'',
 ``/usr/local/bin'', ``/usr/local/apache/bin'' is used. If you have
 no apxs on your system, you probably don't have apache headers (or the
@@ -518,14 +518,14 @@ package apache-dev) installed correctly.
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">--with-apr-config</Emphasis> allows you to specify the ``apr-config'' script that
+<Emphasis Remap="bf">--with-apr-config</Emphasis> allows you to specify the ``apr-config'' script that
 should be used. By default, the first ``apr-config'' found is used.
 </Para>
 </ListItem>
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">--with-apu-config</Emphasis> allows you to specify the ``apu-config'' script that
+<Emphasis Remap="bf">--with-apu-config</Emphasis> allows you to specify the ``apu-config'' script that
 should be used. By default, the first ``apu-config'' found is used.
 </Para>
 </ListItem>
@@ -568,7 +568,7 @@ When requesting a document to an Apache 1.3 server through your browser, apache
 <ListItem>
 
 <Para>
-takes the requested URL and remaps it to a ``file location'', to a path
+takes the requested URL and Remaps it to a ``file location'', to a path
 on the local file system
 (as an example, ``http://www.masobit.net/foo/bar.xml'' may become 
 ``/opt/array-00/customers/masobit.net/http/bar.xml'')
@@ -598,7 +598,7 @@ wire'' back to the browser.
 </OrderedList>
 
 As an example, when you request a .php file with something like ``www.masobit.net/info.php'',
-on our server the first step remaps ``www.masobit.net/info.php'' in something
+on our server the first step Remaps ``www.masobit.net/info.php'' in something
 like ``/opt/array-00/customers/masobit.net/http/info.php''. Apache then looks in the
 mime.magic or mime.types (or the AddType directives) for the mime type of the file. 
 Provided the content of those files and those directives are correct, apache will decide 
@@ -628,7 +628,7 @@ One good way to let mod-xslt2 handle a request is to use the ``AddHandler'' or
 
 <Para>
 Using those directives you can tell apache you want a particular kind of file 
-being handled <Emphasis remap="it">directly</Emphasis> by mod-xslt2. For example, 
+being handled <Emphasis Remap="it">directly</Emphasis> by mod-xslt2. For example, 
 you could use something like:
 
 <Screen>
@@ -655,7 +655,7 @@ you could use something like:
 </Screen>
 
 AddHandler and SetHandler are the ``fastest'' way to use mod-xslt2. The drawback is
-that <Emphasis remap="bf">this method won't work if you set mod-xslt2 up to handle .php files, since they won't be 
+that <Emphasis Remap="bf">this method won't work if you set mod-xslt2 up to handle .php files, since they won't be 
 parsed</Emphasis> by the php module. Infact, as explained previously, apache will call mod-xslt2 instead
 of ``libphp4.so'' to send the document back to the browser.
 </Para>
@@ -673,14 +673,14 @@ to use the mechanism provided by mod-xslt2.
 <Para>
 This mechanism has nothing to do with the mechanism described in the previous sections
 and does not conflict with it. Keep in mind, however, that the following directives need
-to be used <Emphasis remap="bf">only if you want to parse dynamically generated files</Emphasis>, like php, perl or
+to be used <Emphasis Remap="bf">only if you want to parse dynamically generated files</Emphasis>, like php, perl or
 cgi.
 </Para>
 
 <Para>
 Before anything else, you need to enable the XSLT Engine for a given directory, using
 the ``XSLTEngine &lt;on|off&gt;'' directive. Once enabled, mod-xslt will be called
-for <Emphasis remap="bf">every</Emphasis> file in the given directory that apache will 
+for <Emphasis Remap="bf">every</Emphasis> file in the given directory that apache will 
 be required to serve.
 </Para>
 
@@ -698,7 +698,7 @@ text/xml (note: on most systems, text/xml is application/xml...).
 <ListItem>
 
 <Para>
-check the mime type only of <Emphasis remap="it">some</Emphasis> requests, and parse them only if they
+check the mime type only of <Emphasis Remap="it">some</Emphasis> requests, and parse them only if they
 were of type text/xml.
 </Para>
 </ListItem>
@@ -812,24 +812,24 @@ or look to other LoadModule directives in your configuration files.
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">XSLTEngine &lt;on|off&gt;</Emphasis> per directory, per file, per virtual host or in global 
+<Emphasis Remap="bf">XSLTEngine &lt;on|off&gt;</Emphasis> per directory, per file, per virtual host or in global 
 configuration file, allows you to enable or disable XSLT extra features.
 </Para>
 </ListItem>
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">XSLTTmpDir &lt;directory&gt;</Emphasis> per directory, per file, per virtual host or in
+<Emphasis Remap="bf">XSLTTmpDir &lt;directory&gt;</Emphasis> per directory, per file, per virtual host or in
 global configuration file, allows you to specify which directory mod-xslt2 will use to
 create temporary files. By default, ``/tmp/mod-xslt2'' is used. Keep in mind that 
 ``/tmp/mod-xslt2'' must exist in your system. Path must be absolute: ``/tmp'' good,
-``/var/tmp'' good, ``tmp'' <Emphasis remap="bf">bad</Emphasis>, ``./tmp'' <Emphasis remap="bf">bad</Emphasis>.
+``/var/tmp'' good, ``tmp'' <Emphasis Remap="bf">bad</Emphasis>, ``./tmp'' <Emphasis Remap="bf">bad</Emphasis>.
 </Para>
 </ListItem>
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">XSLTAddFilter &lt;MimeType&gt;</Emphasis> per directory, per file, per virtual host, or
+<Emphasis Remap="bf">XSLTAddFilter &lt;MimeType&gt;</Emphasis> per directory, per file, per virtual host, or
 in global configuration file, tells mod-xslt2 to parse files of the given 
 mime type as if they were xml files. Keep in mind that the file is parsed only
 if the content type is set to ``text/xml'' or ``application/xml''.
@@ -838,7 +838,7 @@ if the content type is set to ``text/xml'' or ``application/xml''.
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">XSLTDelFilter &lt;MimeType&gt;</Emphasis> per directory, per file, per virtual host, or
+<Emphasis Remap="bf">XSLTDelFilter &lt;MimeType&gt;</Emphasis> per directory, per file, per virtual host, or
 in global configuration file, tells mod-xslt2 not to parse files of the given mime
 type anymore. This is needed since mod-xslt2 per directory configurations are hinerited
 from parent directories.
@@ -847,7 +847,7 @@ from parent directories.
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">XSLTAddForce &lt;MimeType&gt;</Emphasis> per directory, per file, per virtual host, or
+<Emphasis Remap="bf">XSLTAddForce &lt;MimeType&gt;</Emphasis> per directory, per file, per virtual host, or
 in global configuration file, tells mod-xslt2 to parse files of the given 
 mime type as if they were xml files, independently from the resulting content type.
 </Para>
@@ -855,7 +855,7 @@ mime type as if they were xml files, independently from the resulting content ty
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">XSLTDelForce &lt;MimeType&gt;</Emphasis> per directory, per file, per virtual host, or
+<Emphasis Remap="bf">XSLTDelForce &lt;MimeType&gt;</Emphasis> per directory, per file, per virtual host, or
 in global configuration file, tells mod-xslt2 not to parse files of the given mime
 type anymore. This is needed since mod-xslt2 per directory configurations are hinerited
 from parent directories.
@@ -864,7 +864,7 @@ from parent directories.
 
 <ListItem>
 <Para>
-<Emphasis remap="bf">XSLTSetStylesheet &lt;MimeType&gt; &lt;Stylesheet&gt;</Emphasis> per directory, per file,
+<Emphasis Remap="bf">XSLTSetStylesheet &lt;MimeType&gt; &lt;Stylesheet&gt;</Emphasis> per directory, per file,
 per virtual host or in global configuration file, tells mod-xslt2 to use the given stylesheet
 for all files of the given MimeType, independently from any ``&lt;xml-stylesheet...'' or processing
 instruction available into the document. The MimeType is usually something like text/xml or application/xml,
@@ -874,7 +874,7 @@ telling all such documents need to be transformed using the specified stylesheet
 
 <ListItem>
 <Para>
-<Emphasis remap="bf">XSLTUnSetStylesheet &lt;MimeType&gt; &lt;Stylesheet&gt;</Emphasis> per directory, per file,
+<Emphasis Remap="bf">XSLTUnSetStylesheet &lt;MimeType&gt; &lt;Stylesheet&gt;</Emphasis> per directory, per file,
 per virtual host or in global configuration file, tells mod-xslt2 to forget about a previous
 ``XSLTSetStylesheet''. This is needed since mod-xslt2 per directory configurations are hinerited from
 parent directories. 
@@ -884,7 +884,7 @@ parent directories.
 
 <ListItem>
 <Para>
-<Emphasis remap="bf">XSLTDefaultStylesheet &lt;MimeType&gt; &lt;Stylesheet&gt;</Emphasis> per directory, per file,
+<Emphasis Remap="bf">XSLTDefaultStylesheet &lt;MimeType&gt; &lt;Stylesheet&gt;</Emphasis> per directory, per file,
 per virtual host or in global configuration file, tells mod-xslt2 that, in case an xml
 file does not contain any ``&lt;xml-stylesheet...'' or ``&lt;xslt-stylesheet...'', for
 the given MimeType the specified xslt stylesheet should be used. Same things as for XSLTSetStylesheet.
@@ -893,7 +893,7 @@ the given MimeType the specified xslt stylesheet should be used. Same things as 
 
 <ListItem>
 <Para>
-<Emphasis remap="bf">XSLTNoDefaultStylesheet &lt;MimeType&gt;</Emphasis> per directory, per file,
+<Emphasis Remap="bf">XSLTNoDefaultStylesheet &lt;MimeType&gt;</Emphasis> per directory, per file,
 per virtual host or in global configuration file, tells mod-xslt2 that to forget about
 a previous ``XSLTDefaultStylesheet''. This is needed since mod-xslt2 per directory configurations 
 are hinerited from parent directories.
@@ -901,7 +901,7 @@ are hinerited from parent directories.
 </ListItem>
 <ListItem>
 <Para>
-<Emphasis remap="bf">XSLTUnlink &lt;on|off&gt;</Emphasis> per directory, per file, per virtual host or in
+<Emphasis Remap="bf">XSLTUnlink &lt;on|off&gt;</Emphasis> per directory, per file, per virtual host or in
 global configuration file, tells mod-xslt2 that temporary files are not to be deleted.
 This option was provided to simplify debugging of newly created documents: combined
 with a per directory ``XSLTTmpDir'' and using dynamic documents provided by php or
@@ -913,7 +913,7 @@ log.
 
 <ListItem>
 <Para>
-<Emphasis remap="bf">XSLTParam "variable" "value"</Emphasis> per directory, per file, per virtual host or in
+<Emphasis Remap="bf">XSLTParam "variable" "value"</Emphasis> per directory, per file, per virtual host or in
 global configuration file, tells mod-xslt2 to pass the given ``variable'' to the stylesheet
 with the indicated ``value''. Those variables are accessible from the stylesheet using the mod-xslt2 extension 
 value-of, with something like: &lt;mxslt:value-of select="$MODXSLT[variable]" ... look to the variable 
@@ -923,7 +923,7 @@ substitution paragraph for more details...
 
 <ListItem>
 <Para>
-<Emphasis remap="bf">XSLTAddRule "stylesheet" "condition"</Emphasis> per directory, per file, per virtual host or in
+<Emphasis Remap="bf">XSLTAddRule "stylesheet" "condition"</Emphasis> per directory, per file, per virtual host or in
 global configuration file, tells mod-xslt2 to use the specified stylesheet if all conditions specified in ``condition'' 
 are met. Any modxslt-stylesheet or xml-stylesheet contained in the document is then ignored, unless the selected stylesheet
 is not loadable or does not work, in which case the rule is ignored.
@@ -932,14 +932,14 @@ is not loadable or does not work, in which case the rule is ignored.
 
 <ListItem>
 <Para>
-<Emphasis remap="bf">XSLTDelRule "stylesheet"</Emphasis> per directory, per file, per virtual host or in
+<Emphasis Remap="bf">XSLTDelRule "stylesheet"</Emphasis> per directory, per file, per virtual host or in
 global configuration file, tells mod-xslt2 to forget about the rule regarding the specified stylesheet 
 </Para>
 </ListItem>
 
 <ListItem>
 <Para>
-<Emphasis remap="bf">XSLTDebug category, category, category, ...</Emphasis> per directory, per file, per virtual host or in
+<Emphasis Remap="bf">XSLTDebug category, category, category, ...</Emphasis> per directory, per file, per virtual host or in
 global configuration file, increases verbosity of mod-xslt2 logging. Within mod-xslt, each message is tied to one or more
 categories. When XSLTDebug is specified, all messages whose categories have been specified in XSLTDebug are printed, and
 usually stored in error.log. Categories are: "config" (parsing of configurations), "debug" (useful when debugging with gdb
@@ -954,7 +954,7 @@ enable all debugging messages (probably too verbose for normal usage).
 
 <ListItem>
 <Para>
-<Emphasis remap="bf">XSLTDebugMask &lt;number&gt;</Emphasis> per directory, per file, per virtual host or in
+<Emphasis Remap="bf">XSLTDebugMask &lt;number&gt;</Emphasis> per directory, per file, per virtual host or in
 global configuration file, equivalent to XSLTDebug. The only difference is that instead of specifying categories
 by name, you can use an integer. The integer represents the bitwise OR of the values corresponding to each category.
 
@@ -966,7 +966,7 @@ categories and parameters.
 
 <ListItem>
 <Para>
-<Emphasis remap="bf">XSLTDisableSignature&lt;number&gt;</Emphasis> per directory, per file, per virtual host or in
+<Emphasis Remap="bf">XSLTDisableSignature&lt;number&gt;</Emphasis> per directory, per file, per virtual host or in
 global configuration file, doesn't do anything, only for backward compatibility.
 </Para>
 </ListItem>
@@ -1331,9 +1331,9 @@ a line like the following in your httpd.conf (or apache.conf):
 <Screen>
   LoadModule mxslt_module /usr/lib/apache2/modules/mod_xslt.so
 </Screen>
-  Where <filename>/usr/lib/apache2/</filename> is the path where all your
-modules are kept. Note that on <Emphasis remap="bf">most</Emphasis> systems,
-apache2 modules are kept in <filename>/usr/local/libexec</filename>, so
+  Where <Filename>/usr/lib/apache2/</Filename> is the path where all your
+modules are kept. Note that on <Emphasis Remap="bf">most</Emphasis> systems,
+apache2 modules are kept in <Filename>/usr/local/libexec</Filename>, so
 the correct LoadModule directive should be:
 <Screen>
   LoadModule mxslt_module /usr/local/libexec/mod_xslt.so
@@ -1355,12 +1355,12 @@ you want mod-xslt to be used. To do so, you can use one of the following directi
 
 <ItemizedList>
 <ListItem><Para>
-  <Emphasis remap="bf">AddOutputFilter mod-xslt &lt;extension&gt;...</Emphasis> 
+  <Emphasis Remap="bf">AddOutputFilter mod-xslt &lt;extension&gt;...</Emphasis> 
   tells apache we want mod-xslt to parse all files with extension ``extension''.
 </Para></ListItem>
 
 <ListItem><Para>
-  <Emphasis remap="bf">AddOutputFilterByType mod-xslt &lt;mime-type&gt;...</Emphasis> 
+  <Emphasis Remap="bf">AddOutputFilterByType mod-xslt &lt;mime-type&gt;...</Emphasis> 
   tells apache we want mod-xslt to parse all files with the specified mime-type.
   Note that the mime-type should indicate which files we want mod-xslt to parse.
   Most common values are text/xml or application/xml, depending upon the configuration
@@ -1368,7 +1368,7 @@ you want mod-xslt to be used. To do so, you can use one of the following directi
 </Para></ListItem>
 
 <ListItem><Para>
-  <Emphasis remap="bf">SetOutputFilter mod-xslt</Emphasis> 
+  <Emphasis Remap="bf">SetOutputFilter mod-xslt</Emphasis> 
   tells apache that we want all files in a given directory or location or virtual
   host to be parsed by mod-xslt.
 </Para></ListItem>
@@ -1411,7 +1411,7 @@ to the apache manual, http://httpd.apache.org/.
 <Para>
   It is important to note that it is possible to block mod-xslt from parsing
   a particular document by using the SetEnvIf parameter and the SetEnv family
-  of configuration directives. mod-xslt will infact <Emphasis remap="bf">NOT</Emphasis>
+  of configuration directives. mod-xslt will infact <Emphasis Remap="bf">NOT</Emphasis>
   perform any transformation if the ``no-xslt'' environment variable is set.
 </Para>
 </Sect3>
@@ -1425,7 +1425,7 @@ to the apache manual, http://httpd.apache.org/.
 
 <ListItem>
 <Para>
-<Emphasis remap="bf">XSLTSetStylesheet &lt;MimeType&gt; &lt;Stylesheet&gt;</Emphasis> per directory, per file,
+<Emphasis Remap="bf">XSLTSetStylesheet &lt;MimeType&gt; &lt;Stylesheet&gt;</Emphasis> per directory, per file,
 per virtual host or in global configuration file, tells mod-xslt2 to use the given stylesheet
 for all files of the given MimeType, independently from any ``&lt;xml-stylesheet...'' or processing
 instruction available into the document.
@@ -1434,7 +1434,7 @@ instruction available into the document.
 
 <ListItem>
 <Para>
-<Emphasis remap="bf">XSLTUnSetStylesheet &lt;MimeType&gt; &lt;Stylesheet&gt;</Emphasis> per directory, per file,
+<Emphasis Remap="bf">XSLTUnSetStylesheet &lt;MimeType&gt; &lt;Stylesheet&gt;</Emphasis> per directory, per file,
 per virtual host or in global configuration file, tells mod-xslt2 to forget about a previous
 ``XSLTSetStylesheet''. This is needed since mod-xslt2 per directory configurations are hinerited from
 parent directories.
@@ -1444,7 +1444,7 @@ parent directories.
 
 <ListItem>
 <Para>
-<Emphasis remap="bf">XSLTDefaultStylesheet &lt;MimeType&gt; &lt;Stylesheet&gt;</Emphasis> per directory, per file,
+<Emphasis Remap="bf">XSLTDefaultStylesheet &lt;MimeType&gt; &lt;Stylesheet&gt;</Emphasis> per directory, per file,
 per virtual host or in global configuration file, tells mod-xslt2 that, in case an xml
 file does not contain any ``&lt;xml-stylesheet...'' or ``&lt;xslt-stylesheet...'', for
 the given MimeType the specified xslt stylesheet should be used.
@@ -1453,7 +1453,7 @@ the given MimeType the specified xslt stylesheet should be used.
 
 <ListItem>
 <Para>
-<Emphasis remap="bf">XSLTNoDefaultStylesheet &lt;MimeType&gt;</Emphasis> per directory, per file,
+<Emphasis Remap="bf">XSLTNoDefaultStylesheet &lt;MimeType&gt;</Emphasis> per directory, per file,
 per virtual host or in global configuration file, tells mod-xslt2 that to forget about
 a previous ``XSLTDefaultStylesheet''. This is needed since mod-xslt2 per directory configurations 
 are hinerited from parent directories.
@@ -1462,7 +1462,7 @@ are hinerited from parent directories.
 
 <ListItem>
 <Para>
-<Emphasis remap="bf">XSLTParam "variable" "value"</Emphasis> per directory, per file, per virtual host or in
+<Emphasis Remap="bf">XSLTParam "variable" "value"</Emphasis> per directory, per file, per virtual host or in
 global configuration file, tells mod-xslt2 to pass the given ``variable'' to the stylesheet
 with the indicated ``value''. Those variables are accessible from the stylesheet using the mod-xslt2 extension 
 value-of, with something like: &lt;mxslt:value-of select="$MODXSLT[variable]" ... look to the variable 
@@ -1472,7 +1472,7 @@ substitution paragraph for more details...
 
 <ListItem>
 <Para>
-<Emphasis remap="bf">XSLTAddRule "stylesheet" "condition"</Emphasis> per directory, per file, per virtual host or in
+<Emphasis Remap="bf">XSLTAddRule "stylesheet" "condition"</Emphasis> per directory, per file, per virtual host or in
 global configuration file, tells mod-xslt2 to use the specified stylesheet if all conditions specified in ``condition'' 
 are met. Any modxslt-stylesheet or xml-stylesheet contained in the document is then ignored, unless the selected stylesheet
 is not loadable or does not work, in which case the rule is ignored.
@@ -1481,14 +1481,14 @@ is not loadable or does not work, in which case the rule is ignored.
 
 <ListItem>
 <Para>
-<Emphasis remap="bf">XSLTDelRule "stylesheet"</Emphasis> per directory, per file, per virtual host or in
+<Emphasis Remap="bf">XSLTDelRule "stylesheet"</Emphasis> per directory, per file, per virtual host or in
 global configuration file, tells mod-xslt2 to forget about the rule regarding the specified stylesheet 
 </Para>
 </ListItem>
 
 <ListItem>
 <Para>
-<Emphasis remap="bf">XSLTDebug category, category, category, ...</Emphasis> per directory, per file, per virtual host or in
+<Emphasis Remap="bf">XSLTDebug category, category, category, ...</Emphasis> per directory, per file, per virtual host or in
 global configuration file, tells mod-xslt2 to print (in the log files) the debugging messages corresponding to the specified categories. Note that
 any given message can be part of more than one category. It will be outputted only if all the categories are to be outputted according to this
 parameter. Currently defined categories are: config (parsing of configurations), debug (useful when running gdb, debugging crashes or trying to find
@@ -1501,7 +1501,7 @@ parsing and handling of variables), verbose0, verbose1, verbose2 (to enable outp
 
 <ListItem>
 <Para>
-<Emphasis remap="bf">XSLTDebugMask &lt;number&gt;</Emphasis> per directory, per file, per virtual host or in
+<Emphasis Remap="bf">XSLTDebugMask &lt;number&gt;</Emphasis> per directory, per file, per virtual host or in
 global configuration file, tells mod-xslt2 to print (in the log files) the debugging messages corresponding to the specified categories. This is exactly like
 the XSLTDebug parameter, but allows to specify which messages to output as an integer. The integer represents the OR of the integer value corresponding to each
 category whose output is desired. Note that internally mod-xslt maps every debug category to an int, and every category is mapped to a ``name'', as indicated
@@ -1512,7 +1512,7 @@ been assigned a str name yet. Have a look into modxslt0/modxslt-debug.h, mxslt_d
 
 <ListItem>
 <Para>
-<Emphasis remap="bf">XSLTDisableSignature&lt;number&gt;</Emphasis> per directory, per file, per virtual host or in
+<Emphasis Remap="bf">XSLTDisableSignature&lt;number&gt;</Emphasis> per directory, per file, per virtual host or in
 global configuration file, doesn't do anything, for backward compatibility only.
 </Para>
 </ListItem>
@@ -1530,15 +1530,15 @@ global configuration file, doesn't do anything, for backward compatibility only.
     In order to use php4 with apache2, you can compile it using
     two different SAPI:
     <ItemizedList>
-      <Listitem><Para>
-        <Emphasis remap="bf">apache2filter</Emphasis> - where php4 is
+      <ListItem><Para>
+        <Emphasis Remap="bf">apache2filter</Emphasis> - where php4 is
 	  used as an Apache 2.x.x FILTER
-      </Para></Listitem>
+      </Para></ListItem>
 
-      <Listitem><Para>
-        <Emphasis remap="bf">apache2handler</Emphasis> - where php4 is
+      <ListItem><Para>
+        <Emphasis Remap="bf">apache2handler</Emphasis> - where php4 is
 	  used as an Apache 2.x.x HANDLER
-      </Para></Listitem>
+      </Para></ListItem>
     </ItemizedList>
   </Para>
   <Para>
@@ -1601,7 +1601,7 @@ xslt file by mod-xslt2:
 
 <ListItem>
 <Para>
-<Emphasis remap="it">modxslt-interface</Emphasis> - holds the interface version being used
+<Emphasis Remap="it">modxslt-interface</Emphasis> - holds the interface version being used
 by mod-xslt2. It is changed every time a new variable is added
 to this list and every time a new element is introduced 
 (see section element extensions). Variables are not
@@ -1615,7 +1615,7 @@ is modxslt-conf-xinclude.
 
 <ListItem>
 <Para>
-<Emphasis remap="it">modxslt-sapi</Emphasis> - name of the sapi which is now parsing
+<Emphasis Remap="it">modxslt-sapi</Emphasis> - name of the sapi which is now parsing
 the xml document. It is usually set by the application making
 use of libmodxslt0.
 </Para>
@@ -1623,87 +1623,87 @@ use of libmodxslt0.
 
 <ListItem>
 <Para>
-<Emphasis remap="it">modxslt-name</Emphasis> - name of mod-xslt2.
+<Emphasis Remap="it">modxslt-name</Emphasis> - name of mod-xslt2.
 </Para>
 </ListItem>
 
 <ListItem>
 <Para>
-<Emphasis remap="it">modxslt-handler</Emphasis> - name of handler being used by mod-xslt2.
+<Emphasis Remap="it">modxslt-handler</Emphasis> - name of handler being used by mod-xslt2.
 </Para>
 </ListItem>
 
 <ListItem>
 <Para>
-<Emphasis remap="it">modxslt-namespace</Emphasis> - URL of the namespace for mod-xslt2 extensions.
+<Emphasis Remap="it">modxslt-namespace</Emphasis> - URL of the namespace for mod-xslt2 extensions.
 </Para>
 </ListItem>
 
 <ListItem>
 <Para>
-<Emphasis remap="it">modxslt-conf-libpcre</Emphasis> - has value ``true'' if mod-xslt2 was compiled with libpcre support. 
+<Emphasis Remap="it">modxslt-conf-libpcre</Emphasis> - has value ``true'' if mod-xslt2 was compiled with libpcre support. 
 </Para>
 </ListItem>
 
 <ListItem>
 <Para>
-<Emphasis remap="it">modxslt-conf-exslt</Emphasis> - has value ``true'' if mod-xslt2 was compiled with exslt support. 
+<Emphasis Remap="it">modxslt-conf-exslt</Emphasis> - has value ``true'' if mod-xslt2 was compiled with exslt support. 
 </Para>
 </ListItem>
 
 <ListItem>
 <Para>
-<Emphasis remap="it">modxslt-conf-xinclude</Emphasis> - introduced in interface version 2 - has value 
+<Emphasis Remap="it">modxslt-conf-xinclude</Emphasis> - introduced in interface version 2 - has value 
 ``true'' if mod-xslt2 was compiled with xinclude support. 
 </Para>
 </ListItem>
 
 <ListItem>
 <Para>
-<Emphasis remap="it">modxslt-conf-extensions</Emphasis> - has value ``true'' if mod-xslt2 was compiled to provide extension 
+<Emphasis Remap="it">modxslt-conf-extensions</Emphasis> - has value ``true'' if mod-xslt2 was compiled to provide extension 
 elements (see dedicated section)
 </Para>
 </ListItem>
 
 <ListItem>
 <Para>
-<Emphasis remap="it">modxslt-conf-libxmlthreads</Emphasis> - has value ``true'' if libxml supports threads.
+<Emphasis Remap="it">modxslt-conf-libxmlthreads</Emphasis> - has value ``true'' if libxml supports threads.
 </Para>
 </ListItem>
 
 <ListItem>
 <Para>
-<Emphasis remap="it">modxslt-conf-libxslthack</Emphasis> - has value ``true'' if configure was given the parameter ``--enable-libxslt-hack''
+<Emphasis Remap="it">modxslt-conf-libxslthack</Emphasis> - has value ``true'' if configure was given the parameter ``--enable-libxslt-hack''
 </Para>
 </ListItem>
 
 <ListItem>
 <Para>
-<Emphasis remap="it">modxslt-conf-fallbackwrap</Emphasis> - has value ``true'' if configure was given the parameter ``--enable-fallback-wraparound''
+<Emphasis Remap="it">modxslt-conf-fallbackwrap</Emphasis> - has value ``true'' if configure was given the parameter ``--enable-fallback-wraparound''
 </Para>
 </ListItem>
 
 <ListItem>
 <Para>
-<Emphasis remap="it">modxslt-version</Emphasis> - its value is the current version of the mod-xslt2 being used (example: "1.2.3")
+<Emphasis Remap="it">modxslt-version</Emphasis> - its value is the current version of the mod-xslt2 being used (example: "1.2.3")
 </Para>
 </ListItem>
 
 <ListItem>
 <Para>
-<Emphasis remap="it">modxslt-version-major</Emphasis> - its value is the first digit of the version (in the example above, "1")
+<Emphasis Remap="it">modxslt-version-major</Emphasis> - its value is the first digit of the version (in the example above, "1")
 </Para>
 </ListItem>
 
 <ListItem>
 <Para>
-<Emphasis remap="it">modxslt-version-minor</Emphasis> - its value is the second digit of the version (in the example above, "2")
+<Emphasis Remap="it">modxslt-version-minor</Emphasis> - its value is the second digit of the version (in the example above, "2")
 </Para>
 </ListItem>
 
 <ListItem>
 <Para>
-<Emphasis remap="it">modxslt-version-patchlevel</Emphasis> - its value is the third digit of the version (in the example above, "3")
+<Emphasis Remap="it">modxslt-version-patchlevel</Emphasis> - its value is the third digit of the version (in the example above, "3")
 </Para>
 </ListItem>
 </ItemizedList>
@@ -1747,7 +1747,7 @@ tags:
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">header-set</Emphasis> - to set an output header. The only valid attribute
+<Emphasis Remap="bf">header-set</Emphasis> - to set an output header. The only valid attribute
 is ``name'', you can use to specify the name of the output header you
 want to set.
 </Para>
@@ -1755,7 +1755,7 @@ want to set.
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">value-of</Emphasis> - to fetch a mod-xslt2 specific variable. The only valid
+<Emphasis Remap="bf">value-of</Emphasis> - to fetch a mod-xslt2 specific variable. The only valid
 attribute is ``select''. The value of the ``select'' attribute will
 be parsed as a ``mod-xslt2'' expression, which follows completely different
 rules than XPath expressions.
@@ -1980,7 +1980,7 @@ look like ``arrays''. The main arrays available are:
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">MODXSLT</Emphasis> - holds the same variables as passed as
+<Emphasis Remap="bf">MODXSLT</Emphasis> - holds the same variables as passed as
 parameters to the xslt parser (described in
 the previous sections). Those variables hold informations
 like how mod-xslt2 was compiled or what features are enabled
@@ -1989,14 +1989,14 @@ like how mod-xslt2 was compiled or what features are enabled
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">GET</Emphasis> - contains variables passed to your xml file
+<Emphasis Remap="bf">GET</Emphasis> - contains variables passed to your xml file
 as GET parameters (http get)
 </Para>
 </ListItem>
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">HEADER</Emphasis> - contains the headers passed to mod-xslt2
+<Emphasis Remap="bf">HEADER</Emphasis> - contains the headers passed to mod-xslt2
 by your web server (headers that, in turn, were given
 by the client)
 </Para>
@@ -2705,40 +2705,40 @@ In any case, the following options may be specified:
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">i</Emphasis> - using this option, case insensitive matching is performed
+<Emphasis Remap="bf">i</Emphasis> - using this option, case insensitive matching is performed
 </Para>
 </ListItem>
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">e</Emphasis> - using this option, the ``$'' matches only the end of the string and does
+<Emphasis Remap="bf">e</Emphasis> - using this option, the ``$'' matches only the end of the string and does
 not match any newline the string may contain
 </Para>
 </ListItem>
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">a</Emphasis> - using this option, the match must be ``anchored'', which means it must match
+<Emphasis Remap="bf">a</Emphasis> - using this option, the match must be ``anchored'', which means it must match
 from the beginning to the end of the string
 </Para>
 </ListItem>
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">s</Emphasis> - using this option, the ``.'' matches also newlines 
+<Emphasis Remap="bf">s</Emphasis> - using this option, the ``.'' matches also newlines 
 </Para>
 </ListItem>
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">x</Emphasis> - using this option, spaces inside a regular expression are ignored unless
+<Emphasis Remap="bf">x</Emphasis> - using this option, spaces inside a regular expression are ignored unless
 they are escaped
 </Para>
 </ListItem>
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">X</Emphasis> - using this option, you will enable libpcre features not compatible with perl.
+<Emphasis Remap="bf">X</Emphasis> - using this option, you will enable libpcre features not compatible with perl.
 At time of writing, enabling this option will cause an error every time an unknown character
 is escaped (prepended with a ``\'')
 </Para>
@@ -2746,20 +2746,20 @@ is escaped (prepended with a ``\'')
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">m</Emphasis> - using this option, you will enable multiline matching
+<Emphasis Remap="bf">m</Emphasis> - using this option, you will enable multiline matching
 </Para>
 </ListItem>
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">y</Emphasis> - this option ``inverts the greediness of the quantifiers, so that they are not greedy by
+<Emphasis Remap="bf">y</Emphasis> - this option ``inverts the greediness of the quantifiers, so that they are not greedy by
 default, bug become greedy if followed by ?'' (from pcreapi(3))
 </Para>
 </ListItem>
 <ListItem>
 
 <Para>
-<Emphasis remap="bf">u</Emphasis> - this option causes PCRE to consider both the pattern and the string as made of UTF-8 encoded
+<Emphasis Remap="bf">u</Emphasis> - this option causes PCRE to consider both the pattern and the string as made of UTF-8 encoded
 characters
 </Para>
 </ListItem>
@@ -2911,22 +2911,22 @@ there are a few things to keep in mind:
 <ListItem>
 
 <Para>
-a http URL <Emphasis remap="bf">must</Emphasis> start with ``http://''
+a http URL <Emphasis Remap="bf">must</Emphasis> start with ``http://''
 and could contain a port number, an username
-and a password, like in <filename>http://carlo%password@www.masobit.net:7568/file.php</filename>.
+and a password, like in <Filename>http://carlo%password@www.masobit.net:7568/file.php</Filename>.
 </Para>
 </ListItem>
 <ListItem>
 
 <Para>
-a ftp URL <Emphasis remap="bf">must</Emphasis> start with ``ftp://''
+a ftp URL <Emphasis Remap="bf">must</Emphasis> start with ``ftp://''
 and follow the same conventions as the http URL
 shown above.
 </Para>
 </ListItem>
 <ListItem>
 <Para>
-a file URL <Emphasis remap="bf">may</Emphasis> start with ``file://''
+a file URL <Emphasis Remap="bf">may</Emphasis> start with ``file://''
 or just be an absolute or relative path. If it
 starts with ``file://'', ``file://'' is removed
 from the URL and the remaining path is opened.
@@ -3504,7 +3504,7 @@ to make outgoing connections, if, for any reason, that connection
 comes back to your site, your apache is at risk: if we set
 up apache to handle at most 100 requests at a time 
 (100 children) and we get 100 requests for that page 
-<Emphasis remap="bf">at the same time</Emphasis>, mod-xslt2 
+<Emphasis Remap="bf">at the same time</Emphasis>, mod-xslt2 
 will not be able to connect to the remote host to fetch
 the stylesheet (no more children available), and will
 wait for an apache child to become available. However,
