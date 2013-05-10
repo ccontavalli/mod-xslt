@@ -1,0 +1,502 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>mod-xslt2 Setup and Usage</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="mod-xslt2 Users and Administrators Manual"
+HREF="index.html"><LINK
+REL="PREVIOUS"
+TITLE="Installation"
+HREF="x27.html"><LINK
+REL="NEXT"
+TITLE="Writing XML for mod-xslt2"
+HREF="x239.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>mod-xslt2 Users and Administrators Manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="x27.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="x239.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN157"
+>3. mod-xslt2 Setup and Usage</A
+></H1
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN159"
+>3.1. Apache 2.x.x</A
+></H2
+><P
+>Apache 2.x support is now considered stable (2.0, 2.2, ...), thanks to all
+the people who provided feedbacks on mod-xslt mailing lists.</P
+><P
+>  At time of writing, there is only one known issue about mod-xslt and apache 2.x.x:
+as a filter, it is not very easy for mod-xslt to return status pages different than
+those set by the handler (like 404 or 500 pages), and while it works with most document 
+types, it may not work with _all_ document types (depending on the handler providing the given type).</P
+><P
+>  For example, if a php4 script (where php4 is handled thanks to the php4 apache2handler
+sapi) outputs invalid xml code, mod-xslt tries to tell apache2 to output a 500 error
+page. However, the mod-xslt request is handled by the php4 handler and the connection is 
+instead dropped. Other handlers may have similar problems. If you encounter some, please
+report them to one of the mailing lists. At time of writing, I have no idea on how to correct
+this problem, beshide handling error documents by myself (in mod-xslt) or patching php4
+apache2handler. If anyone has suggestions, please contact me.</P
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN164"
+>3.1.1. Configuring Apache 2.x for mod-xslt</A
+></H3
+><P
+>  To use mod-xslt with apache 2.x.x, you just need to
+tell apache you want to use mod-xslt, by inserting
+a line like the following in your httpd.conf (or apache.conf):
+<PRE
+CLASS="SCREEN"
+>  LoadModule mxslt_module /usr/lib/apache2/modules/mod_xslt.so</PRE
+>
+  Where <TT
+CLASS="FILENAME"
+>/usr/lib/apache2/</TT
+> is the path where all your
+modules are kept. Note that on <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>most</I
+></SPAN
+> systems,
+apache2 modules are kept in <TT
+CLASS="FILENAME"
+>/usr/local/libexec</TT
+>, so
+the correct LoadModule directive should be:
+<PRE
+CLASS="SCREEN"
+>  LoadModule mxslt_module /usr/local/libexec/mod_xslt.so</PRE
+>
+  Note however that this path can be changed during apache2 configuration,
+so please look to where other modules are kept, or run the command ``apxs2 -q LIBEXECDIR''
+or ``apxs -q LIBEXECDIR''.</P
+><P
+>  If you don't know this path, just look for other ``LoadModule'' directives
+  in your configuration file or run the command ``apxs2 -q LIBEXECDIR'', which
+  will show you the correct path.</P
+><P
+>  Once you tell apache to load mod-xslt, you need to tell him for which files
+you want mod-xslt to be used. To do so, you can use one of the following directives:
+
+<P
+></P
+><UL
+><LI
+><P
+>  <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>AddOutputFilter mod-xslt &lt;extension&gt;...</I
+></SPAN
+> 
+  tells apache we want mod-xslt to parse all files with extension ``extension''.</P
+></LI
+><LI
+><P
+>  <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>AddOutputFilterByType mod-xslt &lt;mime-type&gt;...</I
+></SPAN
+> 
+  tells apache we want mod-xslt to parse all files with the specified mime-type.
+  Note that the mime-type should indicate which files we want mod-xslt to parse.
+  Most common values are text/xml or application/xml, depending upon the configuration
+  of your system.</P
+></LI
+><LI
+><P
+>  <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>SetOutputFilter mod-xslt</I
+></SPAN
+> 
+  tells apache that we want all files in a given directory or location or virtual
+  host to be parsed by mod-xslt.</P
+></LI
+></UL
+>
+  Watch out! Just use one of those directives. If you use more than one,
+  your documents will be parsed more than once, and unless your first pass outputs
+  .xml to be parsed again, an error will be signaled by mod-xslt. </P
+><P
+>  For example, you may enable mod-xslt in a given directory with something
+  like:
+  <PRE
+CLASS="SCREEN"
+>&lt;Directory /this/is/a/directory&gt;
+  AddOutputFilterByType mod-xslt text/xml
+  ...
+&lt;/Directory&gt;
+  </PRE
+>
+  Note that on most system both .xml and .xsl files are considered of 
+  mime type application/xml. We often suggest to change that default
+  and set the mime type of .xml files to text/xml and of .xsl files
+  of text/xsl. You can usually use constructs like ``AddType text/xml .xml''
+  to force a mime type of text/xml to .xml files... </P
+><P
+>  If you know before hand that all files in a given directory should be parsed
+  using mod-xslt, you may also use something like:
+  <PRE
+CLASS="SCREEN"
+>&lt;Directory /this/is/another/directory&gt;
+  ...
+  SetOutputFilter mod-xslt
+&lt;/Directory&gt;
+  </PRE
+></P
+><P
+>  To have further details about the discussed parameters, please take a look
+to the apache manual, http://httpd.apache.org/.</P
+><P
+>  It is important to note that it is possible to block mod-xslt from parsing
+  a particular document by using the SetEnvIf parameter and the SetEnv family
+  of configuration directives. mod-xslt will infact <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>NOT</I
+></SPAN
+>
+  perform any transformation if the ``no-xslt'' environment variable is set.</P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN191"
+>3.1.2. mod-xslt Configuration parameters</A
+></H3
+><P
+>&#13;<P
+></P
+><UL
+><LI
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>XSLTSetStylesheet &lt;MimeType&gt; &lt;Stylesheet&gt;</I
+></SPAN
+> per directory, per file,
+per virtual host or in global configuration file, tells mod-xslt2 to use the given stylesheet
+for all files of the given MimeType, independently from any ``&lt;xml-stylesheet...'' or processing
+instruction available into the document.</P
+></LI
+><LI
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>XSLTUnSetStylesheet &lt;MimeType&gt; &lt;Stylesheet&gt;</I
+></SPAN
+> per directory, per file,
+per virtual host or in global configuration file, tells mod-xslt2 to forget about a previous
+``XSLTSetStylesheet''. This is needed since mod-xslt2 per directory configurations are hinerited from
+parent directories.</P
+></LI
+><LI
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>XSLTDefaultStylesheet &lt;MimeType&gt; &lt;Stylesheet&gt;</I
+></SPAN
+> per directory, per file,
+per virtual host or in global configuration file, tells mod-xslt2 that, in case an xml
+file does not contain any ``&lt;xml-stylesheet...'' or ``&lt;xslt-stylesheet...'', for
+the given MimeType the specified xslt stylesheet should be used.</P
+></LI
+><LI
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>XSLTNoDefaultStylesheet &lt;MimeType&gt;</I
+></SPAN
+> per directory, per file,
+per virtual host or in global configuration file, tells mod-xslt2 that to forget about
+a previous ``XSLTDefaultStylesheet''. This is needed since mod-xslt2 per directory configurations 
+are hinerited from parent directories.</P
+></LI
+><LI
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>XSLTParam "variable" "value"</I
+></SPAN
+> per directory, per file, per virtual host or in
+global configuration file, tells mod-xslt2 to pass the given ``variable'' to the stylesheet
+with the indicated ``value''. Those variables are accessible from the stylesheet using the mod-xslt2 extension 
+value-of, with something like: &lt;mxslt:value-of select="$MODXSLT[variable]" ... look to the variable 
+substitution paragraph for more details...</P
+></LI
+><LI
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>XSLTAddRule "stylesheet" "condition"</I
+></SPAN
+> per directory, per file, per virtual host or in
+global configuration file, tells mod-xslt2 to use the specified stylesheet if all conditions specified in ``condition'' 
+are met. Any modxslt-stylesheet or xml-stylesheet contained in the document is then ignored, unless the selected stylesheet
+is not loadable or does not work, in which case the rule is ignored.</P
+></LI
+><LI
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>XSLTDelRule "stylesheet"</I
+></SPAN
+> per directory, per file, per virtual host or in
+global configuration file, tells mod-xslt2 to forget about the rule regarding the specified stylesheet </P
+></LI
+><LI
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>XSLTDebug category, category, category, ...</I
+></SPAN
+> per directory, per file, per virtual host or in
+global configuration file, tells mod-xslt2 to print (in the log files) the debugging messages corresponding to the specified categories. Note that
+any given message can be part of more than one category. It will be outputted only if all the categories are to be outputted according to this
+parameter. Currently defined categories are: config (parsing of configurations), debug (useful when running gdb, debugging crashes or trying to find
+errors in the debug system itself), flags (if enabled, the category of the messages/mask is also outputted in integer format), libxml (parsing done by libxml),
+parser (parsing of PI and mod-xslt expressions at top of .xml files), proto (related to HTTP protocol, headers, and so on), rules (for apache1, output debugging
+messages related to application of *Rules*), sapi (output messages related with the interaction of the specified SAPI), variables (output messages regarding
+parsing and handling of variables), verbose0, verbose1, verbose2 (to enable outputting of messages at verbosity 0, 1, and 2).</P
+></LI
+><LI
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>XSLTDebugMask &lt;number&gt;</I
+></SPAN
+> per directory, per file, per virtual host or in
+global configuration file, tells mod-xslt2 to print (in the log files) the debugging messages corresponding to the specified categories. This is exactly like
+the XSLTDebug parameter, but allows to specify which messages to output as an integer. The integer represents the OR of the integer value corresponding to each
+category whose output is desired. Note that internally mod-xslt maps every debug category to an int, and every category is mapped to a ``name'', as indicated
+above. This parameter is useful when you either want to output all messages (specify -1 as the number) or when there is some category of messages that has not
+been assigned a str name yet. Have a look into modxslt0/modxslt-debug.h, mxslt_debug_e, to see the mapping betweween categories and parameters.</P
+></LI
+><LI
+><P
+><SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>XSLTDisableSignature&lt;number&gt;</I
+></SPAN
+> per directory, per file, per virtual host or in
+global configuration file, doesn't do anything, for backward compatibility only.</P
+></LI
+></UL
+>&#13;</P
+></DIV
+><DIV
+CLASS="SECT3"
+><H3
+CLASS="SECT3"
+><A
+NAME="AEN225"
+>3.1.3. Apache 2.x.x, mod-xslt and PHP4</A
+></H3
+><P
+>    In order to use php4 with apache2, you can compile it using
+    two different SAPI:
+    <P
+></P
+><UL
+><LI
+><P
+>        <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>apache2filter</I
+></SPAN
+> - where php4 is
+	  used as an Apache 2.x.x FILTER
+      </P
+></LI
+><LI
+><P
+>        <SPAN
+CLASS="emphasis"
+><I
+CLASS="EMPHASIS"
+>apache2handler</I
+></SPAN
+> - where php4 is
+	  used as an Apache 2.x.x HANDLER
+      </P
+></LI
+></UL
+>
+  </P
+><P
+>    To know more about the differences between HANDLERs and FILTERs in
+    apache 2.x.x, please refer to apache 2.0.x documentation.
+  </P
+><P
+>    To know more about how to compile php4 using the two SAPI or about
+    the differences between the two, please refer to php4 documentation.
+  </P
+><P
+>    At time of writing, however, if you compile php4 to run under apache2
+    it will be compiled using the HANDLER sapi.
+  </P
+><P
+>    mod-xslt is now being tested using only this SAPI, and only very
+    old versions of mod-xslt have been tested with the FILTER sapi.
+  </P
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="x27.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="x239.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Installation</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Writing XML for mod-xslt2</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

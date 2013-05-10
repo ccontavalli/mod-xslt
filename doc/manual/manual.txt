@@ -15,8 +15,7 @@ Carlo Contavalli
 
         2.1. Prerequisites
 
-              2.1.1. Apache 1.3.x
-              2.1.2. Apache 2.{1,2}.x
+              2.1.1. Apache 2.{1,2}.x
 
         2.2. Quick start
         2.3. Configure parameters
@@ -27,24 +26,11 @@ Carlo Contavalli
 
    3. mod-xslt2 Setup and Usage
 
-        3.1. Apache 1.3.x
+        3.1. Apache 2.x.x
 
-              3.1.1. Request life
-              3.1.2. Using the ``AddHandler'' directive
-              3.1.3. Using the XSLT directives
-              3.1.4. Mixing the two
-              3.1.5. Loading the module
-              3.1.6. mod-xslt Configuration parameters
-              3.1.7. Parameters usage examples
-              3.1.8. Logging
-              3.1.9. Increasing performance
-              3.1.10. Subrequest Issues
-
-        3.2. Apache 2.x.x
-
-              3.2.1. Configuring Apache 2.x for mod-xslt
-              3.2.2. mod-xslt Configuration parameters
-              3.2.3. Apache 2.x.x, mod-xslt and PHP4
+              3.1.1. Configuring Apache 2.x for mod-xslt
+              3.1.2. mod-xslt Configuration parameters
+              3.1.3. Apache 2.x.x, mod-xslt and PHP4
 
    4. Writing XML for mod-xslt2
 
@@ -143,18 +129,7 @@ Carlo Contavalli
    the available patches, please read the file ``README.Patches''.
      __________________________________________________________
 
-2.1.1. Apache 1.3.x
-
-   To install mod-xslt2 on apache 1.3.x, you need to have the
-   apache headers installed (apache-dev) and the command ``apxs''
-   available.
-
-   You also need to know the path of ``apxs'', which can be found
-   by running something like ``locate apxs'', ``whereis apxs'' or
-   ``find / -name apxs''.
-     __________________________________________________________
-
-2.1.2. Apache 2.{1,2}.x
+2.1.1. Apache 2.{1,2}.x
 
    To install mod-xslt2 on an apache 2.1.x or 2.2.x server, you
    need to have:
@@ -289,10 +264,6 @@ Carlo Contavalli
        inside mod-xslt2 extension elements, to reduce the number
        of those messages. Another solution is to patch the library
        to avoid the problem. Please read ``README.Patches''.
-     * --enable-exslt (obsolete, available only for mod-xslt <
-       1.3.9) enable exslt extensions for libxslt. Default is
-       disabled. If you need or want to use the advanced string
-       operators, remember to enable this option.
      * --disable-exslt (available starting with mod-xslt 1.3.9)
        disable exslt extensions for libxslt. Default is enabled.
      * --disable-xinclude disable modxslt usage of xinclude.
@@ -302,7 +273,7 @@ Carlo Contavalli
      * --with-sapi=apache1|apache2|none allows you to specify for
        which web server (sapi) to compile mod-xslt2. Currently,
        you can specify ``apache1'' for apache version 1.3.x,
-       ``apache2'' for apache version > 2.x.44, ``apache'' to
+       ``apache2'' for apache version > 2.x.y, ``apache'' to
        enable apache version autodetection or ``none'' to compile
        only mod-xslt2 utilities and libraries. More sapi modules
        are currently being developed.
@@ -367,531 +338,7 @@ Carlo Contavalli
 
 3. mod-xslt2 Setup and Usage
 
-3.1. Apache 1.3.x
-
-   mod-xslt2 can be configured in several ways to be used on
-   apache 1.3. To choose which one suits best your needs, you need
-   a good knowledge of how apache works. The following sections
-   will try to give you the basic knowledge needed to configure
-   mod-xslt2.
-     __________________________________________________________
-
-3.1.1. Request life
-
-   When requesting a document to an Apache 1.3 server through your
-   browser, apache
-
-    1. takes the requested URL and Remaps it to a ``file
-       location'', to a path on the local file system (as an
-       example, ``http://www.masobit.net/foo/bar.xml'' may become
-       ``/opt/array-00/customers/masobit.net/http/bar.xml'')
-    2. tries to understand the format the document is written into
-       (it looks for the mime type of the document)
-    3. looks for someone or something able to ``read'' the
-       provided document type (an ``handler'')
-    4. the handler is passed the job to send the document ``over
-       the wire'' back to the browser.
-
-   As an example, when you request a .php file with something like
-   ``www.masobit.net/info.php'', on our server the first step
-   Remaps ``www.masobit.net/info.php'' in something like
-   ``/opt/array-00/customers/masobit.net/http/info.php''. Apache
-   then looks in the mime.magic or mime.types (or the AddType
-   directives) for the mime type of the file. Provided the content
-   of those files and those directives are correct, apache will
-   decide the requested file is of type
-   ``application/x-httpd-php''.
-
-   Apache will then look for a handler able to serve this kind of
-   document, and it will see that ``application/x-httpd-php'' is
-   handled by the ``libphp4.so'' module.
-
-   Apache will then call a function in this module and let the
-   module directly write the answer back to the browser.
-     __________________________________________________________
-
-3.1.2. Using the ``AddHandler'' directive
-
-   One good way to let mod-xslt2 handle a request is to use the
-   ``AddHandler'' or ``SetHandler'' directive.
-
-   Using those directives you can tell apache you want a
-   particular kind of file being handled directly by mod-xslt2.
-   For example, you could use something like:
-  AddHandler mod-xslt .xml
-
-   To tell apache the handler for all xml files needs to be
-   ``mod-xslt2''. AddHandler can be even activated on a per
-   directory/per location or per file basis. For example, you
-   could activate xml parsing in a given directory by using
-   something like:
-  <Directory "/opt/foo/">
-    AddHandler mod-xslt .xml
-  </Directory>
-
-   If you want to parse all the files in a given directory as xml
-   files regardless of their extension you could use something
-   like:
-  <Directory "/opt/foo/">
-    SetHandler mod-xslt
-  </Directory>
-
-   AddHandler and SetHandler are the ``fastest'' way to use
-   mod-xslt2. The drawback is that this method won't work if you
-   set mod-xslt2 up to handle .php files, since they won't be
-   parsed by the php module. Infact, as explained previously,
-   apache will call mod-xslt2 instead of ``libphp4.so'' to send
-   the document back to the browser.
-     __________________________________________________________
-
-3.1.3. Using the XSLT directives
-
-   In case you need to apply stylesheets to dynamically generated
-   documents, you thus need to use the mechanism provided by
-   mod-xslt2.
-
-   This mechanism has nothing to do with the mechanism described
-   in the previous sections and does not conflict with it. Keep in
-   mind, however, that the following directives need to be used
-   only if you want to parse dynamically generated files, like
-   php, perl or cgi.
-
-   Before anything else, you need to enable the XSLT Engine for a
-   given directory, using the ``XSLTEngine <on|off>'' directive.
-   Once enabled, mod-xslt will be called for every file in the
-   given directory that apache will be required to serve.
-
-   However, while coding the module, we had the choice to:
-
-     * check the mime type of every apache reply, and parse it if
-       it was of type text/xml (note: on most systems, text/xml is
-       application/xml...).
-     * check the mime type only of some requests, and parse them
-       only if they were of type text/xml.
-
-   Since checking the type of a reply is quite expensive in terms
-   of system resources, we decided to go with the second choice.
-   You thus need to tell mod-xslt2 which requests you want it to
-   check for xml output to parse, by using the ``XSLTAddFilter''
-   parameter. As an example, if you want to apply an xslt
-   stylesheet to the output of the php scripts in one of your
-   directories, you need to use something like:
-<Directory
-  "/opt/array-00/customers/masobit.net/http/php-xml/">
-  XSLTEngine on
-  XSLTAddFilter application/x-httpd-php
-</Directory>
-
-   However, keep in mind that the output of a given script will be
-   parsed if and only if it outputs xml data and sets the mime
-   type to ``text/xml'', so, in php, you need to use something
-   like ``header("Content-Type: text/xml")'' before anything else
-   in your scripts.
-
-   Remember: you need to use ``XSLTEngine on'' only if you need to
-   parse dynamic pages.
-     __________________________________________________________
-
-3.1.4. Mixing the two
-
-   As a rule of thumb, you can use ``AddHandler'' for any ``static
-   document'' and ``XSLTEngine'' with ``XSLTAddFilter'' with any
-   ``dynamic document''.
-
-   A complete example could be the following:
-...
-LoadModule mxslt_module /usr/lib/apache/modules/mod_xslt.so
-AddModule modxslt.c
-...
-
-XSLTTmpDir /tmp
-
-  # Always parse .xml files using the
-  # specified stylesheets
-AddHandler mod-xslt .xml
-
-  # In this directory, some .php scripts
-  # output xml to be parsed - those
-  # scripts need to set the ``Content-Type''
-  # header to text/xml if they want
-  # a stylesheet to be applied. Otherwise,
-  # they will be ignored
-  # header("Content-Type: text/xml")
-
-  # Note also that it is sometime useful
-  # to specify application/xml instead,
-  # which is the default for most systems
-<Directory /var/www/xml>
-  XSLTEngine on
-  XSLTAddFilter application/x-httpd-php
-</Directory>
-
-   In the example above, only php scripts in ``/var/www/xml'' will
-   be parsed provided they output a Content-Type header set to
-   ``text/xml''. If you want to parse them regardless of the
-   Content-Type, thus regardless of the type of data they are
-   outputting, you can use the apache directive ``XSLTAddForce''
-   with the same syntax of XSLTAddFilter.
-     __________________________________________________________
-
-3.1.5. Loading the module
-
-   Regardless of which method you may decide to use to parse your
-   xml data, keep in mind you always need to tell apache to load
-   the module. To do so, add a line like the following to your
-   httpd.conf:
-LoadModule mxslt_module /usr/lib/apache/modules/mod_xslt.so
-AddModule modxslt.c
-
-   Beware that the second parameter must be the full path were
-   mod_xslt got installed. Since the path is detected by querying
-   ``apxs'', it will probably be the same as any other apache
-   module. If you don't know where apache modules are kept on your
-   system, use something like ``apxs -q LIBEXECDIR'' or look to
-   other LoadModule directives in your configuration files.
-     __________________________________________________________
-
-3.1.6. mod-xslt Configuration parameters
-
-     * XSLTEngine <on|off> per directory, per file, per virtual
-       host or in global configuration file, allows you to enable
-       or disable XSLT extra features.
-     * XSLTTmpDir <directory> per directory, per file, per virtual
-       host or in global configuration file, allows you to specify
-       which directory mod-xslt2 will use to create temporary
-       files. By default, ``/tmp/mod-xslt2'' is used. Keep in mind
-       that ``/tmp/mod-xslt2'' must exist in your system. Path
-       must be absolute: ``/tmp'' good, ``/var/tmp'' good, ``tmp''
-       bad, ``./tmp'' bad.
-     * XSLTAddFilter <MimeType> per directory, per file, per
-       virtual host, or in global configuration file, tells
-       mod-xslt2 to parse files of the given mime type as if they
-       were xml files. Keep in mind that the file is parsed only
-       if the content type is set to ``text/xml'' or
-       ``application/xml''.
-     * XSLTDelFilter <MimeType> per directory, per file, per
-       virtual host, or in global configuration file, tells
-       mod-xslt2 not to parse files of the given mime type
-       anymore. This is needed since mod-xslt2 per directory
-       configurations are hinerited from parent directories.
-     * XSLTAddForce <MimeType> per directory, per file, per
-       virtual host, or in global configuration file, tells
-       mod-xslt2 to parse files of the given mime type as if they
-       were xml files, independently from the resulting content
-       type.
-     * XSLTDelForce <MimeType> per directory, per file, per
-       virtual host, or in global configuration file, tells
-       mod-xslt2 not to parse files of the given mime type
-       anymore. This is needed since mod-xslt2 per directory
-       configurations are hinerited from parent directories.
-     * XSLTSetStylesheet <MimeType> <Stylesheet> per directory,
-       per file, per virtual host or in global configuration file,
-       tells mod-xslt2 to use the given stylesheet for all files
-       of the given MimeType, independently from any
-       ``<xml-stylesheet...'' or processing instruction available
-       into the document. The MimeType is usually something like
-       text/xml or application/xml, telling all such documents
-       need to be transformed using the specified stylesheet.
-     * XSLTUnSetStylesheet <MimeType> <Stylesheet> per directory,
-       per file, per virtual host or in global configuration file,
-       tells mod-xslt2 to forget about a previous
-       ``XSLTSetStylesheet''. This is needed since mod-xslt2 per
-       directory configurations are hinerited from parent
-       directories.
-     * XSLTDefaultStylesheet <MimeType> <Stylesheet> per
-       directory, per file, per virtual host or in global
-       configuration file, tells mod-xslt2 that, in case an xml
-       file does not contain any ``<xml-stylesheet...'' or
-       ``<xslt-stylesheet...'', for the given MimeType the
-       specified xslt stylesheet should be used. Same things as
-       for XSLTSetStylesheet.
-     * XSLTNoDefaultStylesheet <MimeType> per directory, per file,
-       per virtual host or in global configuration file, tells
-       mod-xslt2 that to forget about a previous
-       ``XSLTDefaultStylesheet''. This is needed since mod-xslt2
-       per directory configurations are hinerited from parent
-       directories.
-     * XSLTUnlink <on|off> per directory, per file, per virtual
-       host or in global configuration file, tells mod-xslt2 that
-       temporary files are not to be deleted. This option was
-       provided to simplify debugging of newly created documents:
-       combined with a per directory ``XSLTTmpDir'' and using
-       dynamic documents provided by php or perl, the temporary
-       file will keep the xml document generated by your scripts,
-       simplifying debugging. You can find the temporary file that
-       generated an error by reading the error log.
-     * XSLTParam "variable" "value" per directory, per file, per
-       virtual host or in global configuration file, tells
-       mod-xslt2 to pass the given ``variable'' to the stylesheet
-       with the indicated ``value''. Those variables are
-       accessible from the stylesheet using the mod-xslt2
-       extension value-of, with something like: <mxslt:value-of
-       select="$MODXSLT[variable]" ... look to the variable
-       substitution paragraph for more details...
-     * XSLTAddRule "stylesheet" "condition" per directory, per
-       file, per virtual host or in global configuration file,
-       tells mod-xslt2 to use the specified stylesheet if all
-       conditions specified in ``condition'' are met. Any
-       modxslt-stylesheet or xml-stylesheet contained in the
-       document is then ignored, unless the selected stylesheet is
-       not loadable or does not work, in which case the rule is
-       ignored.
-     * XSLTDelRule "stylesheet" per directory, per file, per
-       virtual host or in global configuration file, tells
-       mod-xslt2 to forget about the rule regarding the specified
-       stylesheet
-     * XSLTDebug category, category, category, ... per directory,
-       per file, per virtual host or in global configuration file,
-       increases verbosity of mod-xslt2 logging. Within mod-xslt,
-       each message is tied to one or more categories. When
-       XSLTDebug is specified, all messages whose categories have
-       been specified in XSLTDebug are printed, and usually stored
-       in error.log. Categories are: "config" (parsing of
-       configurations), "debug" (useful when debugging with gdb or
-       other tools), "flags" (causes the category of messages to
-       be output as well), "libxml" (parsing done by libxml),
-       "parser" (parsing of PI and mod-xslt expressions at top of
-       .xml files), "proto" (related to HTTP protocol, headers,
-       and protocol parsing), "rules" (for apache1, output
-       debugging messages related to application of *Rules*),
-       "sapi" (output messages related with the interaction of the
-       specified SAPI), "variables" (output messages regarding
-       parsing and handling of variables), "verbose0", "verbose1",
-       "verbose2" (to enable outputting of messages at verbosity
-       0, 1, and 2), "all" to enable all debugging messages
-       (probably too verbose for normal usage).
-     * XSLTDebugMask <number> per directory, per file, per virtual
-       host or in global configuration file, equivalent to
-       XSLTDebug. The only difference is that instead of
-       specifying categories by name, you can use an integer. The
-       integer represents the bitwise OR of the values
-       corresponding to each category. Note that the integer
-       representation of categories can change from mod-xslt
-       version to version. You should normally not use this
-       parameter. Have a look into modxslt0/modxslt-debug.h,
-       mxslt_debug_e, to see the mapping betweween categories and
-       parameters.
-     * XSLTDisableSignature<number> per directory, per file, per
-       virtual host or in global configuration file, doesn't do
-       anything, only for backward compatibility.
-     __________________________________________________________
-
-3.1.7. Parameters usage examples
-
-3.1.7.1. XSLTSetStylesheet
-
-   XSLTSetStylesheet is most useful when you have .xml documents
-   that do not specify any xslt stylesheet to be used for the
-   parsing.
-
-   You can put all those documents in a given directory on your
-   web server, and then use something like:
-<Directory /documents/without/stylesheet>
-  XSLTSetStylesheet default_stylesheet.xsl
-</Directory>
-
-   All the files in /documents/without/stylesheet would then be
-   parsed using default_stylesheet.xsl, independently from any
-   <?xml-stylesheet or <?modxslt-stylesheet specifyed in the
-   document.
-
-   XSLTSetStylesheet parameters are hierarchically propagated in
-   subdirectories. This means that if you want to disable one of
-   the stylesheet you previously set, you need to use
-   XSLTUnSetStylesheet.
-     __________________________________________________________
-
-3.1.7.2. XSLTAddFilter and XSLTAddForce
-
-   XSLTAddFilter and XSLTAddForce can be used to tell mod-xslt
-   which files to parse.
-
-   They both take as a first argument a MIME type. This MIME type
-   is used by mod-xslt to identify the scripts/files that may
-   output xml to be parsed.
-
-   So, in order for mod-xslt to parse dynamic documents, you need
-   to tell him which ``kind of documents'' may output xml.
-
-   Weel, those ``dynamic documents'', however, may decide not to
-   output xml and output something else.
-
-   XSLTAddFilter thus tells mod-xslt to watch a given mime type,
-   verify if the output is xml, and only if it is, parse it into
-   something else.
-
-   XSLTAddForce, instead, watches a given mime-type, and it tells
-   mod-xslt to parse the output in any case, even if it doesn't
-   look like xml. This instruction may be used if you have cgi or
-   dynamic scripts which output the wrong mime type.
-     __________________________________________________________
-
-3.1.7.3. XSLTAddRule
-
-   XSLTAddRule has been added since mod-xslt 1.3.6, snapshot >=
-   2004100100. This parameter allows you to specify a stylesheet
-   to be used for all documents selected by the apache directive
-   being used only if the specified condition, written as a
-   mod-xslt expression (see the dedicated section), is met.
-
-   Rules are checked by mod-xslt in the same order as specified,
-   and the first one matching specifies the stylesheet to be used
-   to parse the document, independently from any <xml-stylesheet
-   or <modxslt-stylesheet being specified in the document.
-
-   Here are some examples:
-
-<Directory /xml>
-  XSLTAddRule "local://style_mozilla.php?LANG=$GET[LANG]"
-        "$HEADER[User-Agent] =~ '/mozilla/'"
-
-  XSLTAddRule "local://style_printer.php?LANG=$GET[LANG]"
-        "$GET[format] =~ '/printer/'"
-</Directory>
-
-   (above examples have been split on multiple lines for
-   readability) Note that the stylesheets can be of any of the
-   supported kinds, and that mod-xslt performs variable
-   substitution in the stylesheet URL.
-
-   Also note that in case the stylesheet contains errors or is not
-   loadable for any reason, the rule is ignored and parsing goes
-   on using the stylesheets specified by the document.
-     __________________________________________________________
-
-3.1.8. Logging
-
-   In order to process requests, mod-xslt2 needs to create
-   temporary files. Temporary files are used to process dynamic
-   requests, and contain the XML that got to mod-xslt2 to be
-   parsed. It is often useful to know which temporary file was
-   associated with which request, especially if the unlinking of
-   temporary files is disabled.
-
-   mod-xslt2 saves the name of the temporary file being used in a
-   ``request note'' that can be retrieved by using something like
-   ``%{mod-xslt-tmp}n" in the ``LogFormat'' directive, with
-   something like:
-LogFormat "%v %h %l %u %t \"%r\" %>s %b
-        (%{mod-xslt-tmp}n)" mxslt_format
-CustomLog logs/mod-xslt2.log mxslt_format
-     __________________________________________________________
-
-3.1.9. Increasing performance
-
-   The only way in apache 1.3.x to intercept the output of other
-   modules is to provide a suitable file descriptor where to store
-   data.
-
-   Since mod-xslt2 is part of apache itself, a pipe is impossible
-   to use, unless we fork apache one more time, slowing things
-   down.
-
-   The simplest approach has thus been used: creating a temporary
-   file, let other modules write the replies in there, and then
-   parse the temporary file. However, by using temporary files, we
-   hit I/O performance issues.
-
-   One of the greatest performance improvements would thus be to
-   mount a ramdisk (either a ``shm'' or ``rd'' in linux), over the
-   directory used by mod-xslt2 for temporary files.
-
-   Other methods are under investigation and may get supported in
-   future versions of mod-xslt2:
-
-     * Having an external daemon parse data, transmitted from
-       apache through a unix socket. This will be done after
-       implementing the proxy module, which is almost the same.
-       This would also be useful to simplify cache implementation.
-     * Provide, as file descriptor, the file descriptor of
-       /dev/null, and use the ``callback'' provided by apache to
-       store data in memory. In this case, however, we would hit
-       memory problems for big files. However, other solutions may
-       be used (mmapping a file? using libxml push method? does it
-       parse data on the fly or simply keeps the buffers for later
-       parsing?)
-
-   Another performance issue is due to:
-
-     * external http or ftp connections to fetch .xsl or .dtd
-       files
-     * dns lookups to understand if a remote host is in practice a
-       remote host or a local one
-
-   The latest of the two problems can be solved either by using a
-   faster name resolution mechanism (take a look to nsswitch.conf
-   or to the hosts file) or by paying some attention while writing
-   .xml+.xslt file and by explicitly telling mod-xslt2 when to use
-   local connections (will be explained later on).
-     __________________________________________________________
-
-3.1.10. Subrequest Issues
-
-   To avoid security and some concurrency issues (see the section
-   about security concerns), mod-xslt2 for apache 1 tryes to avoid
-   remote connections as much as possible, specially if those
-   connections will loop back to the localhost.
-
-   However, apache accepts any connection it receives on any of
-   the addresses it is listening on, and is thus hard to
-   understand which connections will loop back to the local host.
-
-   By default, when mod-xslt2 starts, it tries to understand on
-   which addresses apache is listening on. However, when you write
-   your apache configuration file, you have two choices:
-
-     * Explicitly listing all the ip addresses to listen on (using
-       the ``Listen'' directive with something like ``Listen
-       127.0.0.1:80'' or by using ``BindAddress'' - which is
-       deprecated by the apache group)
-     * Just specify one or more ports, and let apache listen on
-       all interfaces on all ip addresses (simply using the
-       ``Port'' directive without any ``Listen'', or by using one
-       or more ``Listen'' with something like ``Listen 80 8080'')
-
-   In the first case, mod-xslt2 will use the ip addresses provided
-   with the ``Listen'' directive to detect remote connections.
-
-   However, if you use the ``Listen'' directive by just specifing
-   the port(s) to listen on or you just use the ``Port''
-   directive, mod-xslt2 will have to try to understand which are
-   all the ip addresses available on the operating system, which
-   is very system dependent and quite unportable.
-
-   At time of writing, mod-xslt2 configure script will try to
-   detect if the needed functions to get all the ip addresses of
-   the operative system are available, in which case the
-   autodetection code is compiled in.
-
-   However, if those functions are not available, mod-xslt2 will
-   complain any time you use the ``Port'' directive or the
-   ``Listen'' directive without explicitly specifing the ip
-   addresses to listen on, by printing in the logs something like:
-INADDR_ANY is being used without ioctl support -
-        read mod-xslt2 README!
-
-   In this case, just change any ``Listen'' directive you have
-   like this:
-Listen 80 8080
-
-   in something like
-Listen 127.0.0.1:80 192.168.0.1:80
-        127.0.0.1:8080 192.168.0.1:8080
-
-   where ``127.0.0.1'' and ``192.168.0.1'' are the only ip
-   addresses apache will listen on. If you don't have any listen
-   directive, just add them. Watch out that, if you have many ip
-   addresses to listen on, apache performance will decrease (by
-   listing them all instead). In this case, the best bet would be
-   to improve mod-xslt2 detection code and write some that will
-   work on your platform. Please mail me if you do so, or mail me
-   if you need help in doing so. Unfortunately, at time of
-   writing, I have access only to ``Debian GNU/Linux'' machines,
-   and cannot tell if the detection code will work on any other
-   platform.
-     __________________________________________________________
-
-3.2. Apache 2.x.x
+3.1. Apache 2.x.x
 
    Apache 2.x support is now considered stable (2.0, 2.2, ...),
    thanks to all the people who provided feedbacks on mod-xslt
@@ -916,7 +363,7 @@ Listen 127.0.0.1:80 192.168.0.1:80
    anyone has suggestions, please contact me.
      __________________________________________________________
 
-3.2.1. Configuring Apache 2.x for mod-xslt
+3.1.1. Configuring Apache 2.x for mod-xslt
 
    To use mod-xslt with apache 2.x.x, you just need to tell apache
    you want to use mod-xslt, by inserting a line like the
@@ -992,7 +439,7 @@ Listen 127.0.0.1:80 192.168.0.1:80
    ``no-xslt'' environment variable is set.
      __________________________________________________________
 
-3.2.2. mod-xslt Configuration parameters
+3.1.2. mod-xslt Configuration parameters
 
      * XSLTSetStylesheet <MimeType> <Stylesheet> per directory,
        per file, per virtual host or in global configuration file,
@@ -1078,7 +525,7 @@ Listen 127.0.0.1:80 192.168.0.1:80
        anything, for backward compatibility only.
      __________________________________________________________
 
-3.2.3. Apache 2.x.x, mod-xslt and PHP4
+3.1.3. Apache 2.x.x, mod-xslt and PHP4
 
    In order to use php4 with apache2, you can compile it using two
    different SAPI:
@@ -2255,14 +1702,9 @@ modxslt-perror x
 <modxslt-stylesheet ... href="/data/xslt/$GET[lang].xsl" ...
 
    But what happens here if ``$GET[lang]'' contains characters
-   like ``../../../etc/passwd''? We cannot tell for sure. For
-   sure, mod-xslt2 would try to open a file like ``/etc/passwd''
-   and use it as a stylesheet. Obviously, this wouldn't be
-   considered a valid stylesheet and a 500 error returned back to
-   the client. But, keep in mind that mod-xslt2 both in apache 1.3
-   and 2.x runs with the same privileges as the web server itself,
-   and would thus be able to read others .xsl files if you specify
-   variables like that in the href of the stylesheet.
+   like ``../../../etc/passwd''? Using client specified variables
+   without any sort of validaiton is a BAD idea. Remember that
+   mod-xslt will run with the same privileges as your web server.
 
    Unless you have very good reasons to do so, I would suggest you
    to always use ``local://'' or ``http://'' urls when you need to
@@ -2283,7 +1725,7 @@ modxslt-perror x
    Ok, let's say you have a .xml file that needs a .xsl file to be
    fetched from a remote url in order to be correctly parsed.
 
-   Let's say you are using apache 1.3 and that a browser issues a
+   Let's say you are using apache and that a browser issues a
    request to get the content of that file. Now, apache would
    receive the request, mod-xslt2 would be called to handle that
    request and a connection be open to fetch the remote
