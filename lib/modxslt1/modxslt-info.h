@@ -27,4 +27,7 @@
 # define MXSLT_NS_URI "http://www.modxslt.org/ns/1.0"
 # define MXSLT_SITE "http://www.modxslt.org/"
 
+  /* This is only needed for backward compatibility */
+# define MXSLT_OBSOLETE_NS_URI "http://www.mod-xslt2.com/ns/1.0"
+
 #endif 

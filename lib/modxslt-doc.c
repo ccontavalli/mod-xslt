@@ -1363,6 +1363,8 @@ void mxslt_xml_init(
     /* Register extension module */
   xsltRegisterExtModule(
       (xmlChar *)MXSLT_NS_URI, mxslt_xslt_module_init, mxslt_xslt_module_done);
+  xsltRegisterExtModule(
+      (xmlChar *)MXSLT_OBSOLETE_NS_URI, mxslt_xslt_module_init, mxslt_xslt_module_done);
   mxslt_debug_print(
       shoot->mxslt_state, MXSLT_DBG_INTERNAL,
       "libxml - registered yaslt extensions as "MXSLT_NS_URI" namespace.");

@@ -743,8 +743,15 @@ xmlDocPtr mxslt_doc_xml_apply_stylesheet(mxslt_doc_t * mxslt_doc, xsltStylesheet
   userCtxt->outputFile=mxslt_doc->localfile;
 
 #ifndef MXSLT_DISABLE_EXTENSIONS
-  xsltRegisterExtElement(userCtxt, (xmlChar *)"header-set", (xmlChar *)MXSLT_NS_URI, mxslt_transform_header);
-  xsltRegisterExtElement(userCtxt, (xmlChar *)"value-of", (xmlChar *)MXSLT_NS_URI, mxslt_transform_value_of);
+  xsltRegisterExtElement(userCtxt, (xmlChar *)"header-set",
+                         (xmlChar *)MXSLT_NS_URI, mxslt_transform_header);
+  xsltRegisterExtElement(userCtxt, (xmlChar *)"value-of",
+                         (xmlChar *)MXSLT_NS_URI, mxslt_transform_value_of);
+
+  xsltRegisterExtElement(userCtxt, (xmlChar *)"header-set",
+                         (xmlChar *)MXSLT_OBSOLETE_NS_URI, mxslt_transform_header);
+  xsltRegisterExtElement(userCtxt, (xmlChar *)"value-of",
+                         (xmlChar *)MXSLT_OBSOLETE_NS_URI, mxslt_transform_value_of);
 #endif
 
   retval=xsltApplyStylesheetUser(style, doc, params, NULL, NULL, userCtxt);
