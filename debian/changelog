@@ -1,3 +1,9 @@
+modxslt (1:1.4.3) unstable; urgency=low
+
+  * Update for upstream release 1.4.3.
+
+ -- Carlo Contavalli <ccontavalli@gmail.com>  Fri, 05 Jul 2013 08:36:34 -0800
+
 modxslt (1:1.4.2) unstable; urgency=low
 
   * Update for upstream release 1.4.2.

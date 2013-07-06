@@ -3,7 +3,7 @@
 %define name      mod-xslt
 %define summary   mod-xslt module
 %define license   GPL2
-%define version   1.4.2
+%define version   1.4.3
 %define release   1
 %define group     Web/Applications
 %define source    %{name}-%{version}.tar.gz
