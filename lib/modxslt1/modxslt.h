@@ -31,6 +31,7 @@
 # include <libxml/parserInternals.h>
 # include <libxml/threads.h>
 # include <libxml/nanohttp.h>
+# include <libxml/xmlversion.h>
 
   /* XSLT include files */
 # include <libxslt/xslt.h>

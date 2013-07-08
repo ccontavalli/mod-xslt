@@ -535,9 +535,17 @@ xmlDocPtr mxslt_doc_xml_parse(mxslt_doc_t * document, xmlParserInputBufferPtr bu
   }
 
   input->buf=buf;
+#if LIBXML_VERSION < 20900
   input->base=input->buf->buffer->content;
   input->cur=input->buf->buffer->content;
   input->end=&input->buf->buffer->content[input->buf->buffer->use];
+#else
+    /* With libxml2 2.9.0, the buffer struct can only be accessed through
+     * methods. */
+  input->base=xmlBufContent(input->buf->buffer);
+  input->cur=xmlBufContent(input->buf->buffer);
+  input->end=xmlBufEnd(input->buf->buffer);
+#endif
 
   inputPush(ctx, input);
 
